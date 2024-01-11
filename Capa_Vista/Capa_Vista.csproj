@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{33AED6B3-AF3F-4094-BA99-4CFD9F39D17A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Capa_Vista</RootNamespace>
+    <AssemblyName>Capa_Vista</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="frmDatosAdicionales.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDatosAdicionales.Designer.cs">
+      <DependentUpon>frmDatosAdicionales.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmExperienciaLaboral.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmExperienciaLaboral.Designer.cs">
+      <DependentUpon>frmExperienciaLaboral.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmFamilia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmFamilia.Designer.cs">
+      <DependentUpon>frmFamilia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmFisicoBiologico.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmFisicoBiologico.Designer.cs">
+      <DependentUpon>frmFisicoBiologico.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmHome.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmHome.Designer.cs">
+      <DependentUpon>frmHome.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmIdioma.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmIdioma.Designer.cs">
+      <DependentUpon>frmIdioma.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLocalizacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLocalizacion.Designer.cs">
+      <DependentUpon>frmLocalizacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmNivel_Academico.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmNivel_Academico.Designer.cs">
+      <DependentUpon>frmNivel_Academico.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmOtrosDatos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmOtrosDatos.Designer.cs">
+      <DependentUpon>frmOtrosDatos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPersona.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPersona.Designer.cs">
+      <DependentUpon>frmPersona.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPuestoNominal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPuestoNominal.Designer.cs">
+      <DependentUpon>frmPuestoNominal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPuesto_Funcional.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPuesto_Funcional.Designer.cs">
+      <DependentUpon>frmPuesto_Funcional.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmReferenciaLaboral.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReferenciaLaboral.Designer.cs">
+      <DependentUpon>frmReferenciaLaboral.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmReferenciaPersonal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReferenciaPersonal.Designer.cs">
+      <DependentUpon>frmReferenciaPersonal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSocio_Economico.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSocio_Economico.Designer.cs">
+      <DependentUpon>frmSocio_Economico.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Menu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menu.Designer.cs">
+      <DependentUpon>Menu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="frmDatosAdicionales.resx">
+      <DependentUpon>frmDatosAdicionales.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmExperienciaLaboral.resx">
+      <DependentUpon>frmExperienciaLaboral.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmFamilia.resx">
+      <DependentUpon>frmFamilia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmFisicoBiologico.resx">
+      <DependentUpon>frmFisicoBiologico.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmHome.resx">
+      <DependentUpon>frmHome.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmIdioma.resx">
+      <DependentUpon>frmIdioma.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLocalizacion.resx">
+      <DependentUpon>frmLocalizacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmNivel_Academico.resx">
+      <DependentUpon>frmNivel_Academico.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmOtrosDatos.resx">
+      <DependentUpon>frmOtrosDatos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPersona.resx">
+      <DependentUpon>frmPersona.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPuestoNominal.resx">
+      <DependentUpon>frmPuestoNominal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPuesto_Funcional.resx">
+      <DependentUpon>frmPuesto_Funcional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmReferenciaLaboral.resx">
+      <DependentUpon>frmReferenciaLaboral.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmReferenciaPersonal.resx">
+      <DependentUpon>frmReferenciaPersonal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSocio_Economico.resx">
+      <DependentUpon>frmSocio_Economico.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menu.resx">
+      <DependentUpon>Menu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Capa_Negocio\Capa_Negocio.csproj">
+      <Project>{d3975c10-2b5b-426b-af11-d51c8114eecf}</Project>
+      <Name>Capa_Negocio</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FontAwesome.MVC">
+      <Version>1.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="FontAwesome.Sharp">
+      <Version>6.3.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
