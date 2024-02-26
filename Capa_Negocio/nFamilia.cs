@@ -57,16 +57,16 @@ namespace Capa_Negocio
 
 
         public static string Insertar(
-    int idPersona,
-    int idTipoFamilia,
-    string nombre,
-    DateTime fNacimiento,
-    string ocupacion,
-    string telefono,
-    string lTrabajo,
-    string dTrabajo,
-    string tTrabajo)
-        {
+                  int idPersona,
+                   int idTipoFamilia,
+                 string nombre,
+                  DateTime fNacimiento,
+              string ocupacion,
+                string telefono,
+               string lTrabajo,
+            string dTrabajo,
+                    string tTrabajo)
+              {
             // Crear una instancia de la clase Familia (suponiendo que ya tienes una)
             cFamilia obj = new cFamilia();
 
@@ -85,7 +85,18 @@ namespace Capa_Negocio
             // Llamar al método de actualización en la clase Familia (debes tener este método)
             return obj.Insertar(obj);
         }
+
+
+        public static string Eliminar(int idFamilia)
+        {
+            cFamilia Obj = new cFamilia();
+            Obj.ID = idFamilia;
+            return Obj.Eliminar(Obj);
+        }
     }
 
     
+
+
+
 }

@@ -59,5 +59,13 @@ namespace Capa_Negocio
             return Idioma.Actualizar(Idioma);
         }
 
+        public static string Eliminar(int idIdioma)
+        {
+            cIdioma Obj = new cIdioma();
+            Obj.ID = idIdioma;
+            return Obj.Eliminar(Obj);
+        }
+
+
     }
 }

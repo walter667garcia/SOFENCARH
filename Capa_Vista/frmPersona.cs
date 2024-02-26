@@ -1,9 +1,11 @@
 ﻿using Capa_Negocio;
+using ClosedXML.Excel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -13,6 +15,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Bibliography;
 
 namespace Capa_Vista
 {
@@ -23,7 +27,14 @@ namespace Capa_Vista
         public frmPersona()
         {
             InitializeComponent();
-            
+            dtmFecha.Format = DateTimePickerFormat.Custom;
+            dtmFecha.CustomFormat = "dd/MM/yyyy";
+
+            dtmFecha.KeyPress += dtmFecha_KeyPress;
+
+            ConfigurarOrdenTabulacion();
+
+
         }
 
         private void textBox5_TextChanged(object sender, EventArgs e)
@@ -39,7 +50,7 @@ namespace Capa_Vista
                 if (this.dtgPersona.Columns.Count > 0)
                 {
                     this.dtgPersona.Columns[0].Visible = false;
-                    this.dtgPersona.Columns[9].Visible = false;
+                    //this.dtgPersona.Columns[9].Visible = false;
                 }
                 else
                 {
@@ -75,16 +86,17 @@ namespace Capa_Vista
         {
             this.Top = 0;
             this.Left = 0;
-
             this.Mostrar();
-
             this.Habilitar(false);
             this.Botones();
-          this.LlenarComboBoxes();
-         
+            this.LlenarComboBoxes();
+            this.BuscarMunicipio();
 
-            this.letras(txtPnombre.Text);
+
         }
+
+        
+
 
         private void LlenarComboBoxes()
         {
@@ -108,9 +120,13 @@ namespace Capa_Vista
             cmbEstado.DisplayMember = "ESTADO_CIVIL";
             cmbEstado.ValueMember = "ID_ESTADO_CIVIL";
 
-            cmbMunicipio.DataSource = dataSet.Tables["TYMUNICIPIO"];
-            cmbMunicipio.DisplayMember = "MUNICIPIO";
-            cmbMunicipio.ValueMember = "ID_MUNICIPIO";
+           // cmbMunicipio.DataSource = dataSet.Tables["TYMUNICIPIO"];
+            //cmbMunicipio.DisplayMember = "MUNICIPIO";
+            //cmbMunicipio.ValueMember = "ID_MUNICIPIO";
+
+            cmbDepartamento.DataSource = dataSet.Tables["TYDEPARTAMENTO"];
+            cmbDepartamento.DisplayMember = "DEPARTAMENTO";
+            cmbDepartamento.ValueMember = "ID_DEPARTAMENTO";
 
         }
 
@@ -121,33 +137,56 @@ namespace Capa_Vista
   
     private void button5_Click(object sender, EventArgs e)
 {
-    OpenFileDialog ofd = new OpenFileDialog();
+            OpenFileDialog ofd = new OpenFileDialog();
 
-    // Configura el filtro para permitir solo imágenes
-    ofd.Filter = "Archivos de imagen|*.jpg;*.jpeg;*.png;*.gif;*.bmp|Todos los archivos|*.*";
-    DialogResult rs = ofd.ShowDialog();
+            // Configura el filtro para permitir solo imágenes
+            ofd.Filter = "Archivos de imagen|*.jpg;*.jpeg;*.png;*.gif;*.bmp|Todos los archivos|*.*";
+            DialogResult rs = ofd.ShowDialog();
 
-    if (rs == DialogResult.OK)
-    {
+            if (rs == DialogResult.OK)
+            {
                 // Guarda la imagen actual antes de cargar una nueva imagen
                 imagenActual = pcbFoto.Image;
 
                 // Verifica si el archivo seleccionado es una imagen
                 string extension = Path.GetExtension(ofd.FileName).ToLower();
-        if (extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".gif" || extension == ".bmp")
-        {
-            pcbFoto.Image = Image.FromFile(ofd.FileName);
-        }
-        else
-        {
-            // Muestra un mensaje de error si el archivo no es una imagen
-            MessageBox.Show("Por favor, selecciona un archivo de imagen válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".gif" || extension == ".bmp")
+                {
+                    try
+                    {
+                        // Verifica el tamaño de la imagen antes de cargarla
+                        FileInfo fileInfo = new FileInfo(ofd.FileName);
+                        long fileSize = fileInfo.Length; // Tamaño del archivo en bytes
 
-            // Restaura la imagen anterior
-            pcbFoto.Image = imagenActual;
+                        // Define el tamaño máximo permitido (en bytes)
+                        long maxSize = 10 * 1024 * 1024; // 10 MB como ejemplo, ajusta según tus necesidades
+
+                        if (fileSize > maxSize)
+                        {
+                            MessageBox.Show("El tamaño de la imagen es demasiado grande. Por favor, selecciona una imagen más pequeña.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return; // Sale de la función sin cargar la imagen
+                        }
+
+                        // Carga la imagen si pasa todas las verificaciones
+                        pcbFoto.Image = Image.FromFile(ofd.FileName);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error al cargar la imagen: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        // Restaura la imagen anterior
+                        pcbFoto.Image = imagenActual;
+                    }
+                }
+                else
+                {
+                    // Muestra un mensaje de error si el archivo no es una imagen
+                    MessageBox.Show("Por favor, selecciona un archivo de imagen válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    // Restaura la imagen anterior
+                    pcbFoto.Image = imagenActual;
+                }
+            }
         }
-    }
-}
 
         private void btnNuevo_Click(object sender, EventArgs e)
         {
@@ -174,7 +213,6 @@ namespace Capa_Vista
             this.txtSapellido.ReadOnly = !valor;
             this.txtTapellido.ReadOnly = !valor;
             this.txtEdad.ReadOnly = !valor;
-            this.txtPretencion.ReadOnly = !valor;
             this.txtNacion.ReadOnly = !valor;
             this.txtNacionalidad.ReadOnly = !valor;
             this.cmbEstado.Enabled = valor;
@@ -195,7 +233,6 @@ namespace Capa_Vista
 
         private void ReemplazarImagen(PictureBox origen, PictureBox destino)
         {
-          
                 // Copia la imagen del PictureBox de origen al PictureBox de destino
                 origen.Image = new Bitmap(destino.Image);
             
@@ -209,7 +246,6 @@ namespace Capa_Vista
             this.txtSapellido.Text = string.Empty;
             this.txtTapellido.Text = string.Empty;
             this.txtEdad.Text = string.Empty;
-            this.txtPretencion.Text = string.Empty;
             this.cmbEstado.SelectedIndex = -1;  
             this.txtNacion.Text = string.Empty;
             this.dtmFecha.Value = DateTime.Today;
@@ -223,6 +259,7 @@ namespace Capa_Vista
             this.txtNIT.Text = string.Empty;
             this.txtLicencia.Text = string.Empty;
             this.txtTipoLicencia.Text = string.Empty;
+            this.cmbDepartamento.Text = string.Empty;
             ReemplazarImagen(pcbFoto, pcbFoto2);
 
         }
@@ -276,7 +313,6 @@ namespace Capa_Vista
                                 this.txtSapellido.Text.Trim().ToUpper(),
                                 this.txtTapellido.Text.Trim().ToUpper(),
                                 this.txtEdad.Text.Trim().ToUpper(),
-                                this.txtPretencion.Text.Trim().ToUpper(),
                                 Convert.ToInt32(this.cmbEstado.SelectedValue),
                                 this.txtNacion.Text.Trim().ToUpper(),
                                 date,
@@ -290,7 +326,8 @@ namespace Capa_Vista
                                 this.txtNIT.Text.Trim().ToUpper(),
                                 ms.ToArray(), // Reemplaza ms.GetBuffer() con ms.ToArray()
                                 this.txtLicencia.Text.Trim().ToUpper(),
-                                this.txtTipoLicencia.Text.Trim().ToUpper());
+                                this.txtTipoLicencia.Text.Trim().ToUpper(),
+                                this.cmbDepartamento.Text.Trim().ToUpper());
                         }
                         else if (this.IsEditar)
                         {
@@ -311,7 +348,6 @@ namespace Capa_Vista
                                 this.txtSapellido.Text.Trim().ToUpper(),
                                 this.txtTapellido.Text.Trim().ToUpper(),
                                 this.txtEdad.Text.Trim().ToUpper(),
-                                this.txtPretencion.Text.Trim().ToUpper(),
                                 Convert.ToInt32(this.cmbEstado.SelectedValue),
                                 this.txtNacion.Text.Trim().ToUpper(),
                                 date,
@@ -325,7 +361,8 @@ namespace Capa_Vista
                                 this.txtNIT.Text.Trim().ToUpper(),
                                 nuevaImagen, // Utiliza la nueva imagen en lugar de ms.ToArray()
                                 this.txtLicencia.Text.Trim().ToUpper(),
-                                this.txtTipoLicencia.Text.Trim().ToUpper());
+                                this.txtTipoLicencia.Text.Trim().ToUpper(),
+                                this.cmbDepartamento.Text.Trim().ToUpper());
                         }
 
                         if (rpta.Equals("OK"))
@@ -359,6 +396,14 @@ namespace Capa_Vista
 
             lblTotal.Text = "Total de Registros: " + Convert.ToString(dtgPersona.Rows.Count - 1);
         }
+
+        private DataSet municipio;
+        private void BuscarMunicipio()
+        {
+                cmbMunicipio.DataSource = nPersona.BuscarMunicipio(cmbDepartamento.SelectedValue.ToString());
+                cmbMunicipio.DisplayMember = "MUNICIPIO";
+                cmbMunicipio.ValueMember = "ID_MUNICIPIO";
+        }
         private void txtBuscar_TextChanged(object sender, EventArgs e)
         {
             BuscarPersona();
@@ -369,19 +414,49 @@ namespace Capa_Vista
         {
             if (this.dtgPersona.CurrentRow != null)
             {
+                if(btnNuevo.Enabled != false)
+                {
+
+                    DataTable dataSet = nPersona.BuscarDepartamento(dtgPersona.CurrentRow.Cells["MUNICIPIO"].Value.ToString());
+                    string nombreDepartamento = dataSet.Rows[0]["DEPARTAMENTO"].ToString();
+                    int idDepartamento = cmbDepartamento.FindStringExact(nombreDepartamento);
+                    cmbDepartamento.SelectedIndex = idDepartamento;
+
+                    string Etnia = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Etnia"].Value);
+                int idEtnia = cmbEtnia.FindStringExact(Etnia);
+                cmbEtnia.SelectedIndex = idEtnia;
+                
+
+                string Genero = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Genero"].Value);
+                int idGenero = cmbGenero.FindStringExact(Genero);
+                cmbGenero.SelectedIndex = idGenero;
+
+                string Estado = Convert.ToString(this.dtgPersona.CurrentRow.Cells["ESTADO_CIVIL"].Value);
+                int idestadocivil = cmbEstado.FindString(Estado);
+                cmbEstado.SelectedIndex = idestadocivil;
+
+                string Municipio = this.dtgPersona.CurrentRow.Cells["MUNICIPIO"].Value.ToString();
+                int idMunicipio = cmbMunicipio.FindString(Municipio);
+                cmbMunicipio.SelectedIndex = idMunicipio;
+
+                string Religion = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Religión"].Value);
+                int idReligion = cmbReligion.FindStringExact(Religion);
+                cmbReligion.SelectedIndex = idReligion;
+
+
                 this.txtIdPersona.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Id"].Value);
-                this.txtPnombre.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["P_NOMBRE"].Value);
-                this.txtSnombre.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["S_NOMBRE"].Value);
-                this.txtTnombre.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["T_NOMBRE"].Value);
-                this.txtPapellido.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["P_APELLIDO"].Value);
-                this.txtSapellido.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["S_APELLIDO"].Value);
-                this.txtTapellido.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["C_APELLIDO"].Value);
+                this.txtPnombre.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_NOMBRE"].Value);
+                this.txtSnombre.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_NOMBRE"].Value);
+                this.txtTnombre.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Tercer_NOMBRE"].Value);
+                this.txtPapellido.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_APELLIDO"].Value);
+                this.txtSapellido.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_APELLIDO"].Value);
+                this.txtTapellido.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["APELLIDO_casada"].Value);
                 this.txtEdad.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["EDAD"].Value);
-                this.txtPretencion.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["PRETENCION_SALARIO"].Value);
-                 this.txtNacion.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["L_NACIMIENTO"].Value);
-                   this.txtNacionalidad.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["NACIONALIDAD"].Value);
-                   this.txtDPI.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["DPI"].Value);
-                  this.txtIgss.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["IGSS"].Value);
+                this.txtNacion.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Lugar_NACIMIENTO"].Value);
+                this.txtNacionalidad.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["NACIONALIDAD"].Value);
+                this.txtDPI.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["DPI"].Value);
+                this.dtmFecha.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Fecha_NACIMIENTO"].Value);
+                this.txtIgss.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["IGSS"].Value);
                 this.txtNIT.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["NIT"].Value);
                 byte[] datosBinarios = this.dtgPersona.CurrentRow.Cells["Foto"].Value as byte[];
 
@@ -397,6 +472,12 @@ namespace Capa_Vista
                 this.txtLicencia.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["LICENCIA"].Value);
                 this.txtTipoLicencia.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["TIPO_LICENCIA"].Value);
                 this.tabMantenimiento.SelectedIndex = 1;
+            
+                }
+                else
+                {
+                    MessageBox.Show("No puede editar y crear un nuevo registro a la vez");
+                }
             }
         }
 
@@ -432,53 +513,20 @@ namespace Capa_Vista
             txtDPI.SelectionStart = txtDPI.Text.Length;
         }
 
-        private void txtNIT_TextChanged(object sender, EventArgs e)
-        {
-            // Elimina cualquier caracter que no sea dígito
-            string nitNumero = Regex.Replace(txtNIT.Text, @"[^\d]", "");
-
-            // Limita a 13 caracteres
-            if (nitNumero.Length > 12)
-            {
-                nitNumero = nitNumero.Substring(0, 12);
-            }
-
-            // Asigna el texto limpio al TextBox
-            txtNIT.Text = nitNumero;
-            // Coloca el cursor al final del texto
-            txtNIT.SelectionStart = txtNIT.Text.Length;
-        }
-
-        private void txtIgss_TextChanged(object sender, EventArgs e)
-        {
-            // Elimina cualquier caracter que no sea dígito
-            string iggsNumero = Regex.Replace(txtIgss.Text, @"[^\d]", "");
-
-            // Limita a 13 caracteres
-            if (iggsNumero.Length > 12)
-            {
-                iggsNumero = iggsNumero.Substring(0, 12);
-            }
-
-            // Asigna el texto limpio al TextBox
-            txtIgss.Text = iggsNumero;
-            // Coloca el cursor al final del texto
-            txtIgss.SelectionStart = txtIgss.Text.Length;
-        }
 
         private void txtLicencia_TextChanged(object sender, EventArgs e)
         {
             // Elimina cualquier caracter que no sea dígito
             string lcNumero = Regex.Replace(txtLicencia.Text, @"[^\d]", "");
 
-            // Limita a 13 caracteres
-            if (lcNumero.Length > 9)
+            // Limita  13 caracteres
+            if (lcNumero.Length > 13)
             {
-                lcNumero = lcNumero.Substring(0, 9);
-                
+                lcNumero = lcNumero.Substring(0, 13);
+
             }
 
-            if (lcNumero.Length == 9)
+            if (lcNumero.Length <= 13)
             {
                 txtTipoLicencia.Enabled = true;
 
@@ -493,33 +541,10 @@ namespace Capa_Vista
             txtLicencia.Text = lcNumero;
             // Coloca el cursor al final del texto
             txtLicencia.SelectionStart = txtLicencia.Text.Length;
+
         }
 
-        private void txtPretencion_TextChanged(object sender, EventArgs e)
-        {
-            // Elimina cualquier caracter que no sea dígito
-            string Q = Regex.Replace(txtPretencion.Text, @"[^\d]", "");
-
-            // Limita a 9 caracteres
-            if (Q.Length > 9)
-            {
-                Q = Q.Substring(0, 9);
-            }
-
-            // Formatea el número como moneda local (Quetzal en Guatemala)
-            if (long.TryParse(Q, out long numero))
-            {
-                txtPretencion.Text = numero.ToString("C0", new CultureInfo("es-GT"));
-
-            }
-            else
-            {
-                txtPretencion.Text = "";  // Si no se puede convertir, se deja en blanco
-            }
-
-            // Coloca el cursor al final del texto
-            txtPretencion.SelectionStart = txtPretencion.Text.Length;
-        }
+       
 
         private void dtmFecha_ValueChanged(object sender, EventArgs e)
         {
@@ -535,67 +560,6 @@ namespace Capa_Vista
 
             // Asigna la edad al campo correspondiente
             txtEdad.Text = edad.ToString();
-        }
-
-        private void txtPnombre_TextChanged(object sender, EventArgs e)
-        {
-            letras(txtPnombre.Text);
-        }
-
-        private void letras(string texto)
-        {
-            // Verificar si el texto contiene solo letras y espacios en blanco
-            if (!Regex.IsMatch(texto, "^[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ ]*$"))
-            {
-               MessageBox.Show("Solo se permiten letras y espacios en blanco en este campo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void txtSnombre_TextChanged(object sender, EventArgs e)
-        {
-
-            letras(txtSnombre.Text);
-        }
-
-        private void txtTnombre_TextChanged(object sender, EventArgs e)
-        {
-            letras(txtTnombre.Text);
-        }
-
-        private void txtPapellido_TextChanged(object sender, EventArgs e)
-        {
-            letras(txtPapellido.Text);
-        }
-
-        private void txtSapellido_TextChanged(object sender, EventArgs e)
-        {
-            letras(txtSapellido.Text);
-        }
-
-        private void txtTapellido_TextChanged(object sender, EventArgs e)
-        {
-            letras(txtTapellido.Text);
-        }
-
-        private void txtNacion_TextChanged(object sender, EventArgs e)
-        {
-            letras(txtNacion.Text);
-        }
-
-        private void txtNacionalidad_TextChanged(object sender, EventArgs e)
-        {
-            letras(txtNacionalidad.Text);
-        }
-
-        private void btnNuevo_Click_1(object sender, EventArgs e)
-        {
-
-            this.IsNuevo = true;
-            this.IsEditar = false;
-            this.Botones();
-            this.Limpiar();
-            this.Habilitar(true);
-            this.txtPnombre.Focus();
         }
 
 
@@ -659,8 +623,7 @@ namespace Capa_Vista
                                 this.txtPapellido.Text.Trim().ToUpper(),
                                 this.txtSapellido.Text.Trim().ToUpper(),
                                 this.txtTapellido.Text.Trim().ToUpper(),
-                                this.txtEdad.Text.Trim().ToUpper(),
-                                this.txtPretencion.Text.Trim().ToUpper(),
+                                this.txtEdad.Text.Trim().ToUpper(),                          
                                 Convert.ToInt32(this.cmbEstado.SelectedValue),
                                 this.txtNacion.Text.Trim().ToUpper(),
                                 date,
@@ -674,11 +637,19 @@ namespace Capa_Vista
                                 this.txtNIT.Text.Trim().ToUpper(),
                                 imagenBytes,
                                 this.txtLicencia.Text.Trim().ToUpper(),
-                                this.txtTipoLicencia.Text.Trim().ToUpper());
-                        }
-                        else if (this.IsEditar)
+                                this.txtTipoLicencia.Text.Trim().ToUpper(),
+                                this.cmbDepartamento.Text.Trim().ToUpper());
+
+                                this.MensajeOk(this.IsNuevo ? "Se insertó de forma correcta el registro" : "Se actualizó de forma correcta el registro");
+                    }
+                    else if (this.IsEditar)
+                    {
+                        // Mostrar un cuadro de diálogo de confirmación
+                        DialogResult result = MessageBox.Show("¿Estás seguro de ingresar la nueva actualización?", "Confirmar Actualización", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        byte[] nuevaImagen;
+
+                        if (result == DialogResult.Yes)
                         {
-                            byte[] nuevaImagen;
                             using (MemoryStream msNuevaImagen = new MemoryStream())
                             {
                                 // Reemplaza pcbNuevaFoto con el PictureBox que contiene la nueva imagen
@@ -695,7 +666,6 @@ namespace Capa_Vista
                                 this.txtSapellido.Text.Trim().ToUpper(),
                                 this.txtTapellido.Text.Trim().ToUpper(),
                                 this.txtEdad.Text.Trim().ToUpper(),
-                                this.txtPretencion.Text.Trim().ToUpper(),
                                 Convert.ToInt32(this.cmbEstado.SelectedValue),
                                 this.txtNacion.Text.Trim().ToUpper(),
                                 date,
@@ -709,43 +679,60 @@ namespace Capa_Vista
                                 this.txtNIT.Text.Trim().ToUpper(),
                                 nuevaImagen, // Utiliza la nueva imagen en lugar de ms.ToArray()
                                 this.txtLicencia.Text.Trim().ToUpper(),
-                                this.txtTipoLicencia.Text.Trim().ToUpper());
-                        }
+                                this.txtTipoLicencia.Text.Trim().ToUpper(),
+                                this.cmbDepartamento.Text.Trim().ToUpper());
 
-                        if (rpta.Equals("OK"))
-                        {
-                            this.MensajeOk(this.IsNuevo ? "Se insertó de forma correcta el registro" : "Se actualizó de forma correcta el registro");
+                            if (rpta.Equals("OK"))
+                            {
+                                this.MensajeOk("Se actualizó de forma correcta el registro");
+                            }
+                            else
+                            {
+                                this.MensajeError(rpta);
+                            }
                         }
                         else
                         {
-                            this.MensajeError(rpta);
+                            // El usuario ha seleccionado "No", por lo tanto, no se realiza la actualización
+                            this.Limpiar(false); // Limpia los campos o realiza acciones necesarias al cancelar la actualización
                         }
-
-                        this.IsNuevo = false;
-                        this.IsEditar = false;
-                        this.Botones();
-                        this.Limpiar();
-                        this.Mostrar();
-                        this.Habilitar(false);
-
                     }
+
+                    // Resto del código para manejar la lógica después de la actualización o cancelación
+                    this.IsNuevo = false;
+                    this.IsEditar = false;
+                    this.Botones();
+                    this.Limpiar();
+                    this.Mostrar();
+                    this.Habilitar(false);
+                }
                 
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                // También puedes registrar la excepción en un archivo de registro.
+               
             }
+        }
+
+        private void Limpiar(bool v)
+        {
+            throw new NotImplementedException();
         }
 
         private void btnEditar_Click_1(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(this.txtIdPersona.Text))
             {
-                this.IsEditar = true;
-                this.Botones();
-                this.Habilitar(true);
+                // Mostrar un cuadro de diálogo de confirmación
+                DialogResult result = MessageBox.Show("¿Estás seguro de que deseas realizar la actualización?", "Confirmar Actualización", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
+                if (result == DialogResult.Yes)
+                {
+                    this.IsEditar = true;
+                    this.Botones();
+                    this.Habilitar(true);
+                }
+                // Si el usuario elige "No", no se realiza la actualización
             }
             else
             {
@@ -762,5 +749,675 @@ namespace Capa_Vista
             this.txtIdPersona.Text = string.Empty;
             this.Habilitar(false);
         }
+
+        private void cmbDepartamento_SelectedValueChanged(object sender, EventArgs e)
+        {
+            cmbMunicipio.DataSource = nPersona.BuscarMunicipio(cmbDepartamento.SelectedValue.ToString());
+            cmbMunicipio.DisplayMember = "MUNICIPIO";
+            cmbMunicipio.ValueMember = "ID_MUNICIPIO";
+
+
+        }
+
+       
+        private void dtmFecha_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(char.IsDigit(e.KeyChar) || e.KeyChar=='/')
+            {
+                e.Handled = false;
+            }
+            else {
+                e.Handled = true; 
+            }
+        }
+
+        private void btnNuevo_Click_1(object sender, EventArgs e)
+        {
+            this.IsNuevo = true;
+            this.IsEditar = false;
+            this.Botones();
+            this.Limpiar();
+            this.Habilitar(true);
+            this.txtPnombre.Focus();
+        }
+
+        private void txtNIT_TextChanged(object sender, EventArgs e)
+        {
+            // Obtener la posición actual del cursor
+            int cursorPosition = txtNIT.SelectionStart;
+
+            // Obtener el texto actual en el cuadro de texto
+            string texto = txtNIT.Text;
+
+            // Verificar la longitud del texto y truncarlo si excede los 15 caracteres
+            if (texto.Length > 12)
+            {
+                txtNIT.Text = texto.Substring(0, 12);
+                // Mantener la posición del cursor dentro del rango válido
+                txtNIT.SelectionStart = 12;
+            }
+
+            // Verificar cada carácter en el texto
+            foreach (char caracter in texto)
+            {
+                // Permitir números del 0 al 9, el signo "-" y la letra "K" mayúscula
+                if (!(char.IsDigit(caracter) && caracter >= '0' && caracter <= '9') &&
+                    caracter != '-' &&
+                    caracter != 'K')
+                {
+                    // Eliminar el carácter no permitido
+                    txtNIT.Text = txtNIT.Text.Replace(caracter.ToString(), "");
+                }
+            }
+
+            // Restaurar la posición del cursor
+            txtNIT.SelectionStart = cursorPosition;
+        }
+
+        
+
+
+        private void menuclick(object sender, ToolStripItemClickedEventArgs e)
+        {
+            
+        }
+
+        private void ConfigurarDataGridView()
+        {
+            // Configura el DataGridView
+            dtgPersona.AllowUserToAddRows = false;
+            dtgPersona.AllowUserToDeleteRows = false;
+            dtgPersona.ReadOnly = true;
+
+            // Agrega la fila de separación visual
+            DataGridViewRow separador = new DataGridViewRow();
+            separador.Height = 50; // Ajusta la altura según tus necesidades
+            separador.DefaultCellStyle.BackColor = Color.Gray; // Color del separador
+            dtgPersona.Rows.Add(separador);
+        }
+
+
+        private void dtgPersona_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Suponiendo que la primera columna es la que contiene el nombre
+            if (e.ColumnIndex == 0) // Modifica según la columna que estás utilizando
+            {
+                // Obtiene el valor actual de la celda
+                string valorActual = dtgPersona.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+
+                // Capitaliza la primera letra y convierte el resto a minúsculas
+                string nuevoValor = CapitalizarPrimeraLetra(valorActual);
+
+                // Establece el nuevo valor en la celda
+                dtgPersona.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = nuevoValor;
+            }
+        }
+
+
+        private string CapitalizarPrimeraLetra(string texto)
+        {
+            if (string.IsNullOrEmpty(texto))
+            {
+                return texto;
+            }
+
+            // Convierte el primer carácter a mayúscula y el resto a minúsculas
+            return char.ToUpper(texto[0]) + texto.Substring(1).ToLower();
+        }
+
+
+        private void ConfigurarOrdenTabulacion()
+        {
+            // Establecer el orden de tabulación para los TextBox
+            txtPnombre.TabIndex = 1;
+            txtSnombre.TabIndex = 2;
+            txtTnombre.TabIndex = 3;
+            txtPapellido.TabIndex = 4;
+            txtSapellido.TabIndex = 5;
+            txtTapellido.TabIndex = 6;
+            txtDPI.TabIndex = 7;
+            cmbGenero.TabIndex = 8;
+            cmbEtnia.TabIndex = 9;
+            cmbEstado.TabIndex = 10;
+            dtmFecha.TabIndex = 11;
+            cmbDepartamento.TabIndex = 12;
+            cmbMunicipio.TabIndex = 13;
+            txtNacion.TabIndex = 14;
+            txtNacionalidad.TabIndex = 15;
+            txtNIT.TabIndex = 16;
+            txtIgss.TabIndex = 17;
+            cmbReligion.TabIndex = 18;
+            txtLicencia.TabIndex = 19;
+            txtTipoLicencia.TabIndex = 20;
+            btnFoto.TabIndex = 20;
+
+        }
+
+        private void txtPretencionSalarial_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtTipoLicencia_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+       
+
+        private void dtgPersona_MouseClick(object sender, MouseEventArgs e)
+        {
+
+            if (e.Button == MouseButtons.Right)
+            {
+                var hti = dtgPersona.HitTest(e.X, e.Y);
+                if (hti.RowIndex >= 0)
+                {
+                    dtgPersona.Rows[hti.RowIndex].Selected = true;
+                }
+            }
+
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenuStrip menu = new System.Windows.Forms.ContextMenuStrip();
+                int posicion = dtgPersona.HitTest(e.X, e.Y).RowIndex;
+                if (posicion > -1)
+                {
+                    menu.Items.Add("Ubicacion").Name = "Ubicacion" + posicion;
+                    menu.Items.Add("Familia").Name = "Familia" + posicion;
+                    menu.Items.Add("Estudios").Name = "Estudios" + posicion;
+                    menu.Items.Add("Idiomas").Name = "Idiomas" + posicion;
+                    menu.Items.Add("Experiencia Laboral").Name = "Experiencia Laboral" + posicion;
+                    menu.Items.Add("Socio Economico").Name = "Socio Economico" + posicion;
+                    menu.Items.Add("Fisico Biologico").Name = "Fisico Biologico" + posicion;
+                    menu.Items.Add("Referencia Laboral").Name = "Referencia Laboral" + posicion;
+                    menu.Items.Add("Referencia Personal").Name = "Referencia Personal" + posicion;
+                    menu.Items.Add("Otros Datos").Name = "Otros Datos" + posicion;
+                    menu.Items.Add("Datos Adicionales").Name = "Datos Adicionales" + posicion;
+                }
+                menu.Show(dtgPersona, e.X, e.Y);
+                menu.ItemClicked += new ToolStripItemClickedEventHandler(menuclick1);
+            }
+        }
+
+      
+
+        private void menuclick1(object sender, ToolStripItemClickedEventArgs e)
+        {
+            string id = e.ClickedItem.Name.ToString();
+            if (id.Contains("Ubicacion"))
+            {
+                id = id.Replace("Ubicacion", "");
+                frmLocalizacion Obj = new frmLocalizacion();
+                string persona = Convert.ToString(this.dtgPersona.CurrentRow.Cells["id"].Value);
+                string a, b, c, d;
+                a = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Nombre"].Value);
+                b = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Nombre"].Value);
+                c = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Apellido"].Value);
+                d = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Apellido"].Value);
+                string nombre = a + " " + b + " " + c + " " + d;
+                Obj.Show();
+                Obj.cargar(persona, nombre);
+            }
+
+            if (id.Contains("Familia"))
+            {
+                id = id.Replace("Familia", "");
+                frmFamilia Obj = new frmFamilia();
+                string persona = Convert.ToString(this.dtgPersona.CurrentRow.Cells["id"].Value);
+                string a, b, c, d;
+                a = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Nombre"].Value);
+                b = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Nombre"].Value);
+                c = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Apellido"].Value);
+                d = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Apellido"].Value);
+                string nombre = a + " " + b + " " + c + " " + d;
+                Obj.Show();
+                Obj.cargar(persona, nombre);
+            }
+
+            if (id.Contains("Estudios"))
+            {
+                id = id.Replace("Estudios", "");
+                frmNivel_Academico Obj = new frmNivel_Academico();
+                string persona = Convert.ToString(this.dtgPersona.CurrentRow.Cells["id"].Value);
+                string a, b, c, d;
+                a = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Nombre"].Value);
+                b = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Nombre"].Value);
+                c = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Apellido"].Value);
+                d = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Apellido"].Value);
+                string nombre = a + " " + b + " " + c + " " + d;
+                Obj.Show();
+                Obj.cargar(persona, nombre);
+            }
+
+            if (id.Contains("Idiomas"))
+            {
+                id = id.Replace("Idiomas", "");
+                frmIdioma Obj = new frmIdioma();
+                string persona = Convert.ToString(this.dtgPersona.CurrentRow.Cells["id"].Value);
+                string a, b, c, d;
+                a = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Nombre"].Value);
+                b = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Nombre"].Value);
+                c = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Apellido"].Value);
+                d = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Apellido"].Value);
+                string nombre = a + " " + b + " " + c + " " + d;
+                Obj.Show();
+                Obj.cargar(persona, nombre);
+            }
+
+
+            if (id.Contains("Experiencia Laboral"))
+            {
+                id = id.Replace("Experiencia Laboral", "");
+                frmExperienciaLaboral Obj = new frmExperienciaLaboral();
+                string persona = Convert.ToString(this.dtgPersona.CurrentRow.Cells["id"].Value);
+                string a, b, c, d;
+                a = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Nombre"].Value);
+                b = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Nombre"].Value);
+                c = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Apellido"].Value);
+                d = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Apellido"].Value);
+                string nombre = a + " " + b + " " + c + " " + d;
+                Obj.Show();
+                Obj.cargar(persona, nombre);
+            }
+
+            if (id.Contains("Socio Economico"))
+            {
+                id = id.Replace("Socio Economico", "");
+                frmSocio_Economico Obj = new frmSocio_Economico();
+                string persona = Convert.ToString(this.dtgPersona.CurrentRow.Cells["id"].Value);
+                string a, b, c, d;
+                a = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Nombre"].Value);
+                b = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Nombre"].Value);
+                c = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Apellido"].Value);
+                d = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Apellido"].Value);
+                string nombre = a + " " + b + " " + c + " " + d;
+                Obj.Show();
+                Obj.cargar(persona, nombre);
+            }
+
+            if (id.Contains("Fisico Biologico"))
+            {
+                id = id.Replace("Fisico Biologico", "");
+                frmFisicoBiologico Obj = new frmFisicoBiologico();
+                string persona = Convert.ToString(this.dtgPersona.CurrentRow.Cells["id"].Value);
+                string a, b, c, d;
+                a = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Nombre"].Value);
+                b = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Nombre"].Value);
+                c = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Apellido"].Value);
+                d = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Apellido"].Value);
+                string nombre = a + " " + b + " " + c + " " + d;
+                Obj.Show();
+                Obj.cargar(persona, nombre);
+            }
+
+
+
+            if (id.Contains("Referencia Laboral"))
+            {
+                id = id.Replace("Referencia Laboral", "");
+                frmReferenciaLaboral Obj = new frmReferenciaLaboral();
+                string persona = Convert.ToString(this.dtgPersona.CurrentRow.Cells["id"].Value);
+                string a, b, c, d;
+                a = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Nombre"].Value);
+                b = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Nombre"].Value);
+                c = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Apellido"].Value);
+                d = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Apellido"].Value);
+                string nombre = a + " " + b + " " + c + " " + d;
+                Obj.Show();
+                Obj.cargar(persona, nombre);
+            }
+
+
+
+            if (id.Contains("Referencia Personal"))
+            {
+                id = id.Replace("Referencia Personal", "");
+                frmReferenciaPersonal Obj = new frmReferenciaPersonal();
+                string persona = Convert.ToString(this.dtgPersona.CurrentRow.Cells["id"].Value);
+                string a, b, c, d;
+                a = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Nombre"].Value);
+                b = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Nombre"].Value);
+                c = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Apellido"].Value);
+                d = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Apellido"].Value);
+                string nombre = a + " " + b + " " + c + " " + d;
+                Obj.Show();
+                Obj.cargar(persona, nombre);
+
+            }
+
+
+
+            if (id.Contains("Otros Datos"))
+            {
+                id = id.Replace("Otros Datos", "");
+                frmOtrosDatos Obj = new frmOtrosDatos();
+                string persona = Convert.ToString(this.dtgPersona.CurrentRow.Cells["id"].Value);
+                string a, b, c, d;
+                a = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Nombre"].Value);
+                b = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Nombre"].Value);
+                c = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Apellido"].Value);
+                d = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Apellido"].Value);
+                string nombre = a + " " + b + " " + c + " " + d;
+                Obj.Show();
+                Obj.cargar(persona, nombre);
+            }
+
+
+
+            if (id.Contains("Datos Adicionales"))
+            {
+
+                id = id.Replace("Datos Adicionales", "");
+                frmDatosAdicionales Obj = new frmDatosAdicionales();
+                string persona = Convert.ToString(this.dtgPersona.CurrentRow.Cells["id"].Value);
+                string a, b, c, d;
+                a = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Nombre"].Value);
+                b = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Nombre"].Value);
+                c = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Apellido"].Value);
+                d = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Apellido"].Value);
+                string nombre = a + " " + b + " " + c + " " + d;
+                Obj.Show();
+                Obj.cargar(persona, nombre);
+                Obj.StartPosition = FormStartPosition.CenterScreen; // Centrar la ventana en el formulario principal
+            }
+        }
+
+        private void txtPnombre_TextChanged(object sender, EventArgs e)
+        {
+            string textoOriginal = txtPnombre.Text;
+            string textoValidado = ValidarTexto(textoOriginal);
+
+            if (textoOriginal != textoValidado)
+            {
+                // Si el texto original no es igual al texto validado,
+                // establece el texto validado en el TextBox.
+                txtPnombre.Text = textoValidado;
+
+                // También puedes establecer el cursor al final del texto para mejorar la experiencia del usuario.
+                txtPnombre.SelectionStart = textoValidado.Length;
+            }
+        }
+
+        private string ValidarTexto(string texto)
+        {
+            // Filtra letras (mayúsculas y minúsculas), espacios y puntos.
+            string patron = "[a-zA-ZáéíóúÁÉÍÓÚ-ñ]";
+
+            StringBuilder textoValidado = new StringBuilder();
+
+            foreach (char caracter in texto)
+            {
+                if (System.Text.RegularExpressions.Regex.IsMatch(caracter.ToString(), patron))
+                {
+                    textoValidado.Append(caracter);
+                }
+            }
+
+            return textoValidado.ToString();
+        }
+
+        private string ValidarTexto1(string texto)
+        {
+            // Filtra letras (mayúsculas y minúsculas), espacios y puntos.
+            string patron = "[a-zA-Z0-9áéíóúÁÉÍÓÚ-ñ .,-]";
+
+            StringBuilder textoValidado = new StringBuilder();
+
+            foreach (char caracter in texto)
+            {
+                if (System.Text.RegularExpressions.Regex.IsMatch(caracter.ToString(), patron))
+                {
+                    textoValidado.Append(caracter);
+                }
+            }
+
+            return textoValidado.ToString();
+        }
+
+        private void txtSnombre_TextChanged(object sender, EventArgs e)
+        {
+            string textoOriginal = txtSnombre.Text;
+            string textoValidado = ValidarTexto(textoOriginal);
+
+            if (textoOriginal != textoValidado)
+            {
+                // Si el texto original no es igual al texto validado,
+                // establece el texto validado en el TextBox.
+                txtSnombre.Text = textoValidado;
+
+                // También puedes establecer el cursor al final del texto para mejorar la experiencia del usuario.
+                txtSnombre.SelectionStart = textoValidado.Length;
+            }
+        }
+
+        private void txtTnombre_TextChanged(object sender, EventArgs e)
+        {
+            string textoOriginal = txtTnombre.Text;
+            string textoValidado = ValidarTexto(textoOriginal);
+
+            if (textoOriginal != textoValidado)
+            {
+                // Si el texto original no es igual al texto validado,
+                // establece el texto validado en el TextBox.
+                txtTnombre.Text = textoValidado;
+
+                // También puedes establecer el cursor al final del texto para mejorar la experiencia del usuario.
+                txtTnombre.SelectionStart = textoValidado.Length;
+            }
+        }
+
+        private void txtPapellido_TextChanged(object sender, EventArgs e)
+        {
+            string textoOriginal = txtPapellido.Text;
+            string textoValidado = ValidarTexto(textoOriginal);
+
+            if (textoOriginal != textoValidado)
+            {
+                // Si el texto original no es igual al texto validado,
+                // establece el texto validado en el TextBox.
+                txtPapellido.Text = textoValidado;
+
+                // También puedes establecer el cursor al final del texto para mejorar la experiencia del usuario.
+                txtPapellido.SelectionStart = textoValidado.Length;
+            }
+        }
+
+        private void txtSapellido_TextChanged(object sender, EventArgs e)
+        {
+            string textoOriginal = txtSapellido.Text;
+            string textoValidado = ValidarTexto(textoOriginal);
+
+            if (textoOriginal != textoValidado)
+            {
+                // Si el texto original no es igual al texto validado,
+                // establece el texto validado en el TextBox.
+                txtSapellido.Text = textoValidado;
+
+                // También puedes establecer el cursor al final del texto para mejorar la experiencia del usuario.
+                txtSapellido.SelectionStart = textoValidado.Length;
+            }
+        }
+
+        private void txtTapellido_TextChanged(object sender, EventArgs e)
+        {
+            string textoOriginal = txtTapellido.Text;
+            string textoValidado = ValidarTexto(textoOriginal);
+
+            if (textoOriginal != textoValidado)
+            {
+                // Si el texto original no es igual al texto validado,
+                // establece el texto validado en el TextBox.
+                txtTapellido.Text = textoValidado;
+
+                // También puedes establecer el cursor al final del texto para mejorar la experiencia del usuario.
+                txtTapellido.SelectionStart = textoValidado.Length;
+            }
+        }
+
+        private void txtNacion_TextChanged(object sender, EventArgs e)
+        {
+            string textoOriginal = txtNacion.Text;
+            string textoValidado = ValidarTexto1(textoOriginal);
+
+            if (textoOriginal != textoValidado)
+            {
+                // Si el texto original no es igual al texto validado,
+                // establece el texto validado en el TextBox.
+                txtNacion.Text = textoValidado;
+
+                // También puedes establecer el cursor al final del texto para mejorar la experiencia del usuario.
+                txtNacion.SelectionStart = textoValidado.Length;
+            }
+        }
+
+        private void txtNacionalidad_TextChanged(object sender, EventArgs e)
+        {
+            string textoOriginal = txtNacionalidad.Text;
+            string textoValidado = ValidarTexto(textoOriginal);
+
+            if (textoOriginal != textoValidado)
+            {
+                // Si el texto original no es igual al texto validado,
+                // establece el texto validado en el TextBox.
+                txtNacionalidad.Text = textoValidado;
+
+                // También puedes establecer el cursor al final del texto para mejorar la experiencia del usuario.
+                txtNacionalidad.SelectionStart = textoValidado.Length;
+            }
+        }
+
+        private void txtIgss_TextChanged(object sender, EventArgs e)
+        {
+            // Elimina cualquier caracter que no sea dígito
+            string IgssNumerico = Regex.Replace(txtIgss.Text, @"[^\d]", "");
+
+            // Limita a 13 caracteres
+            if (IgssNumerico.Length > 15)
+            {
+                IgssNumerico = IgssNumerico.Substring(0, 15);
+            }
+
+            // Asigna el texto limpio al TextBox
+            txtIgss.Text = IgssNumerico;
+            // Coloca el cursor al final del texto
+            txtIgss.SelectionStart = txtIgss.Text.Length;
+        }
+
+        private void Codigo_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ExportarDataGridViewAExcel(dtgPersona);
+        }
+
+        private void ExportarDataGridViewAExcel(DataGridView dataGridView)
+        {
+            // Verificar si hay datos en el DataGridView
+            if (dataGridView.Rows.Count == 0)
+            {
+                MessageBox.Show("No hay datos para exportar.", "Exportar a Excel", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Crear un nuevo libro de Excel
+            var workbook = new XLWorkbook();
+            var worksheet = workbook.Worksheets.Add("Hoja1");
+
+            // Agregar los encabezados de columnas
+            for (int i = 1; i <= dataGridView.Columns.Count; i++)
+            {
+                worksheet.Cell(1, i).Value = dataGridView.Columns[i - 1].HeaderText;
+            }
+
+            // Agregar los datos de las filas
+            for (int i = 0; i < dataGridView.Rows.Count; i++)
+            {
+                for (int j = 0; j < dataGridView.Columns.Count; j++)
+                {
+                    worksheet.Cell(i + 2, j + 1).Value = dataGridView.Rows[i].Cells[j].Value.ToString();
+                }
+            }
+
+            // Guardar el archivo de Excel
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Archivos Excel (*.xlsx)|*.xlsx";
+            saveFileDialog.FileName = "ArchivoExcel.xlsx";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                workbook.SaveAs(saveFileDialog.FileName);
+                MessageBox.Show("El archivo Excel se ha exportado correctamente.", "Exportar a Excel", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void lblTotal_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbMunicipio_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void cmbDepartamento_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Verificar si el índice seleccionado no es el elemento en blanco
+            if (cmbDepartamento.SelectedIndex > 0)
+            {
+                // Guardar el municipio seleccionado actualmente
+                municipioSeleccionado = cmbMunicipio.SelectedValue?.ToString() ?? "";
+
+                // Obtener la lista de municipios del departamento seleccionado
+                cmbMunicipio.DataSource = nPersona.BuscarMunicipio(cmbDepartamento.SelectedValue.ToString());
+                cmbMunicipio.DisplayMember = "MUNICIPIO";
+                cmbMunicipio.ValueMember = "ID_MUNICIPIO";
+
+                // Seleccionar el municipio guardado previamente
+                if (!string.IsNullOrEmpty(municipioSeleccionado))
+                {
+                    cmbMunicipio.SelectedValue = municipioSeleccionado;
+                }
+            }
+            else
+            {
+                // Limpiar el combo box de municipios si se selecciona el elemento en blanco
+                cmbMunicipio.DataSource = null;
+            }
+        }
+
+        private void btnlimpiar_Click(object sender, EventArgs e)
+        {
+            this.IsNuevo = false;
+            this.IsEditar = false;
+            this.Botones();
+            this.Limpiar();
+            this.txtIdPersona.Text = string.Empty;
+            this.Habilitar(false);
+
+            // Agregar mensaje de actualización
+            MessageBox.Show("Se actualizó la edición de datos.", "Actualización Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private string municipioSeleccionado = "ID_MUNICIPIO";
+
+        private void dtgPersona_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+{
+                DataGridViewRow row = dtgPersona.Rows[e.RowIndex];
+
+                // Obtener valores de las celdas que deseas pasar
+                string valorCelda1 = row.Cells["Primer_Nombre"].Value.ToString();
+                string valorCelda2 = row.Cells["Segundo_Nombre"].Value.ToString();
+                string valorCelda3 = row.Cells["Primer_Apellido"].Value.ToString();
+                string valorCelda4 = row.Cells["Segundo_Apellido"].Value.ToString();
+            }
+        }
+
+
     }
 }

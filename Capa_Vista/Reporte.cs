@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SOFENCARH
+namespace Capa_Vista
 {
-    public partial class frmMenu : Form
+    public partial class Reporte : Form
     {
-        public frmMenu()
+        public Reporte()
         {
             InitializeComponent();
         }

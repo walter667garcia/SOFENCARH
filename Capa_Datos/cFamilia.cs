@@ -10,85 +10,20 @@ namespace Capa_Datos
 {
     public class cFamilia
     {
-        // Variables privadas
-        private int id_Familia;
-        private int idPersona;
-        private int idTipo_Familia;
-        private string nombre;
-        private DateTime f_nacimiento;
-        private string ocupacion;
-        private string telefono;
-        private string l_trabajo;
-        private string d_trabajo;
-        private string t_trabajo;
-        private string persona;
+        public int Id_Familia { get; set; }
+        public int IdPersona { get; set; }
+        public int IdTipo_Familia { get; set; }
+        public string Persona { get; set; }
+        public string Nombre { get; set; }
+        public DateTime F_nacimiento { get; set; }
+        public string Ocupacion { get; set; }
+        public string Telefono { get; set; }
+        public string L_trabajo { get; set; }
+        public string D_trabajo { get; set; }
+        public string T_trabajo { get; set; }
 
-        // Propiedades públicas
-        public int Id_Familia
-        {
-            get { return id_Familia; }
-            set { id_Familia = value; }
-        }
+        public int ID { get; set; }
 
-        public int IdPersona
-        {
-            get { return idPersona; }
-            set { idPersona = value; }
-        }
-
-        public int IdTipo_Familia
-        {
-            get { return idTipo_Familia; }
-            set { idTipo_Familia = value; }
-        }
-
-        public string Persona
-        {
-            get { return persona; }
-            set { persona = value; }
-        }
-
-        public string Nombre
-        {
-            get { return nombre; }
-            set { nombre = value; }
-        }
-
-        public DateTime F_nacimiento
-        {
-            get { return f_nacimiento; }
-            set { f_nacimiento = value; }
-        }
-
-        public string Ocupacion
-        {
-            get { return ocupacion; }
-            set { ocupacion = value; }
-        }
-
-        public string Telefono
-        {
-            get { return telefono; }
-            set { telefono = value; }
-        }
-
-        public string L_trabajo
-        {
-            get { return l_trabajo; }
-            set { l_trabajo = value; }
-        }
-
-        public string D_trabajo
-        {
-            get { return d_trabajo; }
-            set { d_trabajo = value; }
-        }
-
-        public string T_trabajo
-        {
-            get { return t_trabajo; }
-            set { t_trabajo = value; }
-        }
 
         // Constructor vacío
         public cFamilia()
@@ -96,7 +31,7 @@ namespace Capa_Datos
         }
 
         // Constructor lleno
-        public cFamilia(int id_Familia, int idPersona, int idTipo_Familia, string nombre, DateTime f_nacimiento, string ocupacion, string telefono, string l_trabajo, string d_trabajo, string t_trabajo, string persona)
+        public cFamilia(int id_Familia, int idPersona, int idTipo_Familia, string nombre, DateTime f_nacimiento, string ocupacion, string telefono, string l_trabajo, string d_trabajo, string t_trabajo, string persona, int iD)
         {
             Id_Familia = id_Familia;
             IdPersona = idPersona;
@@ -109,6 +44,7 @@ namespace Capa_Datos
             D_trabajo = d_trabajo;
             T_trabajo = t_trabajo;
             Persona = persona;
+            ID = iD;
         }
 
         public string Insertar(cFamilia familia)
@@ -247,5 +183,43 @@ namespace Capa_Datos
             }
             return DtResultado1;
         }
+
+        public string Eliminar(cFamilia familia)
+        {
+
+            string rpta = "";
+            SqlConnection sqlcon = new SqlConnection();
+            try
+            {
+                // Código
+                sqlcon.ConnectionString = Conexion.Cn;
+                sqlcon.Open();
+
+                // Establecer el Comando Sql
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = sqlcon;
+                cmd.CommandText = "sp_EliminarRHFamilia";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter ParFamilia = new SqlParameter();
+                ParFamilia.ParameterName = "@Id";
+                ParFamilia.SqlDbType = SqlDbType.Int;
+                ParFamilia.Value = familia.ID;
+                cmd.Parameters.Add(ParFamilia);
+
+                rpta = cmd.ExecuteNonQuery() == 1 ? "OK" : "No eliminó el registro";
+            }
+            catch (Exception ex)
+            {
+                rpta = ex.Message;
+            }
+            finally
+            {
+                if (sqlcon.State == ConnectionState.Open)
+                    sqlcon.Close();
+            }
+            return rpta;
+        }
+
     }
 }

@@ -10,56 +10,20 @@ namespace Capa_Datos
 {
     public class cPuestoFuncional
     {
-        
-            private int idPuestoFuncional;
-            private string puestoFuncional;
-            private int idRenglon;
-            private int idPuestoNominal;
-            private int idUnidadSeccion;
-            private string salarioBase;
-            private string puesto;
+       
 
-            public int IdPuestoFuncional
-            {
-                get { return idPuestoFuncional; }
-                set { idPuestoFuncional = value; }
-            }
+            public int IdPuestoFuncional { get; set; }
+            
+            public string PuestoFuncional { get; set; }
+            public int IdRenglon { get; set; }
 
-            public string PuestoFuncional
-            {
-                get { return puestoFuncional; }
-                set { puestoFuncional = value; }
-            }
+            public int IdPuestoNominal { get; set; }
 
-            public int IdRenglon
-            {
-                get { return idRenglon; }
-                set { idRenglon = value; }
-            }
+            public int IdUnidadSeccion { get; set; }
 
-            public int IdPuestoNominal
-            {
-                get { return idPuestoNominal; }
-                set { idPuestoNominal = value; }
-            }
+            public string SalarioBase { get; set; }
 
-            public int IdUnidadSeccion
-            {
-                get { return idUnidadSeccion; }
-                set { idUnidadSeccion = value; }
-            }
-
-            public string SalarioBase
-            {
-                get { return salarioBase; }
-                set { salarioBase = value; }
-            }
-        public string Puesto
-        {
-            get { return puesto; }
-            set { puesto = value; }
-        }
-
+            public string Puesto { get; set; }
         public cPuestoFuncional()
             {
             }
@@ -181,7 +145,7 @@ namespace Capa_Datos
                 parDPI.ParameterName = "@Puesto";
                 parDPI.SqlDbType = SqlDbType.VarChar;
                 parDPI.Size = 100;
-                parDPI.Value = puestoFuncionalDatos.puesto;
+                parDPI.Value = puestoFuncionalDatos.Puesto;
                 sqlcmd.Parameters.Add(parDPI);
 
                 SqlDataAdapter sqlDat = new SqlDataAdapter(sqlcmd);

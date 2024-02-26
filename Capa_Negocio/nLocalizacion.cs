@@ -47,5 +47,14 @@ namespace Capa_Negocio
 
             return obj.Actualizar(obj);
         }
+
+ 
+            public static string Eliminar(int idLocalizacion)
+            {
+                cLocalizacion Obj = new cLocalizacion();
+                Obj.ID = idLocalizacion;
+                return Obj.Eliminar(Obj);
+
+        }
     }
 }

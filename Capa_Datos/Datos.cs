@@ -26,6 +26,7 @@ namespace Capa_Datos
                 SqlDataAdapter generoAdapter = new SqlDataAdapter("sp_GeneroMostrar", sqlconn);
                 SqlDataAdapter municipioAdapter = new SqlDataAdapter("sp_ListarMunicipio", sqlconn);
                 SqlDataAdapter estadoCivilAdapter = new SqlDataAdapter("sp_EstadoCivilMostrar", sqlconn);
+                SqlDataAdapter departamento = new SqlDataAdapter("sp_LIstarDepartamento", sqlconn);
 
                 // Llenar los DataTable en el DataSet
                 religionAdapter.Fill(dataSet, "TYRELIGION");
@@ -33,6 +34,7 @@ namespace Capa_Datos
                 generoAdapter.Fill(dataSet, "TYGENERO");
                 municipioAdapter.Fill(dataSet, "TYMUNICIPIO");
                 estadoCivilAdapter.Fill(dataSet, "TYESTADOCIVIL");
+                departamento.Fill(dataSet, "TYDEPARTAMENTO");
             }
             catch (Exception ex)
             {

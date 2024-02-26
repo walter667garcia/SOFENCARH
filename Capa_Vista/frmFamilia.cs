@@ -6,8 +6,10 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ClosedXML.Excel;
 
 namespace Capa_Vista
 {
@@ -18,10 +20,13 @@ namespace Capa_Vista
         public frmFamilia()
         {
             InitializeComponent();
-            
-          
 
+            dtmFecha.Format = DateTimePickerFormat.Custom;
+            dtmFecha.CustomFormat = "dd/MM/yyyy";
 
+            dtmFecha.KeyPress += dtmFecha_KeyPress;
+
+            ConfigurarOrdenTabulacion();
         }
         private void Botones()
         {
@@ -33,7 +38,6 @@ namespace Capa_Vista
         private void Limpiar()
         {
             this.txtIdFAmilia.Text = string.Empty;
-            this.cmbIdPersona.SelectedIndex = -1;
             this.cmbTFamilia.SelectedIndex = -1;
             this.txtNombre.Text = string.Empty;
             this.txtOcupacion.Text = string.Empty;
@@ -41,12 +45,13 @@ namespace Capa_Vista
             this.txtLTrabajo.Text = string.Empty;
             this.txtDTrabajo.Text = string.Empty;
             this.txtTelTrabajo.Text = string.Empty;
+            this.dtmFecha.Text = string.Empty;
 
 
         }
         private void Habilitar(bool valor)
         {
-            this.cmbIdPersona.Enabled = valor;
+            this.cmbPersona.Enabled = valor;
             this.cmbTFamilia.Enabled = valor;
             this.txtNombre.ReadOnly = !valor;
             this.txtOcupacion.ReadOnly = !valor;
@@ -89,19 +94,30 @@ namespace Capa_Vista
             try
             {
                 DateTime date = this.dtmFecha.Value;
+
                 if (string.IsNullOrEmpty(this.txtNombre.Text))
                 {
                     MensajeError("Falta ingresar algunos datos Remarcados");
                     errorIcono.SetError(txtNombre, "Ingrese un nombre");
-
                 }
                 else
                 {
+                    if (this.IsEditar)
+                    {
+                        // Preguntar al usuario si desea realizar la actualización
+                        DialogResult result = MessageBox.Show("¿Desea actualizar el registro?", "Confirmar Actualización", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                        if (result == DialogResult.No)
+                        {
+                            return; // No realizar la actualización
+                        }
+                    }
+
                     string rpta = "";
                     if (this.IsNuevo)
                     {
                         rpta = nFamilia.Insertar(
-                            Convert.ToInt32(this.cmbIdPersona.SelectedValue),
+                            Convert.ToInt32(this.cmbPersona.SelectedValue),
                             Convert.ToInt32(this.cmbTFamilia.SelectedValue),
                             this.txtNombre.Text.Trim().ToUpper(),
                             date,
@@ -115,7 +131,7 @@ namespace Capa_Vista
                     {
                         rpta = nFamilia.EditarFamilia(
                             Convert.ToInt32(this.txtIdFAmilia.Text),
-                            Convert.ToInt32(this.cmbIdPersona.SelectedValue),
+                            Convert.ToInt32(this.cmbPersona.SelectedValue),
                             Convert.ToInt32(this.cmbTFamilia.SelectedValue),
                             this.txtNombre.Text.Trim().ToUpper(),
                             date,
@@ -124,7 +140,6 @@ namespace Capa_Vista
                             this.txtLTrabajo.Text.Trim().ToUpper(),
                             this.txtDTrabajo.Text.Trim().ToUpper(),
                             this.txtTelTrabajo.Text.Trim().ToUpper());
-
                     }
 
                     if (rpta.Equals("OK"))
@@ -152,12 +167,18 @@ namespace Capa_Vista
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(this.txtIdFAmilia.Text))
+            if (!string.IsNullOrEmpty(this.cmbPersona.Text))
             {
-                this.IsEditar = true;
-                this.Botones();
-                this.Habilitar(true);
+                // Mostrar un cuadro de diálogo de confirmación
+                DialogResult result = MessageBox.Show("¿Estás seguro de que deseas realizar la actualización?", "Confirmar Actualización", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
+                if (result == DialogResult.Yes)
+                {
+                    this.IsEditar = true;
+                    this.Botones();
+                    this.Habilitar(true);
+                }
+                // Si el usuario elige "No", no se realiza la actualización
             }
             else
             {
@@ -179,36 +200,15 @@ namespace Capa_Vista
             this.dtgTFamilia.DataSource = nFamilia.Buscar(this.txtBuscar.Text);
             lblTotal.Text = "Total de Registros: " + Convert.ToString(dtgTFamilia.Rows.Count);
         }
-        private void txtBuscar_TextChanged(object sender, EventArgs e)
-        {
-            BuscarFamilia();
-        }
 
-        private void dtgTFamilia_DoubleClick(object sender, EventArgs e)
-        {
-            if (this.dtgTFamilia.CurrentRow != null)
-            {
-                this.txtIdFAmilia.Text = Convert.ToString(this.dtgTFamilia.CurrentRow.Cells["Id"].Value);
-                this.txtNombre.Text = Convert.ToString(this.dtgTFamilia.CurrentRow.Cells["Nombre"].Value);
-                this.txtOcupacion.Text = Convert.ToString(this.dtgTFamilia.CurrentRow.Cells["Ocupacion"].Value);
-                this.txtTelefono.Text = Convert.ToString(this.dtgTFamilia.CurrentRow.Cells["Telefono"].Value);
-                this.txtLTrabajo.Text = Convert.ToString(this.dtgTFamilia.CurrentRow.Cells["Lug_TRabajo"].Value);
-                this.txtDTrabajo.Text = Convert.ToString(this.dtgTFamilia.CurrentRow.Cells["Dir_Trabajo"].Value);
-                this.txtTelTrabajo.Text = Convert.ToString(this.dtgTFamilia.CurrentRow.Cells["Tel_TRabajo"].Value);
-                this.tabMantenimiento.SelectedIndex = 1;
-            }
-        }
-
-            private void LlenarComboBoxes()
+        private void LlenarComboBoxes()
         {
             nDatos negocio = new nDatos();
             DataSet dataSet = negocio.CargarDatosRhIdiomas();
 
-            cmbIdPersona.DataSource = dataSet.Tables["RHPERSONA"];
-
-
-            cmbIdPersona.DisplayMember = "Nombre";
-            cmbIdPersona.ValueMember = "IDPERSONA";
+            cmbPersona.DataSource = dataSet.Tables["RHPERSONA"];
+            cmbPersona.DisplayMember = "Nombre";
+            cmbPersona.ValueMember = "IDPERSONA";
 
             cmbTFamilia.DataSource = dataSet.Tables["TYTIPOFAMILIA"];
             cmbTFamilia.DisplayMember = "TIPO_FAMILIA";
@@ -224,6 +224,287 @@ namespace Capa_Vista
             this.Habilitar(false);
             this.Botones();
             this.Mostrar();
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            BuscarFamilia();
+        }
+
+        private void dtgTFamilia_DoubleClick(object sender, EventArgs e)
+        {
+            if (this.dtgTFamilia.CurrentRow != null)
+            {
+                if(btnNuevo.Enabled != false)
+                {
+                    string Persona = dtgTFamilia.CurrentRow.Cells["Persona"].Value.ToString();
+                    int idPersona = cmbPersona.FindStringExact(Persona);
+                    cmbPersona.SelectedIndex = idPersona;
+
+                    string Familia = dtgTFamilia.CurrentRow.Cells["Familiar"].Value.ToString();
+                    int idfamilia = cmbTFamilia.FindStringExact(Familia);
+                    cmbTFamilia.SelectedIndex = idfamilia;
+
+                    dtmFecha.Text = dtgTFamilia.CurrentRow.Cells["f_nacimiento"].Value.ToString();
+
+                    this.txtIdFAmilia.Text = Convert.ToString(this.dtgTFamilia.CurrentRow.Cells["Id"].Value);
+                    this.txtNombre.Text = Convert.ToString(this.dtgTFamilia.CurrentRow.Cells["Nombre"].Value);
+                    this.txtOcupacion.Text = Convert.ToString(this.dtgTFamilia.CurrentRow.Cells["Ocupacion"].Value);
+                    this.txtTelefono.Text = Convert.ToString(this.dtgTFamilia.CurrentRow.Cells["Telefono"].Value);
+                    this.txtLTrabajo.Text = Convert.ToString(this.dtgTFamilia.CurrentRow.Cells["Lug_TRabajo"].Value);
+                    this.txtDTrabajo.Text = Convert.ToString(this.dtgTFamilia.CurrentRow.Cells["Dir_Trabajo"].Value);
+                    this.txtTelTrabajo.Text = Convert.ToString(this.dtgTFamilia.CurrentRow.Cells["Tel_TRabajo"].Value);
+
+                }
+                else
+                {
+                    MessageBox.Show("No puede editar y crear un nuevo registro a la vez");
+                }
+
+            }
+        }
+
+        private void txtTelTrabajo_TextChanged(object sender, EventArgs e)
+        {
+            // Elimina cualquier caracter que no sea dígito
+            string TelTrabajoNumerico = Regex.Replace(txtTelTrabajo.Text, @"[^\d]", "");
+
+            // Limita a 13 caracteres
+            if (TelTrabajoNumerico.Length > 8)
+            {
+                TelTrabajoNumerico = TelTrabajoNumerico.Substring(0, 8);
+            }
+
+            // Asigna el texto limpio al TextBox
+            txtTelTrabajo.Text = TelTrabajoNumerico;
+            // Coloca el cursor al final del texto
+            txtTelTrabajo.SelectionStart = txtTelTrabajo.Text.Length;
+
+        }
+
+        private void dtmFecha_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsDigit(e.KeyChar) || e.KeyChar == '/')
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void ConfigurarOrdenTabulacion()
+        {
+            // Establecer el orden de tabulación para los TextBox
+            cmbPersona.TabIndex = 1;
+            cmbTFamilia.TabIndex = 2;
+            txtNombre.TabIndex = 3;
+            dtmFecha.TabIndex = 4;
+            txtOcupacion.TabIndex = 5;
+            txtTelefono.TabIndex = 6;
+            txtLTrabajo.TabIndex = 7;
+            txtDTrabajo.TabIndex = 8;
+            txtTelTrabajo.TabIndex = 9; 
+        }
+
+        private void txtNombre_TextChanged(object sender, EventArgs e)
+        {
+            string textoOriginal = txtNombre.Text;
+            string textoValidado = ValidarTexto(textoOriginal);
+
+            if (textoOriginal != textoValidado)
+            {
+                // Si el texto original no es igual al texto validado,
+                // establece el texto validado en el TextBox.
+                txtNombre.Text = textoValidado;
+
+                // También puedes establecer el cursor al final del texto para mejorar la experiencia del usuario.
+                txtNombre.SelectionStart = textoValidado.Length;
+            }
+        }
+
+        private string ValidarTexto(string texto)
+        {
+            // Filtra letras (mayúsculas y minúsculas), espacios y puntos.
+            string patron = "[a-zA-Z0-9áéíóúÁÉÍÓÚ-ñ -.,+]";
+
+            StringBuilder textoValidado = new StringBuilder();
+
+            foreach (char caracter in texto)
+            {
+                if (System.Text.RegularExpressions.Regex.IsMatch(caracter.ToString(), patron))
+                {
+                    textoValidado.Append(caracter);
+                }
+            }
+
+            return textoValidado.ToString();
+        }
+
+        private string ValidarTexto1(string texto)
+        {
+            // Filtra letras (mayúsculas y minúsculas), espacios y puntos.
+            string patron = "[a-zA-Z0-9áéíóúÁÉÍÓÚ-ñ -.,+]";
+
+            StringBuilder textoValidado = new StringBuilder();
+
+            foreach (char caracter in texto)
+            {
+                if (System.Text.RegularExpressions.Regex.IsMatch(caracter.ToString(), patron))
+                {
+                    textoValidado.Append(caracter);
+                }
+            }
+
+            return textoValidado.ToString();
+        }
+
+        private void txtOcupacion_TextChanged(object sender, EventArgs e)
+        {
+            string textoOriginal = txtOcupacion.Text;
+            string textoValidado = ValidarTexto(textoOriginal);
+
+            if (textoOriginal != textoValidado)
+            {
+                // Si el texto original no es igual al texto validado,
+                // establece el texto validado en el TextBox.
+                txtOcupacion.Text = textoValidado;
+
+                // También puedes establecer el cursor al final del texto para mejorar la experiencia del usuario.
+                txtOcupacion.SelectionStart = textoValidado.Length;
+            }
+        }
+
+        private void txtTelefono_TextChanged(object sender, EventArgs e)
+        {
+            // Elimina cualquier caracter que no sea dígito
+            string TelefonoNumerico = Regex.Replace(txtTelefono.Text, @"[^\d]", "");
+
+            // Limita a 13 caracteres
+            if (TelefonoNumerico.Length > 8)
+            {
+                TelefonoNumerico = TelefonoNumerico.Substring(0, 8);
+            }
+
+            // Asigna el texto limpio al TextBox
+            txtTelefono.Text = TelefonoNumerico;
+            // Coloca el cursor al final del texto
+            txtTelefono.SelectionStart = txtTelefono.Text.Length;
+
+        }
+
+        private void txtLTrabajo_TextChanged(object sender, EventArgs e)
+        {
+            string textoOriginal = txtLTrabajo.Text;
+            string textoValidado = ValidarTexto1(textoOriginal);
+
+            if (textoOriginal != textoValidado)
+            {
+                // Si el texto original no es igual al texto validado,
+                // establece el texto validado en el TextBox.
+                txtLTrabajo.Text = textoValidado;
+
+                // También puedes establecer el cursor al final del texto para mejorar la experiencia del usuario.
+                txtLTrabajo.SelectionStart = textoValidado.Length;
+            }
+        }
+
+        private void txtDTrabajo_TextChanged(object sender, EventArgs e)
+        {
+            string textoOriginal = txtDTrabajo.Text;
+            string textoValidado = ValidarTexto1(textoOriginal);
+
+            if (textoOriginal != textoValidado)
+            {
+                // Si el texto original no es igual al texto validado,
+                // establece el texto validado en el TextBox.
+                txtDTrabajo.Text = textoValidado;
+
+                // También puedes establecer el cursor al final del texto para mejorar la experiencia del usuario.
+                txtDTrabajo.SelectionStart = textoValidado.Length;
+            }
+        }
+
+        private void dtmFecha_ValueChanged(object sender, EventArgs e)
+        {
+            // Calcula la edad
+            DateTime fechaNacimiento = dtmFecha.Value;
+            int edad = DateTime.Today.Year - fechaNacimiento.Year;
+
+            // Verifica si aún no ha pasado el cumpleaños de este año
+            if (DateTime.Today < fechaNacimiento.AddYears(edad))
+            {
+                edad--;
+            }
+
+            // Asigna la edad al campo correspondiente
+            txtEdad.Text = edad.ToString();
+        }
+
+        private void lblTotal_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ExportarDataGridViewAExcel(DataGridView dataGridView)
+        {
+            // Verificar si hay datos en el DataGridView
+            if (dataGridView.Rows.Count == 0)
+            {
+                MessageBox.Show("No hay datos para exportar.", "Exportar a Excel", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Crear un nuevo libro de Excel
+            var workbook = new XLWorkbook();
+            var worksheet = workbook.Worksheets.Add("Hoja1");
+
+            // Agregar los encabezados de columnas
+            for (int i = 1; i <= dataGridView.Columns.Count; i++)
+            {
+                worksheet.Cell(1, i).Value = dataGridView.Columns[i - 1].HeaderText;
+            }
+
+            // Agregar los datos de las filas
+            for (int i = 0; i < dataGridView.Rows.Count; i++)
+            {
+                for (int j = 0; j < dataGridView.Columns.Count; j++)
+                {
+                    worksheet.Cell(i + 2, j + 1).Value = dataGridView.Rows[i].Cells[j].Value.ToString();
+                }
+            }
+
+            // Guardar el archivo de Excel
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Archivos Excel (*.xlsx)|*.xlsx";
+            saveFileDialog.FileName = "ArchivoExcel.xlsx";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                workbook.SaveAs(saveFileDialog.FileName);
+                MessageBox.Show("El archivo Excel se ha exportado correctamente.", "Exportar a Excel", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ExportarDataGridViewAExcel(dtgTFamilia);
+        }
+
+        private string valorCmbPersona = "";
+
+        public void cargar(string persona, string nombre)
+        {
+            this.cmbPersona.Text = nombre;
+            this.cmbPersona.Enabled = false;
+            this.txtIdHome.Text = persona;
+
+            valorCmbPersona = this.cmbPersona.Text;
         }
     }
 }

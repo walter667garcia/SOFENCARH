@@ -10,54 +10,26 @@ namespace Capa_Datos
 {
     public class cLocalizacion
     {
-
-        private int idLocalizacion;
-        private int idPersona;
-        private int idLocalizacionTipo;
-        private string localizacion;
-        private string persona;
-
-        public int IdLocalizacion
-        {
-            get { return idLocalizacion; }
-            set { idLocalizacion = value; }
-        }
-
-        public int IdPersona
-        {
-            get { return idPersona; }
-            set { idPersona = value; }
-        }
-
-        public int IdLocalizacionTipo
-        {
-            get { return idLocalizacionTipo; }
-            set { idLocalizacionTipo = value; }
-        }
-
-        public string Localizacion
-        {
-            get { return localizacion; }
-            set { localizacion = value; }
-        }
-
-        public string Persona
-        {
-            get { return persona; }
-            set { persona = value; }
-        }
+        public int IdLocalizacion { get; set; }
+        public int IdPersona { get; set; }
+        public int IdLocalizacionTipo { get; set; }
+        public string Localizacion { get; set; }
+        public string Persona { get; set; }
+        public int ID { get; set; }
 
         public cLocalizacion()
         {
         }
 
-        public cLocalizacion(int idLocalizacion, int idPersona, int idLocalizacionTipo, string localizacion, string persona)
+        public cLocalizacion(int idLocalizacion, int idPersona, 
+            int idLocalizacionTipo, string localizacion, string persona, int ID)
         {
             IdLocalizacion = idLocalizacion;
             IdPersona = idPersona;
             IdLocalizacionTipo = idLocalizacionTipo;
             Localizacion = localizacion;
             Persona = persona;
+            ID = ID;
         }
 
         public string Insertar(cLocalizacion localizacionDatos)
@@ -142,7 +114,7 @@ namespace Capa_Datos
             return dtResultado;
         }
 
-        public DataTable Buscar(cLocalizacion localizacionDatos)
+        public DataTable Buscar(cLocalizacion localizacion)
         {
             DataTable dtResultado = new DataTable("RHLOCALIZACION");
             SqlConnection sqlconn = new SqlConnection();
@@ -159,7 +131,7 @@ namespace Capa_Datos
                 parDPI.ParameterName = "@Persona";
                 parDPI.SqlDbType = SqlDbType.VarChar;
                 parDPI.Size = 200;
-                parDPI.Value = localizacionDatos.Persona;
+                parDPI.Value = localizacion.Persona;
                 sqlcmd.Parameters.Add(parDPI);
 
                 SqlDataAdapter sqlDat = new SqlDataAdapter(sqlcmd);
@@ -172,5 +144,39 @@ namespace Capa_Datos
 
             return dtResultado;
         }
+
+        public string Eliminar(cLocalizacion localizacion)
+        {
+            string rpta = "" ;
+            SqlConnection sqlcon = new SqlConnection();
+            try
+            {
+                // Código
+                sqlcon.ConnectionString = Conexion.Cn;
+                sqlcon.Open();
+                // Establecer el Comando Sql
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = sqlcon;
+                cmd.CommandText = "sp_EliminarRHLocalizacion";
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlParameter ParIdEtnia = new SqlParameter();
+                ParIdEtnia.ParameterName ="@ID" ;
+                ParIdEtnia.SqlDbType = SqlDbType.Int;
+                ParIdEtnia.Value = localizacion.ID;
+                cmd.Parameters.Add(ParIdEtnia);
+                rpta = cmd.ExecuteNonQuery() == 1 ? "OK" : "No eliminó el registro";
+            }
+            catch (Exception ex)
+            {
+                rpta = ex.Message;
+            }
+            finally
+            {
+                if (sqlcon.State == ConnectionState.Open)
+                    sqlcon.Close();
+            }
+            return rpta;
+        }
+
     }
 }

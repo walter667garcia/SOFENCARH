@@ -1,4 +1,4 @@
-﻿using Capa_Negocio;
+﻿using Capa_Vista;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,12 +14,12 @@ namespace SOFENCARH
 {
     public partial class Login : Form
     {
-        private nLogin authService;
+        private vLogin  authService;
         public Login()
         {
             InitializeComponent();
             DibujarBordesRedondos(this);
-            authService = new nLogin();
+            authService = new vLogin();
 
         }
 
@@ -57,7 +57,7 @@ namespace SOFENCARH
                 string password = txtPassword.Text;
                 string userType;
                 bool isValid;
-                bool isValidUser = authService.AuthenticateUser(username, password, out isValid, out userType);
+                bool isValidUser = authService.validad(username, password, out isValid, out userType);
 
                 if (isValidUser)
                 {
@@ -77,14 +77,18 @@ namespace SOFENCARH
             }
         }
 
-        private void pictureBox2_Click(object sender, EventArgs e)
+       
+
+       
+
+        private void button2_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        private void pictureBox3_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e)
         {
-
+            this.WindowState = FormWindowState.Minimized;
         }
     }
 }

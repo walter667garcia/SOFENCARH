@@ -9,7 +9,7 @@ namespace Capa_Negocio
 {
     public class nLogin
     {
-        private cLogin  userRepository;
+        public cLogin  userRepository;
 
         public nLogin()
         {

@@ -13,6 +13,7 @@ namespace Capa_Negocio
         private Datos datos;
         private Datos rhIdiomas;
         private Datos puestoFuncional;
+       
 
         public nDatos()
         {

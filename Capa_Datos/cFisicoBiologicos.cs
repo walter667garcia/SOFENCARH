@@ -34,6 +34,8 @@ namespace Capa_Datos
 
         public string Persona {  get; set; }
 
+        public int ID { get; set; }
+
         // Constructor vacío
         public cFisicoBiologicos()
         {
@@ -44,7 +46,7 @@ namespace Capa_Datos
         public cFisicoBiologicos(int idPersona, string enfermedad, string diabetes, string accidente,
             string operacion, string alergias, string tratamiento, string especifique, string lentes,
             string auditivo, string discapacidad, string drogras, string alcohol, string fuma, string peso,
-            string estatura, string sangre, string pasatiempos, string deportes, string persona)
+            string estatura, string sangre, string pasatiempos, string deportes, string persona, int iD)
         {
             IdPersona = idPersona;
             ENFERMEDAD = enfermedad;
@@ -66,6 +68,7 @@ namespace Capa_Datos
             PASATIEMPOS = pasatiempos;
             DEPORTES = deportes;
             Persona = persona;
+            ID = iD;
         }
         public string InsertarFisicoBiologico(cFisicoBiologicos fisicoBiologicos)
         {
@@ -225,6 +228,44 @@ namespace Capa_Datos
             }
 
             return dtResultado;
+        }
+
+
+        public string Eliminar(cFisicoBiologicos biologico)
+        {
+
+            string rpta = "";
+            SqlConnection sqlcon = new SqlConnection();
+            try
+            {
+                // Código
+                sqlcon.ConnectionString = Conexion.Cn;
+                sqlcon.Open();
+
+                // Establecer el Comando Sql
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = sqlcon;
+                cmd.CommandText = "sp_EliminarRHFisicoBiologico";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter ParBiologico = new SqlParameter();
+                ParBiologico.ParameterName = "@Id";
+                ParBiologico.SqlDbType = SqlDbType.Int;
+                ParBiologico.Value = biologico.ID;
+                cmd.Parameters.Add(ParBiologico);
+
+                rpta = cmd.ExecuteNonQuery() == 1 ? "OK" : "No eliminó el registro";
+            }
+            catch (Exception ex)
+            {
+                rpta = ex.Message;
+            }
+            finally
+            {
+                if (sqlcon.State == ConnectionState.Open)
+                    sqlcon.Close();
+            }
+            return rpta;
         }
 
     }

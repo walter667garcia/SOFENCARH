@@ -10,85 +10,37 @@ namespace Capa_Datos
 {
     public class cNivelAcademico
     {
-        private int _Id_Nivel;
-        private int _Id_Persona;
-        private int _Id_Academico;
-        private string _Establecimiento;
-        private DateTime _Fecha_Inicio;
-        private DateTime _Fecha_Outicio;
-        private string _Titulo;
-        private string _Especialidad;
-        private string _persona;
+        public int Id_Nivel { get; set; }
+        public int Id_Persona { get; set; }
+        public int Id_Academico { get; set; }
+        public string Establecimiento { get; set; }
+        public DateTime Fecha_Inicio { get; set; }
+        public DateTime Fecha_Outicio { get; set; }
+        public string Titulo { get; set; }
+        public string Especialidad { get; set; }
+        public string Persona { get; set; }
 
-        public int Id_Nivel
-        {
-            get { return _Id_Nivel; }
-            set { _Id_Nivel = value; }
-        }
-        public int Id_Persona
-        {
-            get { return _Id_Persona; }
-            set { _Id_Persona = value; }
+        public int ID { get; set; }
 
-        }
-
-        public int Id_Academico
-        {
-            get { return _Id_Academico; }
-            set { _Id_Academico = value; }
-        }
-
-        public string Establecimiento
-        {
-            get { return _Establecimiento; }
-            set {  _Establecimiento = value;}
-        }
-
-        public DateTime Fecha_Inicio
-        {
-            get { return _Fecha_Inicio; }
-            set { _Fecha_Inicio = value; }
-        }
-
-        public DateTime Fecha_Outicio
-        {
-            get { return _Fecha_Outicio; }
-            set { _Fecha_Outicio = value; }
-        }
-
-        public string Titulo
-        {
-            get { return _Titulo; }
-            set { _Titulo = value; }
-        }
-
-        public string Especialidad
-        {
-            get { return _Especialidad; }
-            set { _Especialidad = value; }
-        }
-
-        public string Persona
-        {
-            get { return _persona; }
-            set { _persona = value; }
-        }
 
         public cNivelAcademico()
         {
 
         }
-        public cNivelAcademico(int id_Nivel, int id_Persona, int id_Academico, string establecimiento , DateTime fecha_Inicio, DateTime fecha_Outicio, string titulo, string especialidad, string persona)
+        public cNivelAcademico(int id_Nivel, int id_Persona, int id_Academico, 
+            string establecimiento , DateTime fecha_Inicio, DateTime fecha_Outicio, 
+            string titulo, string especialidad, string persona, int id)
         {
-            _Id_Nivel = id_Nivel;
-            _Id_Persona = id_Persona;
-            _Id_Academico = id_Academico;
-            _Establecimiento = establecimiento;
-            _Fecha_Inicio = fecha_Inicio;
-            _Fecha_Outicio = fecha_Outicio;
-            _Titulo = titulo;
-            _Especialidad = especialidad;
-            _persona = persona;
+            Id_Nivel = id_Nivel;
+            Id_Persona = id_Persona;
+            Id_Academico = id_Academico;
+            Establecimiento = establecimiento;
+            Fecha_Inicio = fecha_Inicio;
+            Fecha_Outicio = fecha_Outicio;
+            Titulo = titulo;
+            Especialidad = especialidad;
+            Persona = persona;
+            ID = id;
         }
 
         public DataTable Mostrar()
@@ -224,5 +176,43 @@ namespace Capa_Datos
 
             return rpta;
         }
+
+        public string Eliminar(cNivelAcademico educacion)
+        {
+
+            string rpta = "";
+            SqlConnection sqlcon = new SqlConnection();
+            try
+            {
+                // Código
+                sqlcon.ConnectionString = Conexion.Cn;
+                sqlcon.Open();
+
+                // Establecer el Comando Sql
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = sqlcon;
+                cmd.CommandText = "sp_EliminarRHEducacion";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter ParEducacion = new SqlParameter();
+                ParEducacion.ParameterName = "@Id";
+                ParEducacion.SqlDbType = SqlDbType.Int;
+                ParEducacion.Value = educacion.ID;
+                cmd.Parameters.Add(ParEducacion);
+
+                rpta = cmd.ExecuteNonQuery() == 1 ? "OK" : "No eliminó el registro";
+            }
+            catch (Exception ex)
+            {
+                rpta = ex.Message;
+            }
+            finally
+            {
+                if (sqlcon.State == ConnectionState.Open)
+                    sqlcon.Close();
+            }
+            return rpta;
+        }
+
     }
 }

@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ClosedXML.Excel;
 
 namespace Capa_Vista
 {
@@ -18,6 +21,8 @@ namespace Capa_Vista
         public frmPuesto_Funcional()
         {
             InitializeComponent();
+
+            ConfigurarOrdenTabulacion();
         }
 
         private void frmPuesto_Funcional_Load(object sender, EventArgs e)
@@ -45,7 +50,7 @@ namespace Capa_Vista
             cmbSeccion.ValueMember = "IDUNIDAD_SECCION";
 
             cmbRenglon.DataSource = dataSet.Tables["TYRENGLONPRESUPUESTARIO"];
-            cmbRenglon.DisplayMember = "RENGLON_PRESUPUESTARIO";
+            cmbRenglon.DisplayMember = "ABRIATURA";
             cmbRenglon.ValueMember = "ID_RENGLON";
 
         }
@@ -74,11 +79,7 @@ namespace Capa_Vista
                 MessageBox.Show($"Se produjo un error al intentar ocultar columnas: {ex.Message}");
             }
         }
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-            BuscarDpi();
-            OcultarColumnas();
-        }
+      
         private void Botones()
         {
             this.btnNuevo.Enabled = !this.IsNuevo && !this.IsEditar;
@@ -227,15 +228,174 @@ namespace Capa_Vista
 
         }
 
+        private void txtbuscar_TextChanged(object sender, EventArgs e)
+        {
+            BuscarDpi();
+            OcultarColumnas();
+        }
+
+       
+
+        private void txtSalario_TextChanged(object sender, EventArgs e)
+        {
+            // Elimina cualquier caracter que no sea dígito
+            string Q = Regex.Replace(txtSalario.Text, @"[^\d]", "");
+
+            // Limita a 9 caracteres
+            if (Q.Length > 9)
+            {
+                Q = Q.Substring(0, 9);
+            }
+
+            // Formatea el número como moneda local (Quetzal en Guatemala)
+            if (long.TryParse(Q, out long numero))
+            {
+                txtSalario.Text = numero.ToString("C0", new CultureInfo("es-GT"));
+
+            }
+            else
+            {
+                txtSalario.Text = "";  // Si no se puede convertir, se deja en blanco
+            }
+
+            // Coloca el cursor al final del texto
+            txtSalario.SelectionStart = txtSalario.Text.Length;
+        }
+
         private void dtgPuesto_DoubleClick(object sender, EventArgs e)
         {
             if (this.dtgPuesto.CurrentRow != null)
             {
-                this.txtId.Text = Convert.ToString(this.dtgPuesto.CurrentRow.Cells["id"].Value);
-                this.txtPuesto.Text = Convert.ToString(this.dtgPuesto.CurrentRow.Cells["Puesto"].Value);
-                this.txtSalario.Text = Convert.ToString(this.dtgPuesto.CurrentRow.Cells["SALARIO_BASE"].Value);
-                this.tabControl1.SelectedIndex = 1;
+                if (btnNuevo.Enabled != false)
+                {
+
+
+                    string Seccion = Convert.ToString(this.dtgPuesto.CurrentRow.Cells["Seccion"].Value);
+                    int idSeccion = cmbSeccion.FindStringExact(Seccion);
+                    cmbSeccion.SelectedIndex = idSeccion;
+
+
+                    string Funcional = Convert.ToString(this.dtgPuesto.CurrentRow.Cells["P_Nominal"].Value);
+                    int idFuncional = cmbPuesto.FindStringExact(Funcional);
+                    cmbPuesto.SelectedIndex = idFuncional;
+
+                    string Renglon = Convert.ToString(this.dtgPuesto.CurrentRow.Cells["ABREVIATURA"].Value);
+                    int idRenglon = cmbRenglon.FindStringExact(Renglon);
+                    cmbRenglon.SelectedIndex = idRenglon;
+
+                    string Cordinacion = Convert.ToString(this.dtgPuesto.CurrentRow.Cells["P_Nominal"].Value);
+                    int idcordinacion = cmbcoordinacion.FindStringExact(Cordinacion);
+                    cmbcoordinacion.SelectedIndex = idcordinacion;
+
+                    this.txtId.Text = Convert.ToString(this.dtgPuesto.CurrentRow.Cells["id"].Value);
+                    this.txtPuesto.Text = Convert.ToString(this.dtgPuesto.CurrentRow.Cells["Puesto"].Value);
+                    this.txtSalario.Text = Convert.ToString(this.dtgPuesto.CurrentRow.Cells["SALARIO_BASE"].Value);
+                }
+                else
+                {
+                    MessageBox.Show("No puede editar y crear un nuevo registro a la vez");
+                }
             }
+        }
+
+        private void ConfigurarOrdenTabulacion()
+        {
+            // Establecer el orden de tabulación para los TextBox
+            txtPuesto.TabIndex = 1;
+            cmbRenglon.TabIndex = 2;
+            cmbPuesto.TabIndex = 3;
+            cmbcoordinacion.TabIndex = 4;
+            cmbSeccion.TabIndex = 5;
+            txtSalario.TabIndex = 6;
+        }
+
+        private void txtPuesto_TextChanged(object sender, EventArgs e)
+        {
+            string textoOriginal = txtPuesto.Text;
+            string textoValidado = ValidarTexto(textoOriginal);
+
+            if (textoOriginal != textoValidado)
+            {
+                // Si el texto original no es igual al texto validado,
+                // establece el texto validado en el TextBox.
+                txtPuesto.Text = textoValidado;
+
+                // También puedes establecer el cursor al final del texto para mejorar la experiencia del usuario.
+                txtPuesto.SelectionStart = textoValidado.Length;
+            }
+        }
+
+
+        private string ValidarTexto(string texto)
+        {
+            // Filtra letras (mayúsculas y minúsculas), espacios y puntos.
+            string patron = "[a-zA-Z0-9áéíóúÁÉÍÓÚ-ñ ]";
+
+            StringBuilder textoValidado = new StringBuilder();
+
+            foreach (char caracter in texto)
+            {
+                if (System.Text.RegularExpressions.Regex.IsMatch(caracter.ToString(), patron))
+                {
+                    textoValidado.Append(caracter);
+                }
+            }
+
+            return textoValidado.ToString();
+        }
+
+        private void cmbcoordinacion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ExportarDataGridViewAExcel(DataGridView dataGridView)
+        {
+            // Verificar si hay datos en el DataGridView
+            if (dataGridView.Rows.Count == 0)
+            {
+                MessageBox.Show("No hay datos para exportar.", "Exportar a Excel", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Crear un nuevo libro de Excel
+            var workbook = new XLWorkbook();
+            var worksheet = workbook.Worksheets.Add("Hoja1");
+
+            // Agregar los encabezados de columnas
+            for (int i = 1; i <= dataGridView.Columns.Count; i++)
+            {
+                worksheet.Cell(1, i).Value = dataGridView.Columns[i - 1].HeaderText;
+            }
+
+            // Agregar los datos de las filas
+            for (int i = 0; i < dataGridView.Rows.Count; i++)
+            {
+                for (int j = 0; j < dataGridView.Columns.Count; j++)
+                {
+                    worksheet.Cell(i + 2, j + 1).Value = dataGridView.Rows[i].Cells[j].Value.ToString();
+                }
+            }
+
+            // Guardar el archivo de Excel
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Archivos Excel (*.xlsx)|*.xlsx";
+            saveFileDialog.FileName = "ArchivoExcel.xlsx";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                workbook.SaveAs(saveFileDialog.FileName);
+                MessageBox.Show("El archivo Excel se ha exportado correctamente.", "Exportar a Excel", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ExportarDataGridViewAExcel(dtgPuesto);
+        }
+
+        private void cmbRenglon_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

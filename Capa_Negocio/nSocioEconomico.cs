@@ -19,8 +19,8 @@ namespace Capa_Negocio
         string dependientes,
         string detalleDependientes,
         int idVivienda,
-        string flagDeudas,
         string pagoVivienda,
+        string flagDeudas,  
         string montoDeuda,
         string motivoDeuda,
         string flagOtrosIngresos,
@@ -38,8 +38,8 @@ namespace Capa_Negocio
             obj.Dependientes = dependientes;
             obj.DetalleDependientes = detalleDependientes;
             obj.IdVivienda = idVivienda;
-            obj.FlagDeudas = flagDeudas;
             obj.PagoVivienda = pagoVivienda;
+            obj.FlagDeudas = flagDeudas;
             obj.MontoDeuda = montoDeuda;
             obj.MotivoDeuda = motivoDeuda;
             obj.FlagOtrosIngresos = flagOtrosIngresos;
@@ -74,8 +74,8 @@ namespace Capa_Negocio
        string dependientes,
        string detalleDependientes,
        int idVivienda,
-       string flagDeudas,
        string pagoVivienda,
+       string flagDeudas,
        string montoDeuda,
        string motivoDeuda,
        string flagOtrosIngresos,
@@ -95,8 +95,8 @@ namespace Capa_Negocio
             obj.Dependientes = dependientes;
             obj.DetalleDependientes = detalleDependientes;
             obj.IdVivienda = idVivienda;
-            obj.FlagDeudas = flagDeudas;
             obj.PagoVivienda = pagoVivienda;
+            obj.FlagDeudas = flagDeudas;        
             obj.MontoDeuda = montoDeuda;
             obj.MotivoDeuda = motivoDeuda;
             obj.FlagOtrosIngresos = flagOtrosIngresos;
@@ -110,6 +110,13 @@ namespace Capa_Negocio
             return obj.Actualizar(obj);
         }
 
+
+        public static string Eliminar(int idEconomico)
+        {
+            cSocioEconomico Obj = new cSocioEconomico();
+            Obj.ID = idEconomico;
+            return Obj.Eliminar(Obj);
+        }
 
 
     }

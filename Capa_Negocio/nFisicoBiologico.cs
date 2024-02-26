@@ -91,5 +91,13 @@ namespace Capa_Negocio
             return new cFisicoBiologicos().Mostrar();
         }
 
+        public static string Eliminar(int idBiologico)
+        {
+            cFisicoBiologicos Obj = new cFisicoBiologicos();
+            Obj.ID = idBiologico;
+            return Obj.Eliminar(Obj);
+        }
+
+
     }
 }

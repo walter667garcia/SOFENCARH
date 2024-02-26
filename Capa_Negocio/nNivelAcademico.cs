@@ -56,5 +56,13 @@ namespace Capa_Negocio
             return Obj.Actualizar(Obj);
         }
 
+        public static string Eliminar(int idEducacion)
+        {
+            cNivelAcademico Obj = new cNivelAcademico();
+            Obj.ID = idEducacion;
+            return Obj.Eliminar(Obj);
+        }
+
+
     }
 }

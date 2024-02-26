@@ -10,29 +10,15 @@ namespace Capa_Datos
 {
     public class cPuestoNominal
     {
-        private int _idPuestoNominal;
-        private string _puestoNominal;
-        private string _textoBuscar;
+        
+        public int IdPuestoNominal { get; set; }
+     
 
-        public int IdPuestoNominal
-        {
-            get { return _idPuestoNominal; }
-            set { _idPuestoNominal = value; }
-        }
-
-        public string PuestoNominal
-        {
-            get { return _puestoNominal; }
-            set { _puestoNominal = value; }
-        }
-
+        public string PuestoNominal { get; set; }
        
 
-        public string TextoBuscar
-        {
-            get { return _textoBuscar; }
-            set { _textoBuscar = value; }
-        }
+        public string TextoBuscar { get; set; }
+
 
         // Constructor vacío
         public cPuestoNominal()

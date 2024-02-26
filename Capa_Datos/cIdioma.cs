@@ -11,62 +11,17 @@ namespace Capa_Datos
 {
     public class cIdioma
     {
-        private string _persona;
-        private int _Id_Idioma;
-        private int _IdPersona;
-        private int _IdIdioma;
-        private string _Conversacion;
-        private string _Escritura;
-        private string _Lectura;
-        private string _Documento;
+        public string Persona { get; set; }
+        public int Id_Idioma { get; set; }
+        public int IdPersona { get; set; }
+        public int IdIdioma { get; set; }
+        public string Conversacion { get; set; }
+        public string Escritura { get; set; }
+        public string Lectura { get; set; }
+        public string Documento { get; set; }
 
-        public string Persona
-        {
-            get { return _persona; }
-            set { _persona = value; }
-        }
+        public int ID { get; set; }
 
-        public int Id_Idioma
-        {
-            get { return _Id_Idioma; }
-            set { _Id_Idioma = value; }
-        }
-
-        public int IdPersona
-        {
-            get { return _IdPersona; }
-            set { _IdPersona = value; }
-        }
-
-        public int IdIdioma
-        {
-            get { return _IdIdioma; }
-            set { _IdIdioma = value; }
-        }
-
-        public string Conversacion
-        {
-            get { return _Conversacion; }
-            set { _Conversacion = value; }
-        }
-
-        public string Escritura
-        {
-            get { return _Escritura; }
-            set { _Escritura = value; }
-        }
-
-        public string Lectura
-        {
-            get { return _Lectura; }
-            set { _Lectura = value; }
-        }
-
-        public string Documento
-        {
-            get { return _Documento; }
-            set { _Documento = value; }
-        }
 
         // Constructor vacío
         public cIdioma()
@@ -75,16 +30,17 @@ namespace Capa_Datos
 
         // Constructor lleno
         public cIdioma(string persona, int id_Idioma, int idPersona, int idIdioma,
-                       string conversacion, string escritura, string lectura, string documento)
+                       string conversacion, string escritura, string lectura, string documento, int iD)
         {
-            _persona = persona;
-            _Id_Idioma = id_Idioma;
-            _IdPersona = idPersona;
-            _IdIdioma = idIdioma;
-            _Conversacion = conversacion;
-            _Escritura = escritura;
-            _Lectura = lectura;
-            _Documento = documento;
+            Persona = persona;
+            Id_Idioma = id_Idioma;
+            IdPersona = idPersona;
+            IdIdioma = idIdioma;
+            Conversacion = conversacion;
+            Escritura = escritura;
+            Lectura = lectura;
+            Documento = documento;
+            ID = iD;
         }
 
         public DataTable Mostrar()
@@ -218,5 +174,43 @@ namespace Capa_Datos
 
             return rpta;
         }
+
+        public string Eliminar(cIdioma idioma)
+        {
+
+            string rpta = "";
+            SqlConnection sqlcon = new SqlConnection();
+            try
+            {
+                // Código
+                sqlcon.ConnectionString = Conexion.Cn;
+                sqlcon.Open();
+
+                // Establecer el Comando Sql
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = sqlcon;
+                cmd.CommandText = "sp_EliminarRHIdioma";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter ParIdioma = new SqlParameter();
+                ParIdioma.ParameterName = "@Id";
+                ParIdioma.SqlDbType = SqlDbType.Int;
+                ParIdioma.Value = idioma.ID;
+                cmd.Parameters.Add(ParIdioma);
+
+                rpta = cmd.ExecuteNonQuery() == 1 ? "OK" : "No eliminó el registro";
+            }
+            catch (Exception ex)
+            {
+                rpta = ex.Message;
+            }
+            finally
+            {
+                if (sqlcon.State == ConnectionState.Open)
+                    sqlcon.Close();
+            }
+            return rpta;
+        }
+
     }
 }

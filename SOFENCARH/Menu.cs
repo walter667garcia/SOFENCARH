@@ -63,11 +63,7 @@ namespace SOFENCARH
                 return;
             }
 
-            if (FormActivo != null && !ConfirmarCierreFormulario())
-            {
-                // El usuario canceló el cierre del formulario actual
-                return;
-            }
+           
 
             if (FormActivo != null)
             {
@@ -91,23 +87,13 @@ namespace SOFENCARH
             // Suscribirse al evento FormClosing para realizar acciones antes de cerrar
             formulario.FormClosing += (s, args) =>
             {
-                // Lógica de limpieza o validación antes de cerrar el formulario
-                if (!ConfirmarCierreFormulario())
-                {
-                    args.Cancel = true; // Cancelar el cierre del formulario si el usuario cancela
-                }
+                
             };
 
             formulario.Show();
         }
 
-        private bool ConfirmarCierreFormulario()
-        {
-            // Muestra un cuadro de diálogo de confirmación al usuario
-            DialogResult resultado = MessageBox.Show("¿Está seguro de que desea cerrar la ventana actual? Se perderán los datos no guardados.", "Confirmar Cierre", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-            return resultado == DialogResult.Yes;
-        }
+       
 
 
 
@@ -122,15 +108,6 @@ namespace SOFENCARH
             frm.Show();
         }
 
-        private void pictureBox1_Click_1(object sender, EventArgs e)
-        {
-            this.Hide();
-            Login ext = new Login();
-            ext.Show();
-        }
-
-        
-
        
 
         private void mFuncional_Click(object sender, EventArgs e)
@@ -144,35 +121,7 @@ namespace SOFENCARH
 
         }
 
-        private void mLocalizacion_Click(object sender, EventArgs e)
-        {
-            frmLocalizacion localizacion = new frmLocalizacion();
-            AbrirFormulario((IconMenuItem)sender, localizacion);
-        }
-
-        private void mSocio_Click(object sender, EventArgs e)
-        {
-            frmSocio_Economico socio = new frmSocio_Economico();
-            AbrirFormulario((IconMenuItem)sender, socio);
-        }
-
-        private void mFamilia_Click(object sender, EventArgs e)
-        {
-            frmFamilia familia = new frmFamilia();
-            AbrirFormulario((IconMenuItem)sender, familia);
-        }
-
-        private void mEstudios_Click(object sender, EventArgs e)
-        {
-            frmNivel_Academico estudios = new frmNivel_Academico();
-            AbrirFormulario((IconMenuItem)sender, estudios);
-        }
-
-        private void mIdioma_Click(object sender, EventArgs e)
-        {
-            frmIdioma idioma = new frmIdioma();
-            AbrirFormulario((IconMenuItem)sender, idioma);
-        }
+      
 
         private void mEmpleado_Click(object sender, EventArgs e)
         {
@@ -197,47 +146,23 @@ namespace SOFENCARH
             AbrirFormulario((IconMenuItem)sender, nominal);
         }
 
-        private void mDatosAdicionales_Click(object sender, EventArgs e)
-        {
-            frmDatosAdicionales Adicionales = new frmDatosAdicionales();
-            AbrirFormulario((IconMenuItem)sender, Adicionales);
-        }
-
-        private void mEperienciaLaboral_Click(object sender, EventArgs e)
-        {
-            frmExperienciaLaboral experienciaLaboral = new frmExperienciaLaboral();
-            AbrirFormulario((IconMenuItem)sender, experienciaLaboral);
-        }
-
-        private void mFisicaBiologica_Click(object sender, EventArgs e)
-        {
-            frmFisicoBiologico fisicoBiologico = new frmFisicoBiologico();
-            AbrirFormulario((IconMenuItem)sender, fisicoBiologico);
-        }
-
-        private void mreferenciaLaboral_Click(object sender, EventArgs e)
-        {
-            frmReferenciaLaboral referenciaLaboral = new frmReferenciaLaboral();
-            AbrirFormulario((IconMenuItem)sender, referenciaLaboral);
-        }
-
-        private void mReferenciaPersonal_Click(object sender, EventArgs e)
-        {
-            frmReferenciaPersonal referenciaPersonal = new frmReferenciaPersonal();
-            AbrirFormulario((IconMenuItem)sender, referenciaPersonal);
-        }
-
-        private void mOtrosDatos_Click(object sender, EventArgs e)
-        {
-
-            frmOtrosDatos otrosDatos = new frmOtrosDatos();
-            AbrirFormulario((IconMenuItem)sender, otrosDatos);
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
 
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Login ext = new Login();
+            ext.Show();
+        }
+
+        private void iconMenuItem3_Click(object sender, EventArgs e)
+        {
+            frmReporteEducacion reporte = new frmReporteEducacion();
+            reporte.Show();
         }
     }
 }

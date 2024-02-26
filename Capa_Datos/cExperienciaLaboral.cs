@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Capa_Datos
 {
-    internal class cExperienciaLaboral
+    public class cExperienciaLaboral
     {
         // Propiedades
         public int IDEXPERIENCIA { get; set; }
@@ -26,6 +26,8 @@ namespace Capa_Datos
 
         public string Persona { get; set; }
 
+        public int ID { get; set; }
+
         // Constructor vacío
         public cExperienciaLaboral()
         {
@@ -35,7 +37,7 @@ namespace Capa_Datos
         // Constructor con datos
         public cExperienciaLaboral(int idPersona, string empresa, string telefono, string jefe, string puesto,
             string salario, DateTime fechaIngreso, DateTime fechaRetiro, string motivoRetiro,
-            string referencias, string descripcion, string persona)
+            string referencias, string descripcion, string persona, int iD)
         {
             IdPersona = idPersona;
             EMPRESA = empresa;
@@ -49,157 +51,50 @@ namespace Capa_Datos
             REFERENCIAS = referencias;
             DESCRIPCION = descripcion;
             Persona = persona;
+            ID = iD;
         }
 
-        public void InsertarExperienciaLaboral(cExperienciaLaboral experiencia)
+        public string Insertar(cExperienciaLaboral experiencia)
         {
-            using (SqlConnection connection = new SqlConnection(Conexion.Cn))
-            {
-                connection.Open();
-
-                using (SqlCommand command = new SqlCommand("sp_InsertarRHEXPERIENCIALABORAL", connection))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    // Agregar parámetros del procedimiento almacenado
-                    command.Parameters.AddWithValue("@IdPersona", experiencia.IdPersona);
-                    command.Parameters.AddWithValue("@Empresa", experiencia.EMPRESA);
-                    command.Parameters.AddWithValue("@Telefono", experiencia.TELEFONO);
-                    command.Parameters.AddWithValue("@Jefe", experiencia.JEFE);
-                    command.Parameters.AddWithValue("@Puesto", experiencia.PUESTO);
-                    command.Parameters.AddWithValue("@Salario", experiencia.SALARIO);
-                    command.Parameters.AddWithValue("@Fecha_Ingreso", experiencia.FECHA_INGRESO);
-                    command.Parameters.AddWithValue("@Fecha_Retiro", experiencia.FECHA_RETIRO);
-                    command.Parameters.AddWithValue("@Motivo_Retiro", experiencia.MOTIVO_RETIRO);
-                    command.Parameters.AddWithValue("@Referencias", experiencia.REFERENCIAS);
-                    command.Parameters.AddWithValue("@Descripcion", experiencia.DESCRIPCION);
-
-                    command.ExecuteNonQuery();
-                }
-            }
-        }
-
-        public void ActualizarExperienciaLaboral(cExperienciaLaboral experiencia)
-        {
-            using (SqlConnection connection = new SqlConnection(Conexion.Cn))
-            {
-                connection.Open();
-
-                using (SqlCommand command = new SqlCommand("sp_ActualizarRHEXPERIENCIALABORAL", connection))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    // Agregar parámetros del procedimiento almacenado
-                    command.Parameters.AddWithValue("@Id", experiencia.IDEXPERIENCIA);
-                    command.Parameters.AddWithValue("@IdPersona", experiencia.IdPersona);
-                    command.Parameters.AddWithValue("@Empresa", experiencia.EMPRESA);
-                    command.Parameters.AddWithValue("@Telefono", experiencia.TELEFONO);
-                    command.Parameters.AddWithValue("@Jefe", experiencia.JEFE);
-                    command.Parameters.AddWithValue("@Puesto", experiencia.PUESTO);
-                    command.Parameters.AddWithValue("@Salario", experiencia.SALARIO);
-                    command.Parameters.AddWithValue("@Fecha_Ingreso", experiencia.FECHA_INGRESO);
-                    command.Parameters.AddWithValue("@Fecha_Retiro", experiencia.FECHA_RETIRO);
-                    command.Parameters.AddWithValue("@Motivo_Retiro", experiencia.MOTIVO_RETIRO);
-                    command.Parameters.AddWithValue("@Referencias", experiencia.REFERENCIAS);
-                    command.Parameters.AddWithValue("@Descripcion", experiencia.DESCRIPCION);
-
-                    command.ExecuteNonQuery();
-                }
-            }
-        }
-
-        public DataTable BuscarExperienciaLaboral(cExperienciaLaboral experiencia)
-        {
-            using (SqlConnection connection = new SqlConnection(Conexion.Cn))
-            {
-                connection.Open();
-
-                using (SqlCommand command = new SqlCommand("sp_BuscarRHEXPERIENCIALABORAL", connection))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@Persona", experiencia.Persona);
-
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                    {
-                        DataTable dataTable = new DataTable();
-                        adapter.Fill(dataTable);
-                        return dataTable;
-                    }
-                }
-            }
-        }
-
-        public DataTable MostrarExperienciaLaboral()
-        {
-            using (SqlConnection connection = new SqlConnection(Conexion.Cn))
-            {
-                connection.Open();
-
-                using (SqlCommand command = new SqlCommand("sp_ListarRHEXPERIENCIALABORAL", connection))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                    {
-                        DataTable dataTable = new DataTable();
-                        adapter.Fill(dataTable);
-                        return dataTable;
-                    }
-                }
-            }
-
-        }
-
-
-        public string InsertarFisicoBiologico(cFisicoBiologicos fisicoBiologicos)
-        {
-            string resultado = "";
-
+            string rpta = "";
             using (SqlConnection sqlcon = new SqlConnection(Conexion.Cn))
             {
                 try
                 {
                     sqlcon.Open();
 
-                    using (SqlCommand cmd = new SqlCommand("sp_InsertarRHFISICABIOLOGICA", sqlcon))
+                    using (SqlCommand cmd = new SqlCommand("sp_InsertarRHEXPERIENCIALABORAL", sqlcon))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@IdPersona", experiencia.IdPersona);
+                        cmd.Parameters.AddWithValue("@Empresa", experiencia.EMPRESA);
+                        cmd.Parameters.AddWithValue("@Telefono", experiencia.TELEFONO);
+                        cmd.Parameters.AddWithValue("@Jefe", experiencia.JEFE);
+                        cmd.Parameters.AddWithValue("@Puesto", experiencia.PUESTO);
+                        cmd.Parameters.AddWithValue("@Salario", experiencia.SALARIO);
+                        cmd.Parameters.AddWithValue("@Fecha_Ingreso", experiencia.FECHA_INGRESO);
+                        cmd.Parameters.AddWithValue("@Fecha_Retiro", experiencia.FECHA_RETIRO);
+                        cmd.Parameters.AddWithValue("@Motivo_Retiro", experiencia.MOTIVO_RETIRO);
+                        cmd.Parameters.AddWithValue("@Referencias", experiencia.REFERENCIAS);
+                        cmd.Parameters.AddWithValue("@Descripcion", experiencia.DESCRIPCION);
 
-                        cmd.Parameters.AddWithValue("@IdPersona", fisicoBiologicos.IdPersona).SqlDbType = SqlDbType.Int;
-                        cmd.Parameters.AddWithValue("@Enfermedad", fisicoBiologicos.ENFERMEDAD).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Diabetes", fisicoBiologicos.DIABETES).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Accidente", fisicoBiologicos.ACCIDENTE).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Operacion", fisicoBiologicos.OPERACION).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Alergias", fisicoBiologicos.ALERGIAS).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Tratamiento", fisicoBiologicos.TRATAMIENTO).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Espesifique", fisicoBiologicos.ESPECIFIQUE).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Lentes", fisicoBiologicos.LENTES).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Auditivo", fisicoBiologicos.AUDITIVO).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Discapacidad", fisicoBiologicos.DISCAPACIDAD).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Drogras", fisicoBiologicos.DROGRAS).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Alcohol", fisicoBiologicos.ALCOHOL).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Fuma", fisicoBiologicos.FUMA).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Peso", fisicoBiologicos.PESO).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Estatura", fisicoBiologicos.ESTATURA).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Sangre", fisicoBiologicos.SANGRE).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Pasatiempos", fisicoBiologicos.PASATIEMPOS).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Deportes", fisicoBiologicos.DEPORTES).SqlDbType = SqlDbType.VarChar;
 
-                        resultado = cmd.ExecuteNonQuery() == 1 ? "OK" : "No se ingresó el registro";
+                        rpta = cmd.ExecuteNonQuery() == 1 ? "OK" : "No ingresó el registro";
                     }
                 }
                 catch (Exception ex)
                 {
-                    resultado = ex.Message;
+                    rpta = ex.Message;
                 }
             }
 
-            return resultado;
+            return rpta;
         }
 
-        public string ActualizarFisicoBiologico(cFisicoBiologicos fisicoBiologicos)
+
+        public string Actualizar(cExperienciaLaboral experiencia)
         {
-            string resultado = "";
+            string rpta = "";
 
             using (SqlConnection sqlcon = new SqlConnection(Conexion.Cn))
             {
@@ -207,108 +102,137 @@ namespace Capa_Datos
                 {
                     sqlcon.Open();
 
-                    using (SqlCommand cmd = new SqlCommand("sp_ActualizarRHFISICABIOLOGICA", sqlcon))
+                    using (SqlCommand cmd = new SqlCommand("sp_ActualizarRHEXPERIENCIALABORAL", sqlcon))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
-                        cmd.Parameters.AddWithValue("@Id", fisicoBiologicos.IDFISICABIO).SqlDbType = SqlDbType.Int;
-                        cmd.Parameters.AddWithValue("@IdPersona", fisicoBiologicos.IdPersona).SqlDbType = SqlDbType.Int;
-                        cmd.Parameters.AddWithValue("@Enfermedad", fisicoBiologicos.ENFERMEDAD).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Diabetes", fisicoBiologicos.DIABETES).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Accidente", fisicoBiologicos.ACCIDENTE).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Operacion", fisicoBiologicos.OPERACION).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Alergias", fisicoBiologicos.ALERGIAS).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Tratamiento", fisicoBiologicos.TRATAMIENTO).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Espesifique", fisicoBiologicos.ESPECIFIQUE).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Lentes", fisicoBiologicos.LENTES).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Auditivo", fisicoBiologicos.AUDITIVO).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Discapacidad", fisicoBiologicos.DISCAPACIDAD).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Drogras", fisicoBiologicos.DROGRAS).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Alcohol", fisicoBiologicos.ALCOHOL).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Fuma", fisicoBiologicos.FUMA).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Peso", fisicoBiologicos.PESO).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Estatura", fisicoBiologicos.ESTATURA).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Sangre", fisicoBiologicos.SANGRE).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Pasatiempos", fisicoBiologicos.PASATIEMPOS).SqlDbType = SqlDbType.VarChar;
-                        cmd.Parameters.AddWithValue("@Deportes", fisicoBiologicos.DEPORTES).SqlDbType = SqlDbType.VarChar;
+                        cmd.Parameters.AddWithValue("@Id", experiencia.IDEXPERIENCIA);
+                        cmd.Parameters.AddWithValue("@IdPersona", experiencia.IdPersona);
+                        cmd.Parameters.AddWithValue("@Empresa", experiencia.EMPRESA);
+                        cmd.Parameters.AddWithValue("@Telefono", experiencia.TELEFONO);
+                        cmd.Parameters.AddWithValue("@Jefe", experiencia.JEFE);
+                        cmd.Parameters.AddWithValue("@Puesto", experiencia.PUESTO);
+                        cmd.Parameters.AddWithValue("@Salario", experiencia.SALARIO);
+                        cmd.Parameters.AddWithValue("@Fecha_Ingreso", experiencia.FECHA_INGRESO);
+                        cmd.Parameters.AddWithValue("@Fecha_Retiro", experiencia.FECHA_RETIRO);
+                        cmd.Parameters.AddWithValue("@Motivo_Retiro", experiencia.MOTIVO_RETIRO);
+                        cmd.Parameters.AddWithValue("@Referencias", experiencia.REFERENCIAS);
+                        cmd.Parameters.AddWithValue("@Descripcion", experiencia.DESCRIPCION);
+                        // Agregar parámetros para otros campos...
 
                         int filasAfectadas = cmd.ExecuteNonQuery();
 
-                        resultado = filasAfectadas == 1 ? "OK" : "No se actualizó el registro";
+                        rpta = filasAfectadas == 1 ? "OK" : "No se actualizó el registro 1234";
+
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    // Manejar la excepción y obtener detalles específicos
+                    foreach (SqlError error in ex.Errors)
+                    {
+                        rpta += $"Error: {error.Message}, Número: {error.Number}, Procedimiento: {error.Procedure}";
+                        // Puedes agregar más información según tus necesidades
                     }
                 }
                 catch (Exception ex)
                 {
-                    resultado = ex.Message;
+                    rpta = ex.Message;
                 }
             }
 
-            return resultado;
+            return rpta;
         }
+
 
         public DataTable Mostrar()
         {
-            DataTable dtResultado = new DataTable("RHEXPERIENCIALABORAL");
-
-            using (SqlConnection sqlconn = new SqlConnection(Conexion.Cn))
+            DataTable DtResultado = new DataTable("RHEXPERIENCIALABORAL");
+            SqlConnection sqlconn = new SqlConnection();
+            try
             {
-                try
-                {
-                    sqlconn.Open();
+                sqlconn.ConnectionString = Conexion.Cn;
+                SqlCommand sqlcmd = new SqlCommand();
+                sqlcmd.Connection = sqlconn;
+                sqlcmd.CommandText = "sp_ListarRHEXPERIENCIALABORAL";
+                sqlcmd.CommandType = CommandType.StoredProcedure;
 
-                    using (SqlCommand cmd = new SqlCommand("sp_ListarRHEXPERIENCIALABORAL", sqlconn))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-
-                        using (SqlDataAdapter sqlDat = new SqlDataAdapter(cmd))
-                        {
-                            sqlDat.Fill(dtResultado);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    dtResultado = null;
-                }
+                SqlDataAdapter sqlDat = new SqlDataAdapter(sqlcmd);
+                sqlDat.Fill(DtResultado);
             }
-
-            return dtResultado;
+            catch (Exception ex)
+            {
+                DtResultado = null;
+            }
+            return DtResultado;
         }
 
         public DataTable Buscar(cExperienciaLaboral experiencia)
         {
-            DataTable dtResultado = new DataTable("RHEXPERIENCIALABORAL");
-
-            using (SqlConnection sqlconn = new SqlConnection(Conexion.Cn))
+            DataTable DtResultado1 = new DataTable("RHEXPERIENCIALABORAL");
+            SqlConnection sqlconn = new SqlConnection();
+            try
             {
-                try
-                {
-                    sqlconn.Open();
+                sqlconn.ConnectionString = Conexion.Cn;
+                SqlCommand sqlcmd = new SqlCommand();
+                sqlcmd.Connection = sqlconn;
+                sqlcmd.CommandText = "sp_BuscarRHEXPERIENCIALABORAL";
+                sqlcmd.CommandType = CommandType.StoredProcedure;
 
-                    using (SqlCommand cmd = new SqlCommand("sp_BuscarRHEXPERIENCIALABORAL", sqlconn))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
+                SqlParameter ParBuscar = new SqlParameter();
+                ParBuscar.ParameterName = "@Persona";
+                ParBuscar.SqlDbType = SqlDbType.VarChar;
+                ParBuscar.Size = 200;
+                ParBuscar.Value = experiencia.Persona;
+                sqlcmd.Parameters.Add(ParBuscar);
 
-                        SqlParameter parBuscar = new SqlParameter();
-                        parBuscar.ParameterName = "@Persona";
-                        parBuscar.SqlDbType = SqlDbType.VarChar;
-                        parBuscar.Size = 200;
-                        parBuscar.Value = experiencia.Persona;
-                        cmd.Parameters.Add(parBuscar);
-
-                        using (SqlDataAdapter sqlDat = new SqlDataAdapter(cmd))
-                        {
-                            sqlDat.Fill(dtResultado);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    dtResultado = null;
-                }
+                SqlDataAdapter sqlDat = new SqlDataAdapter(sqlcmd);
+                sqlDat.Fill(DtResultado1);
             }
-
-            return dtResultado;
+            catch (Exception ex)
+            {
+                DtResultado1 = null;
+            }
+            return DtResultado1;
         }
+
+        public string Eliminar(cExperienciaLaboral experiencia)
+        {
+
+            string rpta = "";
+            SqlConnection sqlcon = new SqlConnection();
+            try
+            {
+                // Código
+                sqlcon.ConnectionString = Conexion.Cn;
+                sqlcon.Open();
+
+                // Establecer el Comando Sql
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = sqlcon;
+                cmd.CommandText = "sp_EliminarRHExperiencia";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter ParExperiencia = new SqlParameter();
+                ParExperiencia.ParameterName = "@Id";
+                ParExperiencia.SqlDbType = SqlDbType.Int;
+                ParExperiencia.Value = experiencia.ID;
+                cmd.Parameters.Add(ParExperiencia);
+
+                rpta = cmd.ExecuteNonQuery() == 1 ? "OK" : "No eliminó el registro";
+            }
+            catch (Exception ex)
+            {
+                rpta = ex.Message;
+            }
+            finally
+            {
+                if (sqlcon.State == ConnectionState.Open)
+                    sqlcon.Close();
+            }
+            return rpta;
+        }
+
+
     }
 }

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ClosedXML.Excel;
 
 namespace Capa_Vista
 {
@@ -20,6 +21,7 @@ namespace Capa_Vista
         public frmPuestoNominal()
         {
             InitializeComponent();
+            ConfigurarOrdenTabulacion();
         }
         private void MensajeOk(string mensaje)
         {
@@ -159,18 +161,7 @@ namespace Capa_Vista
             }
         }
 
-       
-
-        private void dtgPuestoFuncional_DoubleClick(object sender, EventArgs e)
-        {
-            if (this.dtgPuestoFuncional.CurrentRow != null)
-            {
-                this.txtCodigo.Text = Convert.ToString(this.dtgPuestoFuncional.CurrentRow.Cells["ID_PUESTO_NOMINAL"].Value);
-                this.txtPuestoNominal.Text = Convert.ToString(this.dtgPuestoFuncional.CurrentRow.Cells["PUESTO_NOMINAL"].Value);
-                this.tabControl1.SelectedIndex = 1;
-            }
-        }
-
+      
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.IsNuevo = false;
@@ -183,6 +174,102 @@ namespace Capa_Vista
         private void txtBuscar_TextChanged(object sender, EventArgs e)
         {
             this.BuscarNombre();
+           
+        }
+
+        private void dtgPuestoFuncional_DoubleClick(object sender, EventArgs e)
+        {
+
+            if (this.dtgPuestoFuncional.CurrentRow != null)
+            {
+                this.txtCodigo.Text = Convert.ToString(this.dtgPuestoFuncional.CurrentRow.Cells["ID_PUESTO_NOMINAL"].Value);
+                this.txtPuestoNominal.Text = Convert.ToString(this.dtgPuestoFuncional.CurrentRow.Cells["PUESTO_NOMINAL"].Value);
+            }
+        }
+
+        private void ConfigurarOrdenTabulacion()
+        {
+            // Establecer el orden de tabulación para los TextBox
+            txtPuestoNominal.TabIndex = 1;
+           
+        }
+
+        private void txtPuestoNominal_TextChanged(object sender, EventArgs e)
+        {
+            string textoOriginal = txtPuestoNominal.Text;
+            string textoValidado = ValidarTexto(textoOriginal);
+
+            if (textoOriginal != textoValidado)
+            {
+                // Si el texto original no es igual al texto validado,
+                // establece el texto validado en el TextBox.
+                txtPuestoNominal.Text = textoValidado;
+
+                // También puedes establecer el cursor al final del texto para mejorar la experiencia del usuario.
+                txtPuestoNominal.SelectionStart = textoValidado.Length;
+            }
+        }
+
+        private string ValidarTexto(string texto)
+        {
+            // Filtra letras (mayúsculas y minúsculas), espacios y puntos.
+            string patron = "[a-zA-Z0-9áéíóúÁÉÍÓÚ-ñ ]";
+
+            StringBuilder textoValidado = new StringBuilder();
+
+            foreach (char caracter in texto)
+            {
+                if (System.Text.RegularExpressions.Regex.IsMatch(caracter.ToString(), patron))
+                {
+                    textoValidado.Append(caracter);
+                }
+            }
+
+            return textoValidado.ToString();
+        }
+
+        private void ExportarDataGridViewAExcel(DataGridView dataGridView)
+        {
+            // Verificar si hay datos en el DataGridView
+            if (dataGridView.Rows.Count == 0)
+            {
+                MessageBox.Show("No hay datos para exportar.", "Exportar a Excel", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Crear un nuevo libro de Excel
+            var workbook = new XLWorkbook();
+            var worksheet = workbook.Worksheets.Add("Hoja1");
+
+            // Agregar los encabezados de columnas
+            for (int i = 1; i <= dataGridView.Columns.Count; i++)
+            {
+                worksheet.Cell(1, i).Value = dataGridView.Columns[i - 1].HeaderText;
+            }
+
+            // Agregar los datos de las filas
+            for (int i = 0; i < dataGridView.Rows.Count; i++)
+            {
+                for (int j = 0; j < dataGridView.Columns.Count; j++)
+                {
+                    worksheet.Cell(i + 2, j + 1).Value = dataGridView.Rows[i].Cells[j].Value.ToString();
+                }
+            }
+
+            // Guardar el archivo de Excel
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Archivos Excel (*.xlsx)|*.xlsx";
+            saveFileDialog.FileName = "ArchivoExcel.xlsx";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                workbook.SaveAs(saveFileDialog.FileName);
+                MessageBox.Show("El archivo Excel se ha exportado correctamente.", "Exportar a Excel", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ExportarDataGridViewAExcel(dtgPuestoFuncional);
         }
     }
     }

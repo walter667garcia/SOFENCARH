@@ -13,11 +13,11 @@ namespace Capa_Negocio
         public static string InsertarPersona(
     string P_NOMBRE, string S_NOMBRE, string T_NOMBRE,
     string P_APELLIDO, string S_APELLIDO, string C_APELLIDO,
-    string EDAD, string PRETENCION_SALARIO, int ID_ESTADO_CIVIL,
+    string EDAD, int ID_ESTADO_CIVIL,
     string L_NACIMIENTO, DateTime F_NACIMIENTO, int ID_GENERO,
     int ID_ETNIA, string NACIONALIDAD, int ID_RELIGION,
     string DPI, int ID_MUNICIPIO, string IGSS, string NIT,
-    byte[] Foto, string LICENCIA, string TIPO_LICENCIA)
+    byte[] Foto, string LICENCIA, string TIPO_LICENCIA, string DEPARTAMENTO)
         {
             cPersona persona = new cPersona
             {
@@ -28,7 +28,6 @@ namespace Capa_Negocio
                 S_APELLIDO = S_APELLIDO,
                 C_APELLIDO = C_APELLIDO,
                 EDAD = EDAD,
-                PRETENCION_SALARIO = PRETENCION_SALARIO,
                 ID_ESTADO_CIVIL = ID_ESTADO_CIVIL,
                 L_NACIMIENTO = L_NACIMIENTO,
                 F_NACIMIENTO = F_NACIMIENTO,
@@ -42,7 +41,8 @@ namespace Capa_Negocio
                 NIT = NIT,
                 Foto = Foto,
                 LICENCIA = LICENCIA,
-                TIPO_LICENCIA = TIPO_LICENCIA
+                TIPO_LICENCIA = TIPO_LICENCIA,
+                Departamento = DEPARTAMENTO
             };
 
             return persona.Insertar(persona);
@@ -56,6 +56,22 @@ namespace Capa_Negocio
             cPersona obj = new cPersona();
             obj.Persona = textoBuscar;
             return obj.Buscar(obj);
+        }
+
+        public static DataTable BuscarMunicipio(string textoBuscar)
+        {
+
+            cPersona obj = new cPersona();
+            obj.Municipio = textoBuscar;
+            return obj.BuscarMunicipio(obj);
+        }
+
+        public static DataTable BuscarDepartamento(string textoBuscar)
+        {
+
+            cPersona obj = new cPersona();
+            obj.Departamento = textoBuscar;
+            return obj.BuscarDepartamento(obj);
         }
 
         public static DataTable MostrarPersonas()
@@ -72,7 +88,6 @@ namespace Capa_Negocio
     string s_APELLIDO,
     string c_APELLIDO,
     string eDAD,
-    string pRETENCION_SALARIO,
     int iD_ESTADO_CIVIL,
     string l_NACIMIENTO,
     DateTime f_NACIMIENTO,
@@ -86,7 +101,8 @@ namespace Capa_Negocio
     string nIT,
     byte[] foto,
     string lICENCIA,
-    string tIPO_LICENCIA)
+    string tIPO_LICENCIA,
+    string Departamento)
         {
             cPersona Obj = new cPersona();
             Obj.IdPersona = idPersona;
@@ -97,7 +113,6 @@ namespace Capa_Negocio
             Obj.S_APELLIDO = s_APELLIDO;
             Obj.C_APELLIDO = c_APELLIDO;
             Obj.EDAD = eDAD;
-            Obj.PRETENCION_SALARIO = pRETENCION_SALARIO;
             Obj.ID_ESTADO_CIVIL = iD_ESTADO_CIVIL;
             Obj.L_NACIMIENTO = l_NACIMIENTO;
             Obj.F_NACIMIENTO = f_NACIMIENTO;
@@ -112,6 +127,7 @@ namespace Capa_Negocio
             Obj.Foto = foto;
             Obj.LICENCIA = lICENCIA;
             Obj.TIPO_LICENCIA = tIPO_LICENCIA;
+            Obj.Departamento = Departamento;
 
             return Obj.Actualizar(Obj);
         }
