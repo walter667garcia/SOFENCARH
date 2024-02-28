@@ -33,5 +33,16 @@ namespace Capa_Vista.Properties {
                 return ((string)(this["encaagroConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.;Initial Catalog=dbaEnca;Integrated Security=True;TrustServerCertifi" +
+            "cate=True")]
+        public string dbaEncaConnectionString {
+            get {
+                return ((string)(this["dbaEncaConnectionString"]));
+            }
+        }
     }
 }

@@ -47,11 +47,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="dsReporte.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dsReporte.xsd</DependentUpon>
-    </Compile>
     <Compile Include="frmDatosAdicionales.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -136,6 +131,12 @@
     <Compile Include="frmReferenciaPersonal.Designer.cs">
       <DependentUpon>frmReferenciaPersonal.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmReportes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReportes.Designer.cs">
+      <DependentUpon>frmReportes.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmSocio_Economico.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -153,11 +154,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Reporte.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Reporte.Designer.cs">
-      <DependentUpon>Reporte.cs</DependentUpon>
+    <Compile Include="ReporteDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReporteDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="vLogin.cs" />
   </ItemGroup>
@@ -204,6 +204,9 @@
     <EmbeddedResource Include="frmReferenciaPersonal.resx">
       <DependentUpon>frmReferenciaPersonal.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmReportes.resx">
+      <DependentUpon>frmReportes.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmSocio_Economico.resx">
       <DependentUpon>frmSocio_Economico.cs</DependentUpon>
     </EmbeddedResource>
@@ -211,6 +214,17 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\rptDatosAdicionales.rdlc" />
+    <EmbeddedResource Include="Reportes\rptEducacion.rdlc" />
+    <EmbeddedResource Include="Reportes\rptExperienciaLaboral.rdlc" />
+    <EmbeddedResource Include="Reportes\rptFamilia.rdlc" />
+    <EmbeddedResource Include="Reportes\rptFisicioBiologico.rdlc" />
+    <EmbeddedResource Include="Reportes\rptIdiomas.rdlc" />
+    <EmbeddedResource Include="Reportes\rptOtrosDatos.rdlc" />
+    <EmbeddedResource Include="Reportes\rptReferenciaLaboral.rdlc" />
+    <EmbeddedResource Include="Reportes\rptReferenciaPersonal.rdlc" />
+    <EmbeddedResource Include="Reportes\rptSocioEconomico.rdlc" />
+    <EmbeddedResource Include="Reportes\rptUbicacionrdlc.rdlc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Capa_Negocio\Capa_Negocio.csproj">
@@ -228,30 +242,31 @@
     <PackageReference Include="FontAwesome.Sharp">
       <Version>6.3.0</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.ReportingServices.ReportViewerControl.Winforms">
+      <Version>150.1620.0</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.ReportViewer.Common">
       <Version>10.0.40219.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="dsReporte.xsc">
-      <DependentUpon>dsReporte.xsd</DependentUpon>
-    </None>
-    <None Include="dsReporte.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>dsReporte.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="dsReporte.xss">
-      <DependentUpon>dsReporte.xsd</DependentUpon>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="ReporteDataSet.xsc">
+      <DependentUpon>ReporteDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="ReporteDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ReporteDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReporteDataSet.xss">
+      <DependentUpon>ReporteDataSet.xsd</DependentUpon>
+    </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Reportes\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

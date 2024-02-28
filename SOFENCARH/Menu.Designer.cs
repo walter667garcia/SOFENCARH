@@ -230,6 +230,7 @@
             this.mReportes.Padding = new System.Windows.Forms.Padding(0);
             this.mReportes.Size = new System.Drawing.Size(200, 40);
             this.mReportes.Text = "REPORTES";
+
             // 
             // iconMenuItem3
             // 

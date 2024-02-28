@@ -67,7 +67,6 @@
             this.cmbPersona = new System.Windows.Forms.ComboBox();
             this.errorIcono = new System.Windows.Forms.ErrorProvider(this.components);
             this.label7 = new System.Windows.Forms.Label();
-            this.sp_ListarHomeFamiliaTableAdapter1 = new Capa_Vista.dsReporteTableAdapters.sp_ListarHomeFamiliaTableAdapter();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -519,7 +518,6 @@
             // 
             // sp_ListarHomeFamiliaTableAdapter1
             // 
-            this.sp_ListarHomeFamiliaTableAdapter1.ClearBeforeFill = true;
             // 
             // frmIdioma
             // 
@@ -580,7 +578,6 @@
         private System.Windows.Forms.Button btnExcel;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-        private dsReporteTableAdapters.sp_ListarHomeFamiliaTableAdapter sp_ListarHomeFamiliaTableAdapter1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button3;
     }

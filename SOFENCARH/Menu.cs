@@ -161,8 +161,10 @@ namespace SOFENCARH
 
         private void iconMenuItem3_Click(object sender, EventArgs e)
         {
-            frmReporteEducacion reporte = new frmReporteEducacion();
-            reporte.Show();
+            frmReportes rpt = new frmReportes();
+            rpt.Show();
+      
         }
+
     }
 }
