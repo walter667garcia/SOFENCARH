@@ -436,5 +436,10 @@ namespace Capa_Vista
 
             valorCmbPersona = this.cmbPersona.Text;
         }
+
+        private void cmbPersona_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

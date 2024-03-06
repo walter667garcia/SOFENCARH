@@ -209,7 +209,7 @@ namespace Capa_Vista
             this.button11.Size = new System.Drawing.Size(60, 44);
             this.button11.TabIndex = 19;
             this.button11.UseVisualStyleBackColor = false;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
+      
             // 
             // dtgDatosAdicional
             // 

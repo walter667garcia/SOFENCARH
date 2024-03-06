@@ -12,27 +12,55 @@ namespace Capa_Vista
 {
     public partial class frmReportes : Form
     {
+        public int IdPersonaReporte { get; set; }
+        public string PersonaReporte {  get; set; }
+
         public frmReportes()
         {
             InitializeComponent();
+           
         }
 
         private void frmReportes_Load(object sender, EventArgs e)
         {
-          
-            this.sp_ListarHomeUbicacionTableAdapter.Fill(this.reporteDataSet.sp_ListarHomeUbicacion, 1);
-            this.sp_listarHomeEducacionTableAdapter.Fill(this.reporteDataSet.sp_listarHomeEducacion, 1);
-            this.sp_ListarHomeFamiliaTableAdapter.Fill(this.reporteDataSet.sp_ListarHomeFamilia, 1);
-            this.sp_ListarHomeidiomaTableAdapter.Fill(this.reporteDataSet.sp_ListarHomeidioma, 1);
-            this.sp_ListarHomeRHSOCIOECONOMICOTableAdapter.Fill(this.reporteDataSet.sp_ListarHomeRHSOCIOECONOMICO, 1);
-            this.sp_ListarHomeRHOTROSDATOSTableAdapter.Fill(this.reporteDataSet.sp_ListarHomeRHOTROSDATOS, 1);
-            this.sp_ListarHomeRHFISICABIOLOGICATableAdapter.Fill(this.reporteDataSet.sp_ListarHomeRHFISICABIOLOGICA,1);
-            this.sp_ListarHomeReferenciaPersonalTableAdapter.Fill(this.reporteDataSet.sp_ListarHomeReferenciaPersonal,1);
-            this.sp_ListarHomeReferenciaLaboralTableAdapter.Fill(this.reporteDataSet.sp_ListarHomeReferenciaLaboral,1);
-            this.sp_ListarHomeRHEXPERIENCIALABORALTableAdapter.Fill(this.reporteDataSet.sp_ListarHomeRHEXPERIENCIALABORAL,1);
-            this.sp_ListarHomeRHDATOSADICIONALESTableAdapter.Fill(this.reporteDataSet.sp_ListarHomeRHDATOSADICIONALES,1);
-         
-            this.reportViewer1.RefreshReport();
+        }
+
+        private void Mostar()
+        {
+
+            try
+            {
+                lbPersona.Text = PersonaReporte;
+                this.sp_ListarHomeUbicacionTableAdapter.Fill(this.reporteDataSet.sp_ListarHomeUbicacion, IdPersonaReporte);
+                this.sp_listarHomeEducacionTableAdapter.Fill(this.reporteDataSet.sp_listarHomeEducacion, IdPersonaReporte);
+                this.sp_ListarHomeFamiliaTableAdapter.Fill(this.reporteDataSet.sp_ListarHomeFamilia, IdPersonaReporte);
+                this.sp_ListarHomeidiomaTableAdapter.Fill(this.reporteDataSet.sp_ListarHomeidioma, IdPersonaReporte);
+                this.sp_ListarHomeRHSOCIOECONOMICOTableAdapter.Fill(this.reporteDataSet.sp_ListarHomeRHSOCIOECONOMICO, IdPersonaReporte);
+                this.sp_ListarHomeRHOTROSDATOSTableAdapter.Fill(this.reporteDataSet.sp_ListarHomeRHOTROSDATOS, IdPersonaReporte);
+                this.sp_ListarHomeRHFISICABIOLOGICATableAdapter.Fill(this.reporteDataSet.sp_ListarHomeRHFISICABIOLOGICA, IdPersonaReporte);
+                this.sp_ListarHomeReferenciaPersonalTableAdapter.Fill(this.reporteDataSet.sp_ListarHomeReferenciaPersonal, IdPersonaReporte);
+                this.sp_ListarHomeReferenciaLaboralTableAdapter.Fill(this.reporteDataSet.sp_ListarHomeReferenciaLaboral, IdPersonaReporte);
+                this.sp_ListarHomeRHEXPERIENCIALABORALTableAdapter.Fill(this.reporteDataSet.sp_ListarHomeRHEXPERIENCIALABORAL, IdPersonaReporte);
+                this.sp_ListarHomeRHDATOSADICIONALESTableAdapter.Fill(this.reporteDataSet.sp_ListarHomeRHDATOSADICIONALES, IdPersonaReporte);
+                this.sp_ListarPersonaReporteTableAdapter.Fill(this.reporteDataSet.sp_ListarPersonaReporte, IdPersonaReporte);
+
+                this.reportViewer1.RefreshReport();
+            }
+            catch (Exception ex)
+            {
+                this.reportViewer1.RefreshReport();
+            }
+        }
+    
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            // Cerrar el formulario
+            this.Close();
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            Mostar();
         }
     }
 }

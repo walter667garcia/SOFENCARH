@@ -36,6 +36,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -47,29 +48,101 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="frmDatosAdicionales.cs">
+    <Compile Include="Actas\ActasFormulario.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmDatosAdicionales.Designer.cs">
+    <Compile Include="Actas\ActasFormulario.Designer.cs">
+      <DependentUpon>ActasFormulario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Actas\frmActas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Actas\frmActas.Designer.cs">
+      <DependentUpon>frmActas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DatosAdicionales\frmDatosAdicionales.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DatosAdicionales\frmDatosAdicionales.Designer.cs">
       <DependentUpon>frmDatosAdicionales.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmExperienciaLaboral.cs">
+    <Compile Include="DatosAdicionales\DatosAdicionalesFormulario.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmExperienciaLaboral.Designer.cs">
+    <Compile Include="DatosAdicionales\DatosAdicionalesFormulario.Designer.cs">
+      <DependentUpon>DatosAdicionalesFormulario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Educacion\frmEducacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Educacion\frmEducacion.Designer.cs">
+      <DependentUpon>frmEducacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Educacion\EducacionFormulario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Educacion\EducacionFormulario.Designer.cs">
+      <DependentUpon>EducacionFormulario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExperienciaLaboral\frmExperienciaLaboral.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExperienciaLaboral\frmExperienciaLaboral.Designer.cs">
       <DependentUpon>frmExperienciaLaboral.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmFamilia.cs">
+    <Compile Include="ExperienciaLaboral\ExperienciaLaboralFormulario.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmFamilia.Designer.cs">
-      <DependentUpon>frmFamilia.cs</DependentUpon>
+    <Compile Include="ExperienciaLaboral\ExperienciaLaboralFormulario.Designer.cs">
+      <DependentUpon>ExperienciaLaboralFormulario.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmFisicoBiologico.cs">
+    <Compile Include="Familia\familia.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmFisicoBiologico.Designer.cs">
+    <Compile Include="Familia\familia.Designer.cs">
+      <DependentUpon>familia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Familia\FamiliaFormulario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Familia\FamiliaFormulario.Designer.cs">
+      <DependentUpon>FamiliaFormulario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FisicoBiologico\frmFisicoBiologico.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FisicoBiologico\frmFisicoBiologico.Designer.cs">
       <DependentUpon>frmFisicoBiologico.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FisicoBiologico\FisicoBiologicoFormulario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FisicoBiologico\FisicoBiologicoFormulario.Designer.cs">
+      <DependentUpon>FisicoBiologicoFormulario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmDatosAdicionales2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDatosAdicionales2.Designer.cs">
+      <DependentUpon>frmDatosAdicionales2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmExperienciaLaboral2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmExperienciaLaboral2.Designer.cs">
+      <DependentUpon>frmExperienciaLaboral2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmFamilia2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmFamilia2.Designer.cs">
+      <DependentUpon>frmFamilia2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmFisicoBiologico2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmFisicoBiologico2.Designer.cs">
+      <DependentUpon>frmFisicoBiologico2.cs</DependentUpon>
     </Compile>
     <Compile Include="frmHome.cs">
       <SubType>Form</SubType>
@@ -77,11 +150,35 @@
     <Compile Include="frmHome.Designer.cs">
       <DependentUpon>frmHome.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmIdioma.cs">
+    <Compile Include="frmIdioma2.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmIdioma.Designer.cs">
+    <Compile Include="frmIdioma2.Designer.cs">
+      <DependentUpon>frmIdioma2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmReporteActas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReporteActas.Designer.cs">
+      <DependentUpon>frmReporteActas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmReportePersona.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReportePersona.Designer.cs">
+      <DependentUpon>frmReportePersona.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Idioma\frmIdioma.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Idioma\frmIdioma.Designer.cs">
       <DependentUpon>frmIdioma.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Idioma\IdiomaContenido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Idioma\IdiomaContenido.Designer.cs">
+      <DependentUpon>IdiomaContenido.cs</DependentUpon>
     </Compile>
     <Compile Include="frmLocalizacion.cs">
       <SubType>Form</SubType>
@@ -95,11 +192,11 @@
     <Compile Include="frmNivel_Academico.Designer.cs">
       <DependentUpon>frmNivel_Academico.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmOtrosDatos.cs">
+    <Compile Include="frmOtrosDatos2.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmOtrosDatos.Designer.cs">
-      <DependentUpon>frmOtrosDatos.cs</DependentUpon>
+    <Compile Include="frmOtrosDatos2.Designer.cs">
+      <DependentUpon>frmOtrosDatos2.cs</DependentUpon>
     </Compile>
     <Compile Include="frmPersona.cs">
       <SubType>Form</SubType>
@@ -119,17 +216,17 @@
     <Compile Include="frmPuesto_Funcional.Designer.cs">
       <DependentUpon>frmPuesto_Funcional.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmReferenciaLaboral.cs">
+    <Compile Include="frmReferenciaLaboral2.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmReferenciaLaboral.Designer.cs">
-      <DependentUpon>frmReferenciaLaboral.cs</DependentUpon>
+    <Compile Include="frmReferenciaLaboral2.Designer.cs">
+      <DependentUpon>frmReferenciaLaboral2.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmReferenciaPersonal.cs">
+    <Compile Include="frmReferenciaPersonal2.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmReferenciaPersonal.Designer.cs">
-      <DependentUpon>frmReferenciaPersonal.cs</DependentUpon>
+    <Compile Include="frmReferenciaPersonal2.Designer.cs">
+      <DependentUpon>frmReferenciaPersonal2.cs</DependentUpon>
     </Compile>
     <Compile Include="frmReportes.cs">
       <SubType>Form</SubType>
@@ -143,6 +240,36 @@
     <Compile Include="frmSocio_Economico.Designer.cs">
       <DependentUpon>frmSocio_Economico.cs</DependentUpon>
     </Compile>
+    <Compile Include="Localizacion\frmUbicacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Localizacion\frmUbicacion.Designer.cs">
+      <DependentUpon>frmUbicacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Localizacion\UbicacionFormulario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Localizacion\UbicacionFormulario.Designer.cs">
+      <DependentUpon>UbicacionFormulario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Menu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menu.Designer.cs">
+      <DependentUpon>Menu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OtrosDatos\frmOtrosDatos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OtrosDatos\frmOtrosDatos.Designer.cs">
+      <DependentUpon>frmOtrosDatos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OtrosDatos\OtrosDatosFormulario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OtrosDatos\OtrosDatosFormulario.Designer.cs">
+      <DependentUpon>OtrosDatosFormulario.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -154,31 +281,121 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="ReferenciaLaboral\frmReferenciaLaboral.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReferenciaLaboral\frmReferenciaLaboral.Designer.cs">
+      <DependentUpon>frmReferenciaLaboral.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReferenciaLaboral\ReferenciaLaboralFormulario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReferenciaLaboral\ReferenciaLaboralFormulario.Designer.cs">
+      <DependentUpon>ReferenciaLaboralFormulario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReferenciaPersonal\frmReferenciaPersonal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReferenciaPersonal\frmReferenciaPersonal.Designer.cs">
+      <DependentUpon>frmReferenciaPersonal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReferenciaPersonal\ReferenciaPersonalFormulario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReferenciaPersonal\ReferenciaPersonalFormulario.Designer.cs">
+      <DependentUpon>ReferenciaPersonalFormulario.cs</DependentUpon>
+    </Compile>
     <Compile Include="ReporteDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ReporteDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="rtpCrystal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="rtpCrystal.Designer.cs">
+      <DependentUpon>rtpCrystal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SocioEconomico\frmSocioEconomico.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SocioEconomico\frmSocioEconomico.Designer.cs">
+      <DependentUpon>frmSocioEconomico.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SocioEconomico\SocioEconomicoFormulario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SocioEconomico\SocioEconomicoFormulario.Designer.cs">
+      <DependentUpon>SocioEconomicoFormulario.cs</DependentUpon>
+    </Compile>
     <Compile Include="vLogin.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="frmDatosAdicionales.resx">
+    <EmbeddedResource Include="Actas\ActasFormulario.resx">
+      <DependentUpon>ActasFormulario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actas\frmActas.resx">
+      <DependentUpon>frmActas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DatosAdicionales\frmDatosAdicionales.resx">
       <DependentUpon>frmDatosAdicionales.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmExperienciaLaboral.resx">
+    <EmbeddedResource Include="DatosAdicionales\DatosAdicionalesFormulario.resx">
+      <DependentUpon>DatosAdicionalesFormulario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Educacion\frmEducacion.resx">
+      <DependentUpon>frmEducacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Educacion\EducacionFormulario.resx">
+      <DependentUpon>EducacionFormulario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExperienciaLaboral\frmExperienciaLaboral.resx">
       <DependentUpon>frmExperienciaLaboral.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmFamilia.resx">
-      <DependentUpon>frmFamilia.cs</DependentUpon>
+    <EmbeddedResource Include="ExperienciaLaboral\ExperienciaLaboralFormulario.resx">
+      <DependentUpon>ExperienciaLaboralFormulario.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmFisicoBiologico.resx">
+    <EmbeddedResource Include="Familia\familia.resx">
+      <DependentUpon>familia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Familia\FamiliaFormulario.resx">
+      <DependentUpon>FamiliaFormulario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FisicoBiologico\frmFisicoBiologico.resx">
       <DependentUpon>frmFisicoBiologico.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FisicoBiologico\FisicoBiologicoFormulario.resx">
+      <DependentUpon>FisicoBiologicoFormulario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDatosAdicionales2.resx">
+      <DependentUpon>frmDatosAdicionales2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmExperienciaLaboral2.resx">
+      <DependentUpon>frmExperienciaLaboral2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmFamilia2.resx">
+      <DependentUpon>frmFamilia2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmFisicoBiologico2.resx">
+      <DependentUpon>frmFisicoBiologico2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmHome.resx">
       <DependentUpon>frmHome.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmIdioma.resx">
+    <EmbeddedResource Include="frmIdioma2.resx">
+      <DependentUpon>frmIdioma2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmReporteActas.resx">
+      <DependentUpon>frmReporteActas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmReportePersona.resx">
+      <DependentUpon>frmReportePersona.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Idioma\frmIdioma.resx">
       <DependentUpon>frmIdioma.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Idioma\IdiomaContenido.resx">
+      <DependentUpon>IdiomaContenido.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmLocalizacion.resx">
       <DependentUpon>frmLocalizacion.cs</DependentUpon>
@@ -186,8 +403,8 @@
     <EmbeddedResource Include="frmNivel_Academico.resx">
       <DependentUpon>frmNivel_Academico.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmOtrosDatos.resx">
-      <DependentUpon>frmOtrosDatos.cs</DependentUpon>
+    <EmbeddedResource Include="frmOtrosDatos2.resx">
+      <DependentUpon>frmOtrosDatos2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmPersona.resx">
       <DependentUpon>frmPersona.cs</DependentUpon>
@@ -198,11 +415,11 @@
     <EmbeddedResource Include="frmPuesto_Funcional.resx">
       <DependentUpon>frmPuesto_Funcional.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmReferenciaLaboral.resx">
-      <DependentUpon>frmReferenciaLaboral.cs</DependentUpon>
+    <EmbeddedResource Include="frmReferenciaLaboral2.resx">
+      <DependentUpon>frmReferenciaLaboral2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmReferenciaPersonal.resx">
-      <DependentUpon>frmReferenciaPersonal.cs</DependentUpon>
+    <EmbeddedResource Include="frmReferenciaPersonal2.resx">
+      <DependentUpon>frmReferenciaPersonal2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmReportes.resx">
       <DependentUpon>frmReportes.cs</DependentUpon>
@@ -210,10 +427,39 @@
     <EmbeddedResource Include="frmSocio_Economico.resx">
       <DependentUpon>frmSocio_Economico.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Localizacion\frmUbicacion.resx">
+      <DependentUpon>frmUbicacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localizacion\UbicacionFormulario.resx">
+      <DependentUpon>UbicacionFormulario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menu.resx">
+      <DependentUpon>Menu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OtrosDatos\frmOtrosDatos.resx">
+      <DependentUpon>frmOtrosDatos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OtrosDatos\OtrosDatosFormulario.resx">
+      <DependentUpon>OtrosDatosFormulario.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="ReferenciaLaboral\frmReferenciaLaboral.resx">
+      <DependentUpon>frmReferenciaLaboral.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReferenciaLaboral\ReferenciaLaboralFormulario.resx">
+      <DependentUpon>ReferenciaLaboralFormulario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReferenciaPersonal\frmReferenciaPersonal.resx">
+      <DependentUpon>frmReferenciaPersonal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReferenciaPersonal\ReferenciaPersonalFormulario.resx">
+      <DependentUpon>ReferenciaPersonalFormulario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\ReporteActas.rdlc" />
+    <EmbeddedResource Include="Reportes\ReportePersona.rdlc" />
     <EmbeddedResource Include="Reportes\rptDatosAdicionales.rdlc" />
     <EmbeddedResource Include="Reportes\rptEducacion.rdlc" />
     <EmbeddedResource Include="Reportes\rptExperienciaLaboral.rdlc" />
@@ -225,6 +471,15 @@
     <EmbeddedResource Include="Reportes\rptReferenciaPersonal.rdlc" />
     <EmbeddedResource Include="Reportes\rptSocioEconomico.rdlc" />
     <EmbeddedResource Include="Reportes\rptUbicacionrdlc.rdlc" />
+    <EmbeddedResource Include="rtpCrystal.resx">
+      <DependentUpon>rtpCrystal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SocioEconomico\frmSocioEconomico.resx">
+      <DependentUpon>frmSocioEconomico.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SocioEconomico\SocioEconomicoFormulario.resx">
+      <DependentUpon>SocioEconomicoFormulario.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Capa_Negocio\Capa_Negocio.csproj">
@@ -235,6 +490,9 @@
   <ItemGroup>
     <PackageReference Include="ClosedXML">
       <Version>0.104.0-preview2</Version>
+    </PackageReference>
+    <PackageReference Include="CrystalReports.Windows.Forms">
+      <Version>13.0.4003</Version>
     </PackageReference>
     <PackageReference Include="FontAwesome.MVC">
       <Version>1.0.0</Version>

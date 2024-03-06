@@ -105,12 +105,16 @@ namespace Capa_Datos
                 SqlDataAdapter puestoFuncional = new SqlDataAdapter("sp_ListarPuestoNominal", sqlconn);
                 SqlDataAdapter unidadSeccion = new SqlDataAdapter("sp_ListarUnidadSeccion", sqlconn);
                 SqlDataAdapter renglonPresupuestario = new SqlDataAdapter("sp_ListarTYRENGLONPRESUPUESTARIO", sqlconn);
+                SqlDataAdapter coordinacion = new SqlDataAdapter("sp_ListarCoordinacion", sqlconn);
+
+                
 
 
                 // Llenar los DataTable en el DataSet
                 puestoFuncional.Fill(dataSet, "TYPUESTONOMINAL");
                 unidadSeccion.Fill(dataSet, "TYUNIDADSECCION");
                 renglonPresupuestario.Fill(dataSet, "TYRENGLONPRESUPUESTARIO");
+                coordinacion.Fill(dataSet, "TYCOORDINACION");
 
             }
             catch (Exception ex)

@@ -16,9 +16,16 @@ using ClosedXML.Excel;
 namespace Capa_Vista
 {
     public partial class frmSocio_Economico : Form
-    {
+    { //variables para que el panel desplaze el formulario
+        private bool dragging = false;
+        private Point dragCursorPoint;
+        private Point dragFormPoint;
+
+        //Variables necesarias para el funcionamiento
         private bool IsNuevo = false;
         private bool IsEditar = false;
+        public int Idpersona { get; set; }
+        public string Persona { get; set; }
         public frmSocio_Economico()
         {
             InitializeComponent();
@@ -46,10 +53,6 @@ namespace Capa_Vista
             nDatos negocio = new nDatos();
             DataSet dataSet = negocio.CargarDatosRhIdiomas();
 
-            cmbPersona.DataSource = dataSet.Tables["RHPERSONA"];
-            cmbPersona.DisplayMember = "Nombre";
-            cmbPersona.ValueMember = "IDPERSONA";
-
             cmbVehiculo.DataSource = dataSet.Tables["TYVEHICULO"];
             cmbVehiculo.DisplayMember = "VEHICULO";
             cmbVehiculo.ValueMember = "IDVEHICULO";
@@ -67,10 +70,10 @@ namespace Capa_Vista
         private void Mostrar()
         {
 
-            this.dtgSocioEconomico.DataSource = nSocioEconomico.MostrarSocioEconomico();
+            this.dtgSocioEconomico.DataSource = nHome.BuscarSocioEconomico(Idpersona);
             this.OcultarColumnas();
-
-            lblTotal.Text = "Total de Registros: " + Convert.ToString(dtgSocioEconomico.Rows.Count);
+            lbPersona.Text = Persona;
+            lblTotal.Text = "Total : " + Convert.ToString(dtgSocioEconomico.Rows.Count);
         }
         private void frmSocio_Economico_Load(object sender, EventArgs e)
         {
@@ -84,12 +87,7 @@ namespace Capa_Vista
             this.Botones();
             this.LlenarComboBoxes();
         }
-        private void BuscarPersona()
-        {
-            this.dtgSocioEconomico.DataSource = nSocioEconomico.BuscarSocioEconomico(this.txtBuscar.Text);
-
-            lblTotal.Text = "Total de Registros: " + Convert.ToString(dtgSocioEconomico.Rows.Count - 1);
-        }
+     
        
         private void OcultarColumnas()
         {
@@ -141,7 +139,6 @@ namespace Capa_Vista
 
         private void Habilitar(bool valor)
         {
-            this.cmbPersona.Enabled = valor;
             this.cmbAgrupacion.Enabled = valor;
             this.txtDetalleAgrupacion.ReadOnly = !valor;
             this.txtDependencias.ReadOnly = !valor;
@@ -179,7 +176,7 @@ namespace Capa_Vista
             this.Botones();
             this.Limpiar();
             this.Habilitar(true);
-            this.cmbPersona.Focus();
+            this.cmbAgrupacion.Focus();
         }
         private void MensajeOk(string mensaje)
         {
@@ -217,7 +214,7 @@ namespace Capa_Vista
                     if (this.IsNuevo)
                     {
                         rpta = nSocioEconomico.Insertar(
-                            Convert.ToInt32(this.cmbPersona.SelectedValue),
+                           Idpersona,
                             Convert.ToInt32(this.cmbAgrupacion.SelectedValue),
                             this.txtDetalleAgrupacion.Text.Trim().ToUpper(),
                             this.txtDependencias.Text.Trim().ToUpper(),
@@ -239,7 +236,7 @@ namespace Capa_Vista
                     {
                         rpta = nSocioEconomico.Actualizar(
                             Convert.ToInt32(this.txtId.Text),
-                            Convert.ToInt32(this.cmbPersona.SelectedValue),
+                          Idpersona,
                             Convert.ToInt32(this.cmbAgrupacion.SelectedValue),
                             this.txtDetalleAgrupacion.Text.Trim().ToUpper(),
                             this.txtDependencias.Text.Trim().ToUpper(),
@@ -285,7 +282,7 @@ namespace Capa_Vista
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(this.cmbPersona.Text))
+            if (!string.IsNullOrEmpty(this.Idpersona.ToString()))
             {
                 // Mostrar un cuadro de diálogo de confirmación
                 DialogResult result = MessageBox.Show("¿Estás seguro de que deseas realizar la actualización?", "Confirmar Actualización", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -384,65 +381,13 @@ namespace Capa_Vista
             txtMontoOtrosIngresos.SelectionStart = txtMontoOtrosIngresos.Text.Length;
         }
 
-        private void txtBuscar_TextChanged(object sender, EventArgs e)
-        {
-            BuscarPersona();
-            OcultarColumnas();
-           
-        }
+        
 
-        private void dtgSocioEconomico_DoubleClick(object sender, EventArgs e)
-        {
-            if (this.dtgSocioEconomico.CurrentRow != null)
-            {
-                if (btnNuevo.Enabled != false)
-                {
-                    string Persona = dtgSocioEconomico.CurrentRow.Cells["Persona"].Value.ToString();
-                    int idPersona = cmbPersona.FindStringExact(Persona);
-                    cmbPersona.SelectedIndex = idPersona;
-
-                    string Agrupacion = dtgSocioEconomico.CurrentRow.Cells["AGRUPACION"].Value.ToString();
-                    int idAgrupacion = cmbAgrupacion.FindStringExact(Agrupacion);
-                    cmbAgrupacion.SelectedIndex = idAgrupacion;
-
-                    string Vivienda = dtgSocioEconomico.CurrentRow.Cells["VIVIENDA"].Value.ToString();
-                    int idVivienda = cmbVivienda.FindStringExact(Vivienda);
-                    cmbVivienda.SelectedIndex = idVivienda;
-
-                    string Vehiculo = dtgSocioEconomico.CurrentRow.Cells["VEHICULO"].Value.ToString();
-                    int idVehiculo = cmbVehiculo.FindStringExact(Vehiculo);
-                    cmbVehiculo.SelectedIndex = idVehiculo;
-
-
-                    this.txtDetalleAgrupacion.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["DETALLE_AGRUPACION"].Value);
-                    this.txtDependencias.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["DEPENDIENTES"].Value);
-                    this.txtDetalleDependencias.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["DETALLE_DEPENDIENTES"].Value);
-                    this.txtPagoVivienda.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["PAGO_VIVIENDA"].Value);
-                    this.cmbFlagDeuda.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["FLAG_DEUDAS"].Value);
-                    this.txtMontoDeuda.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["MONTO_DEUDA"].Value);
-                    this.txtMotivoDeuda.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["MOTIVO_DEUDA"].Value);
-                    this.cmbFlagOtrosIngresos.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["FLAG_OTROS_INGRESOS"].Value);
-                    this.txtMontoOtrosIngresos.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["MONTO_OTROS_INGRESOS"].Value);
-                    this.txtFuenteOtrosIngresos.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["FUENTES_OTROS_INGRESOS"].Value);
-                    this.txtTipoVehiculo.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["TIPO_VEHICULO"].Value);
-                    this.txtPlacaVehiculo.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["Modelo"].Value);
-                    this.txtModeloVehiculo.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["Placa"].Value);
-                    this.txtId.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["id"].Value);
-                }
-                else
-                {
-                    MessageBox.Show("No puede editar y crear un nuevo registro a la vez");
-                }
-
-
-
-            }
-        }
 
         private void ConfigurarOrdenTabulacion()
         {
             // Establecer el orden de tabulación para los TextBox
-            cmbPersona.TabIndex = 1;
+           
             cmbAgrupacion.TabIndex = 2;
             txtDetalleAgrupacion.TabIndex = 3;
             txtDependencias.TabIndex = 4;
@@ -652,11 +597,6 @@ namespace Capa_Vista
             return textoValidado.ToString();
         }
 
-        private void txtFlagOtrosIngresos_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void ExportarDataGridViewAExcel(DataGridView dataGridView)
         {
             // Verificar si hay datos en el DataGridView
@@ -748,15 +688,78 @@ namespace Capa_Vista
             }
         }
 
-        private string valorCmbPersona = "";
-
-        public void cargar(string persona, string nombre)
+        private void dtgSocioEconomico_DoubleClick(object sender, EventArgs e)
         {
-            this.cmbPersona.Text = nombre;
-            this.cmbPersona.Enabled = false;
-            this.txtIdHome.Text = persona;
+            if (this.dtgSocioEconomico.CurrentRow != null)
+            {
+                if (btnNuevo.Enabled != false)
+                {
 
-            valorCmbPersona = this.cmbPersona.Text;
+                    string Agrupacion = dtgSocioEconomico.CurrentRow.Cells["AGRUPACION"].Value.ToString();
+                    int idAgrupacion = cmbAgrupacion.FindStringExact(Agrupacion);
+                    cmbAgrupacion.SelectedIndex = idAgrupacion;
+
+                    string Vivienda = dtgSocioEconomico.CurrentRow.Cells["VIVIENDA"].Value.ToString();
+                    int idVivienda = cmbVivienda.FindStringExact(Vivienda);
+                    cmbVivienda.SelectedIndex = idVivienda;
+
+                    string Vehiculo = dtgSocioEconomico.CurrentRow.Cells["VEHICULO"].Value.ToString();
+                    int idVehiculo = cmbVehiculo.FindStringExact(Vehiculo);
+                    cmbVehiculo.SelectedIndex = idVehiculo;
+
+
+                    this.txtDetalleAgrupacion.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["DETALLE_AGRUPACION"].Value);
+                    this.txtDependencias.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["DEPENDIENTES"].Value);
+                    this.txtDetalleDependencias.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["DETALLE_DEPENDIENTES"].Value);
+                    this.txtPagoVivienda.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["PAGO_VIVIENDA"].Value);
+                    this.cmbFlagDeuda.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["FLAG_DEUDAS"].Value);
+                    this.txtMontoDeuda.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["MONTO_DEUDA"].Value);
+                    this.txtMotivoDeuda.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["MOTIVO_DEUDA"].Value);
+                    this.cmbFlagOtrosIngresos.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["FLAG_OTROS_INGRESOS"].Value);
+                    this.txtMontoOtrosIngresos.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["MONTO_OTROS_INGRESOS"].Value);
+                    this.txtFuenteOtrosIngresos.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["FUENTES_OTROS_INGRESOS"].Value);
+                    this.txtTipoVehiculo.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["TIPO_VEHICULO"].Value);
+                    this.txtPlacaVehiculo.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["MODELO_VEHICULO"].Value);
+                    this.txtModeloVehiculo.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["PLACA_VEHICULO"].Value);
+                    this.txtId.Text = Convert.ToString(this.dtgSocioEconomico.CurrentRow.Cells["id"].Value);
+                    this.tabSocioEconomico.SelectedIndex = 1;
+                }
+                else
+                {
+                    MessageBox.Show("No puede editar y crear un nuevo registro a la vez");
+                }
+
+
+
+            }
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void panel1_MouseDown(object sender, MouseEventArgs e)
+        {
+            dragging = true;
+            dragCursorPoint = Cursor.Position;
+            dragFormPoint = this.Location;
+        }
+
+        private void panel1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (dragging)
+            {
+                Point dif = Point.Subtract(Cursor.Position, new Size(dragCursorPoint));
+                this.Location = Point.Add(dragFormPoint, new Size(dif));
+            }
+
+        }
+
+        private void panel1_MouseUp(object sender, MouseEventArgs e)
+        {
+            dragging = false;
+
         }
     }
 

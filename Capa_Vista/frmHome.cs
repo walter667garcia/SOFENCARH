@@ -288,7 +288,7 @@ namespace Capa_Vista
 
         private void button6_Click(object sender, EventArgs e)
         {
-            ShowSocioeconomico();
+            
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -311,10 +311,7 @@ namespace Capa_Vista
             ShowOtrosdatos();
         }
 
-        private void button11_Click(object sender, EventArgs e)
-        {
-            ShowDatosadicionales();
-        }
+      
 
         private void button12_Click(object sender, EventArgs e)
         {
@@ -335,7 +332,7 @@ namespace Capa_Vista
 
         private void ShowFamilia()
         {
-            frmFamilia Obj = new frmFamilia();
+            frmFamilia2 Obj = new frmFamilia2();
             Obj.Show();
         }
 
@@ -347,51 +344,42 @@ namespace Capa_Vista
 
         private void ShowIdioma()
         {
-            frmIdioma Obj = new frmIdioma();
+            frmIdioma2 Obj = new frmIdioma2();
             Obj.Show();
         }
 
         private void ShowExperiencialaboral()
         {
-            frmExperienciaLaboral Obj = new frmExperienciaLaboral();
+            frmExperienciaLaboral2 Obj = new frmExperienciaLaboral2();
             Obj.Show();
         }
 
-        private void ShowSocioeconomico()
-        {
-            frmSocio_Economico Obj = new frmSocio_Economico();
-            Obj.Show();
-        }
+       
 
         private void ShowFisicobiologico()
         {
-            frmFisicoBiologico Obj = new frmFisicoBiologico();
+            frmFisicoBiologico2 Obj = new frmFisicoBiologico2();
             Obj.Show();
         }
 
         private void ShowReferencialaboral()
         {
-            frmReferenciaLaboral Obj = new frmReferenciaLaboral();
+            frmReferenciaLaboral2 Obj = new frmReferenciaLaboral2();
             Obj.Show();
         }
 
         private void ShowReferenciapersonal()
         {
-            frmReferenciaPersonal Obj = new frmReferenciaPersonal();
-            Obj.Show();
+          
         }
 
         private void ShowOtrosdatos()
         {
-            frmOtrosDatos Obj = new frmOtrosDatos();
+            frmOtrosDatos2 Obj = new frmOtrosDatos2();
             Obj.Show();
         }
 
-        private void ShowDatosadicionales()
-        {
-            frmDatosAdicionales Obj = new frmDatosAdicionales();
-            Obj.Show();
-        }
+      
 
         private void button13_Click(object sender, EventArgs e)
         {

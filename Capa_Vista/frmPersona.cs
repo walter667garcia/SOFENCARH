@@ -17,6 +17,19 @@ using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Bibliography;
+using Capa_Vista.Educacion;
+using Capa_Vista.DatosAdicionales;
+using Capa_Vista.ExperienciaLaboral;
+using Capa_Vista.OtrosDatos;
+using Capa_Vista.ReferenciaLaboral;
+using Capa_Vista.ReferenciaPersonal;
+using Capa_Vista.Localizacion;
+using Capa_Vista.Idioma;
+using Capa_Vista.Familia;
+using Capa_Vista.SocioEconomico;
+using Capa_Vista.FisicoBiologico;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using Capa_Vista.Actas;
 
 namespace Capa_Vista
 {
@@ -33,7 +46,6 @@ namespace Capa_Vista
             dtmFecha.KeyPress += dtmFecha_KeyPress;
 
             ConfigurarOrdenTabulacion();
-
 
         }
 
@@ -97,7 +109,6 @@ namespace Capa_Vista
 
         
 
-
         private void LlenarComboBoxes()
         {
             nDatos negocio = new nDatos();
@@ -131,12 +142,12 @@ namespace Capa_Vista
         }
 
         private Image imagenActual; // Variable para almacenar la imagen actual del PictureBox
-        // Guarda la imagen actual antes de cargar una nueva imagen
-        
+                                    // Guarda la imagen actual antes de cargar una nueva imagen
 
-  
-    private void button5_Click(object sender, EventArgs e)
-{
+
+
+        private void button5_Click(object sender, EventArgs e)
+        {
             OpenFileDialog ofd = new OpenFileDialog();
 
             // Configura el filtro para permitir solo imágenes
@@ -154,21 +165,25 @@ namespace Capa_Vista
                 {
                     try
                     {
-                        // Verifica el tamaño de la imagen antes de cargarla
-                        FileInfo fileInfo = new FileInfo(ofd.FileName);
-                        long fileSize = fileInfo.Length; // Tamaño del archivo en bytes
+                        // Carga la imagen
+                        Image img = Image.FromFile(ofd.FileName);
 
-                        // Define el tamaño máximo permitido (en bytes)
-                        long maxSize = 10 * 1024 * 1024; // 10 MB como ejemplo, ajusta según tus necesidades
+                        // Verifica el tamaño de la imagen en centímetros
+                        float anchoCm = img.Width / img.HorizontalResolution * 2.54f; // Ancho en centímetros
+                        float altoCm = img.Height / img.VerticalResolution * 2.54f; // Alto en centímetros
 
-                        if (fileSize > maxSize)
+                        // Define el tamaño máximo permitido (en centímetros)
+                        float maxAnchoCm = 10; // 10 cm de ancho
+                        float maxAltoCm = 15; // 15 cm de alto
+
+                        if (anchoCm > maxAnchoCm || altoCm > maxAltoCm)
                         {
                             MessageBox.Show("El tamaño de la imagen es demasiado grande. Por favor, selecciona una imagen más pequeña.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return; // Sale de la función sin cargar la imagen
                         }
 
                         // Carga la imagen si pasa todas las verificaciones
-                        pcbFoto.Image = Image.FromFile(ofd.FileName);
+                        pcbFoto.Image = img;
                     }
                     catch (Exception ex)
                     {
@@ -406,8 +421,7 @@ namespace Capa_Vista
         }
         private void txtBuscar_TextChanged(object sender, EventArgs e)
         {
-            BuscarPersona();
-            OcultarColumnas();
+            
         }
 
         private void dtgPersona_DoubleClick(object sender, EventArgs e)
@@ -817,24 +831,7 @@ namespace Capa_Vista
         
 
 
-        private void menuclick(object sender, ToolStripItemClickedEventArgs e)
-        {
-            
-        }
 
-        private void ConfigurarDataGridView()
-        {
-            // Configura el DataGridView
-            dtgPersona.AllowUserToAddRows = false;
-            dtgPersona.AllowUserToDeleteRows = false;
-            dtgPersona.ReadOnly = true;
-
-            // Agrega la fila de separación visual
-            DataGridViewRow separador = new DataGridViewRow();
-            separador.Height = 50; // Ajusta la altura según tus necesidades
-            separador.DefaultCellStyle.BackColor = Color.Gray; // Color del separador
-            dtgPersona.Rows.Add(separador);
-        }
 
 
         private void dtgPersona_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -893,16 +890,6 @@ namespace Capa_Vista
 
         }
 
-        private void txtPretencionSalarial_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtTipoLicencia_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
        
 
         private void dtgPersona_MouseClick(object sender, MouseEventArgs e)
@@ -934,194 +921,302 @@ namespace Capa_Vista
                     menu.Items.Add("Referencia Personal").Name = "Referencia Personal" + posicion;
                     menu.Items.Add("Otros Datos").Name = "Otros Datos" + posicion;
                     menu.Items.Add("Datos Adicionales").Name = "Datos Adicionales" + posicion;
+                    menu.Items.Add("Reporte").Name = "Reporte" + posicion;
+                    menu.Items.Add("Actas").Name = "Actas" + posicion;
                 }
                 menu.Show(dtgPersona, e.X, e.Y);
                 menu.ItemClicked += new ToolStripItemClickedEventHandler(menuclick1);
             }
         }
 
-      
+
+        private static frmUbicacion ubicacion = null;
+        private static familia familia = null;
+        private static frmEducacion estudios = null;
+        private static frmIdioma idiomas = null;
+        private static frmExperienciaLaboral experienciaLAboral = null;
+        private static frmSocioEconomico socioEconomico = null;
+        private static frmFisicoBiologico fisicoBiologico = null;
+        private static frmReferenciaLaboral referenciaLaboral = null;
+        private static frmReferenciaPersonal referenciaPersonal = null;
+        private static frmOtrosDatos otrosDatos = null;
+        private static frmDatosAdicionales datosAdicionales = null;
+        private static frmReportes reporte = null;
+        private static ActasFormulario actas = null;
 
         private void menuclick1(object sender, ToolStripItemClickedEventArgs e)
         {
+            int Idpersona = Convert.ToInt32(this.dtgPersona.CurrentRow.Cells["id"].Value);
+            string a = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Nombre"].Value);
+            string b = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Nombre"].Value);
+            string c = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Apellido"].Value);
+            string d = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Apellido"].Value);
+            string Persona = a + " " + b + " " + c + " " + d;
             string id = e.ClickedItem.Name.ToString();
-            if (id.Contains("Ubicacion"))
+
+            try
             {
-                id = id.Replace("Ubicacion", "");
-                frmLocalizacion Obj = new frmLocalizacion();
-                string persona = Convert.ToString(this.dtgPersona.CurrentRow.Cells["id"].Value);
-                string a, b, c, d;
-                a = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Nombre"].Value);
-                b = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Nombre"].Value);
-                c = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Apellido"].Value);
-                d = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Apellido"].Value);
-                string nombre = a + " " + b + " " + c + " " + d;
-                Obj.Show();
-                Obj.cargar(persona, nombre);
+                if (id.Contains("Ubicacion"))
+                {
+                    if (ubicacion == null || ubicacion.IsDisposed)
+                    {
+                        id = id.Replace("Ubicacion", "");
+                        // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
+                        ubicacion = new frmUbicacion();
+                        ubicacion.FormClosed += (s, args) => { ubicacion = null; };
+                        ubicacion.Idpersona = Idpersona;
+                        ubicacion.Persona = Persona;
+                        ubicacion.ShowDialog();
+                    }
+                    else
+                    {
+                        ubicacion.Activate();
+                        // Si ya hay una instancia abierta, mostrar un mensaje de advertencia
+                        MessageBox.Show("Actualmente está ingresando un dato. No puede abrir nuevamente el formulario.");
+                    }
+                }
+                else if (id.Contains("Familia"))
+                {
+                    if (familia == null || familia.IsDisposed)
+                    {
+                        id = id.Replace("Familia", "");
+                        // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
+                        familia = new familia();
+                        familia.FormClosed += (s, args) => { familia = null; };
+                        familia.Idpersona = Idpersona;
+                        familia.Persona = Persona;
+                        familia.ShowDialog();
+                    }
+                    else
+                    {
+                        familia.Activate();
+                        // Si ya hay una instancia abierta, mostrar un mensaje de advertencia
+                        MessageBox.Show("Actualmente está ingresando un dato. No puede abrir nuevamente el formulario.");
+                    }
+                }
+                else if (id.Contains("Estudios"))
+                {
+                    if (estudios == null || estudios.IsDisposed)
+                    {
+                        id = id.Replace("Estudios", "");
+                        // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
+                        estudios = new frmEducacion();
+                        estudios.FormClosed += (s, args) => { estudios = null; };
+                        estudios.Idpersona = Idpersona;
+                        estudios.Persona = Persona; 
+                        estudios.ShowDialog();
+                    }
+                    else
+                    {
+                        estudios.Activate();
+                        // Si ya hay una instancia abierta, mostrar un mensaje de advertencia
+                        MessageBox.Show("Actualmente está ingresando un dato. No puede abrir nuevamente el formulario.");
+                    }
+                }
+                // Agregar el resto de las condiciones aquí...
+                else if (id.Contains("Idiomas"))
+                {
+                    if (idiomas == null || idiomas.IsDisposed)
+                    {
+                        id = id.Replace("Idiomas", "");
+                        // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
+                        idiomas = new frmIdioma();
+                        idiomas.FormClosed += (s, args) => { idiomas = null; };
+                        idiomas.Idpersona = Idpersona;
+                        idiomas.Persona = Persona;
+                        idiomas.ShowDialog();
+                    }
+                    else
+                    {
+                        idiomas.Activate();
+                        // Si ya hay una instancia abierta, mostrar un mensaje de advertencia
+                        MessageBox.Show("Actualmente está ingresando un dato. No puede abrir nuevamente el formulario.");
+                    }
+                }
+                else if (id.Contains("Experiencia Laboral"))
+                {
+                    if (experienciaLAboral == null || experienciaLAboral.IsDisposed)
+                    {
+                        id = id.Replace("Experiencia Laboral", "");
+                        // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
+                        experienciaLAboral = new frmExperienciaLaboral();
+                        experienciaLAboral.FormClosed += (s, args) => { experienciaLAboral = null; };
+                        experienciaLAboral.Idpersona = Idpersona;
+                        experienciaLAboral.Persona = Persona;
+                        experienciaLAboral.ShowDialog();
+                    }
+                    else
+                    {
+                        experienciaLAboral.Activate();
+                        // Si ya hay una instancia abierta, mostrar un mensaje de advertencia
+                        MessageBox.Show("Actualmente está ingresando un dato. No puede abrir nuevamente el formulario.");
+                    }
+                }
+                else if (id.Contains("Socio Economico"))
+                {
+                    if (socioEconomico == null || socioEconomico.IsDisposed)
+                    {
+                        id = id.Replace("Socio Economico", "");
+                        // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
+                        socioEconomico = new frmSocioEconomico();
+                        socioEconomico.FormClosed += (s, args) => { socioEconomico = null; };
+                        socioEconomico.Idpersona = Idpersona;
+                        socioEconomico.Persona = Persona;
+                        socioEconomico.ShowDialog();
+                    }
+                    else
+                    {
+                        socioEconomico.Activate();
+                        // Si ya hay una instancia abierta, mostrar un mensaje de advertencia
+                        MessageBox.Show("Actualmente está ingresando un dato. No puede abrir nuevamente el formulario.");
+                    }
+                }
+                else if (id.Contains("Fisico Biologico"))
+                {
+                    if (fisicoBiologico == null || fisicoBiologico.IsDisposed)
+                    {
+                        id = id.Replace("Fisico Biologico", "");
+                        // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
+                        fisicoBiologico = new frmFisicoBiologico();
+                        fisicoBiologico.FormClosed += (s, args) => { fisicoBiologico = null; };
+                        fisicoBiologico.Idpersona = Idpersona;
+                        fisicoBiologico.Persona = Persona;
+                        fisicoBiologico.ShowDialog();
+                    }
+                    else
+                    {
+                        referenciaPersonal.Activate();
+                        // Si ya hay una instancia abierta, mostrar un mensaje de advertencia
+                        MessageBox.Show("Actualmente está ingresando un dato. No puede abrir nuevamente el formulario.");
+                    }
+                }
+                else if (id.Contains("Referencia Laboral"))
+                {
+                    if (referenciaLaboral == null || referenciaLaboral.IsDisposed)
+                    {
+                        id = id.Replace("Referencia Laboral", "");
+                        // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
+                        referenciaLaboral = new frmReferenciaLaboral();
+                        referenciaLaboral.FormClosed += (s, args) => { referenciaLaboral = null; };
+                        referenciaLaboral.Idpersona = Idpersona;
+                        referenciaLaboral.Persona = Persona;
+                        referenciaLaboral.ShowDialog();
+                    }
+                    else
+                    {
+                        referenciaPersonal.Activate();
+                        // Si ya hay una instancia abierta, mostrar un mensaje de advertencia
+                        MessageBox.Show("Actualmente está ingresando un dato. No puede abrir nuevamente el formulario.");
+                    }
+                }
+                else if (id.Contains("Referencia Personal"))
+                {
+                    if (referenciaPersonal == null || referenciaPersonal.IsDisposed)
+                    {
+                        id = id.Replace("Referencia Personal", "");
+                        // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
+                        referenciaPersonal = new frmReferenciaPersonal();
+                        referenciaPersonal.FormClosed += (s, args) => { referenciaPersonal = null; };
+                        referenciaPersonal.Idpersona = Idpersona;
+                        referenciaPersonal.Persona = Persona;
+                        referenciaPersonal.ShowDialog();
+                    }
+                    else
+                    {
+                        referenciaPersonal.Activate();
+                        // Si ya hay una instancia abierta, mostrar un mensaje de advertencia
+                        MessageBox.Show("Actualmente está ingresando un dato. No puede abrir nuevamente el formulario.");
+                    }
+                }
+                else if (id.Contains("Otros Datos"))
+                {
+                    if (otrosDatos == null || otrosDatos.IsDisposed)
+                    {
+                        id = id.Replace("Otros Datos", "");
+                        // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
+                        otrosDatos = new frmOtrosDatos();
+                        otrosDatos.FormClosed += (s, args) => { otrosDatos = null; };
+                        otrosDatos.Idpersona = Idpersona;
+                        otrosDatos.Persona = Persona;
+                        otrosDatos.ShowDialog();
+                    }
+                    else
+                    {
+                        otrosDatos.Activate();
+                        // Si ya hay una instancia abierta, mostrar un mensaje de advertencia
+                        MessageBox.Show("Actualmente está ingresando un dato. No puede abrir nuevamente el formulario.");
+                    }
+
+                }
+                else if (id.Contains("Datos Adicionales"))
+                {
+                    // Verificar si ya hay una instancia abierta
+                    if (datosAdicionales == null || datosAdicionales.IsDisposed)
+                    {
+                        id = id.Replace("Datos Adicionales", "");
+                        // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
+                        datosAdicionales = new frmDatosAdicionales();
+                        datosAdicionales.FormClosed += (s, args) => { datosAdicionales = null; };
+                        datosAdicionales.Idpersona = Idpersona;
+                        datosAdicionales.Persona = Persona;
+                        datosAdicionales.ShowDialog();
+                    }
+                    else
+                    {
+                        datosAdicionales.Activate();
+                        // Si ya hay una instancia abierta, mostrar un mensaje de advertencia
+                        MessageBox.Show("Actualmente está ingresando un dato. No puede abrir nuevamente el formulario.");
+                    }
+                }
+
+                else if (id.Contains("Reporte"))
+                {
+                    // Verificar si ya hay una instancia abierta
+                    if (reporte == null || reporte.IsDisposed)
+                    {
+                        id = id.Replace("Reporte", "");
+                        // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
+                        reporte = new frmReportes();
+                        reporte.FormClosed += (s, args) => { reporte = null; };
+                        reporte.IdPersonaReporte = Idpersona;
+                        reporte.PersonaReporte = Persona;
+                        reporte.ShowDialog();
+                    }
+                    else
+                    {
+                        reporte.Activate();
+                        // Si ya hay una instancia abierta, mostrar un mensaje de advertencia
+                        MessageBox.Show("Actualmente está ingresando solicitando un reporte. No puede abrir nuevamente el formulario.");
+                    }
+                }
+
+                else if (id.Contains("Actas"))
+                {
+                    // Verificar si ya hay una instancia abierta
+                    if (actas == null || actas.IsDisposed)
+                    {
+                        id = id.Replace("Actas", "");
+                        // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
+                        actas = new ActasFormulario(Idpersona);
+                        actas.FormClosed += (s, args) => { actas = null; };
+
+                        actas.ShowDialog();
+                    }
+                    else
+                    {
+                        actas.Activate();
+                        // Si ya hay una instancia abierta, mostrar un mensaje de advertencia
+                        MessageBox.Show("Actualmente está ingresando solicitando un reporte. No puede abrir nuevamente el formulario.");
+                    }
+                }
             }
-
-            if (id.Contains("Familia"))
+            catch (Exception ex)
             {
-                id = id.Replace("Familia", "");
-                frmFamilia Obj = new frmFamilia();
-                string persona = Convert.ToString(this.dtgPersona.CurrentRow.Cells["id"].Value);
-                string a, b, c, d;
-                a = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Nombre"].Value);
-                b = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Nombre"].Value);
-                c = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Apellido"].Value);
-                d = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Apellido"].Value);
-                string nombre = a + " " + b + " " + c + " " + d;
-                Obj.Show();
-                Obj.cargar(persona, nombre);
-            }
-
-            if (id.Contains("Estudios"))
-            {
-                id = id.Replace("Estudios", "");
-                frmNivel_Academico Obj = new frmNivel_Academico();
-                string persona = Convert.ToString(this.dtgPersona.CurrentRow.Cells["id"].Value);
-                string a, b, c, d;
-                a = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Nombre"].Value);
-                b = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Nombre"].Value);
-                c = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Apellido"].Value);
-                d = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Apellido"].Value);
-                string nombre = a + " " + b + " " + c + " " + d;
-                Obj.Show();
-                Obj.cargar(persona, nombre);
-            }
-
-            if (id.Contains("Idiomas"))
-            {
-                id = id.Replace("Idiomas", "");
-                frmIdioma Obj = new frmIdioma();
-                string persona = Convert.ToString(this.dtgPersona.CurrentRow.Cells["id"].Value);
-                string a, b, c, d;
-                a = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Nombre"].Value);
-                b = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Nombre"].Value);
-                c = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Apellido"].Value);
-                d = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Apellido"].Value);
-                string nombre = a + " " + b + " " + c + " " + d;
-                Obj.Show();
-                Obj.cargar(persona, nombre);
-            }
-
-
-            if (id.Contains("Experiencia Laboral"))
-            {
-                id = id.Replace("Experiencia Laboral", "");
-                frmExperienciaLaboral Obj = new frmExperienciaLaboral();
-                string persona = Convert.ToString(this.dtgPersona.CurrentRow.Cells["id"].Value);
-                string a, b, c, d;
-                a = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Nombre"].Value);
-                b = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Nombre"].Value);
-                c = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Apellido"].Value);
-                d = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Apellido"].Value);
-                string nombre = a + " " + b + " " + c + " " + d;
-                Obj.Show();
-                Obj.cargar(persona, nombre);
-            }
-
-            if (id.Contains("Socio Economico"))
-            {
-                id = id.Replace("Socio Economico", "");
-                frmSocio_Economico Obj = new frmSocio_Economico();
-                string persona = Convert.ToString(this.dtgPersona.CurrentRow.Cells["id"].Value);
-                string a, b, c, d;
-                a = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Nombre"].Value);
-                b = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Nombre"].Value);
-                c = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Apellido"].Value);
-                d = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Apellido"].Value);
-                string nombre = a + " " + b + " " + c + " " + d;
-                Obj.Show();
-                Obj.cargar(persona, nombre);
-            }
-
-            if (id.Contains("Fisico Biologico"))
-            {
-                id = id.Replace("Fisico Biologico", "");
-                frmFisicoBiologico Obj = new frmFisicoBiologico();
-                string persona = Convert.ToString(this.dtgPersona.CurrentRow.Cells["id"].Value);
-                string a, b, c, d;
-                a = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Nombre"].Value);
-                b = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Nombre"].Value);
-                c = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Apellido"].Value);
-                d = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Apellido"].Value);
-                string nombre = a + " " + b + " " + c + " " + d;
-                Obj.Show();
-                Obj.cargar(persona, nombre);
-            }
-
-
-
-            if (id.Contains("Referencia Laboral"))
-            {
-                id = id.Replace("Referencia Laboral", "");
-                frmReferenciaLaboral Obj = new frmReferenciaLaboral();
-                string persona = Convert.ToString(this.dtgPersona.CurrentRow.Cells["id"].Value);
-                string a, b, c, d;
-                a = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Nombre"].Value);
-                b = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Nombre"].Value);
-                c = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Apellido"].Value);
-                d = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Apellido"].Value);
-                string nombre = a + " " + b + " " + c + " " + d;
-                Obj.Show();
-                Obj.cargar(persona, nombre);
-            }
-
-
-
-            if (id.Contains("Referencia Personal"))
-            {
-                id = id.Replace("Referencia Personal", "");
-                frmReferenciaPersonal Obj = new frmReferenciaPersonal();
-                string persona = Convert.ToString(this.dtgPersona.CurrentRow.Cells["id"].Value);
-                string a, b, c, d;
-                a = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Nombre"].Value);
-                b = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Nombre"].Value);
-                c = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Apellido"].Value);
-                d = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Apellido"].Value);
-                string nombre = a + " " + b + " " + c + " " + d;
-                Obj.Show();
-                Obj.cargar(persona, nombre);
-
-            }
-
-
-
-            if (id.Contains("Otros Datos"))
-            {
-                id = id.Replace("Otros Datos", "");
-                frmOtrosDatos Obj = new frmOtrosDatos();
-                string persona = Convert.ToString(this.dtgPersona.CurrentRow.Cells["id"].Value);
-                string a, b, c, d;
-                a = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Nombre"].Value);
-                b = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Nombre"].Value);
-                c = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Apellido"].Value);
-                d = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Apellido"].Value);
-                string nombre = a + " " + b + " " + c + " " + d;
-                Obj.Show();
-                Obj.cargar(persona, nombre);
-            }
-
-
-
-            if (id.Contains("Datos Adicionales"))
-            {
-
-                id = id.Replace("Datos Adicionales", "");
-                frmDatosAdicionales Obj = new frmDatosAdicionales();
-                string persona = Convert.ToString(this.dtgPersona.CurrentRow.Cells["id"].Value);
-                string a, b, c, d;
-                a = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Nombre"].Value);
-                b = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Nombre"].Value);
-                c = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Apellido"].Value);
-                d = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Apellido"].Value);
-                string nombre = a + " " + b + " " + c + " " + d;
-                Obj.Show();
-                Obj.cargar(persona, nombre);
-                Obj.StartPosition = FormStartPosition.CenterScreen; // Centrar la ventana en el formulario principal
+                MessageBox.Show("Error al abrir el formulario: " + ex.Message);
             }
         }
+
+
 
         private void txtPnombre_TextChanged(object sender, EventArgs e)
         {
@@ -1304,10 +1399,7 @@ namespace Capa_Vista
             txtIgss.SelectionStart = txtIgss.Text.Length;
         }
 
-        private void Codigo_Click(object sender, EventArgs e)
-        {
-
-        }
+        
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -1353,15 +1445,7 @@ namespace Capa_Vista
             }
         }
 
-        private void lblTotal_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cmbMunicipio_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
-        }
+      
 
         private void cmbDepartamento_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -1391,33 +1475,21 @@ namespace Capa_Vista
 
         private void btnlimpiar_Click(object sender, EventArgs e)
         {
-            this.IsNuevo = false;
-            this.IsEditar = false;
-            this.Botones();
-            this.Limpiar();
-            this.txtIdPersona.Text = string.Empty;
-            this.Habilitar(false);
-
-            // Agregar mensaje de actualización
-            MessageBox.Show("Se actualizó la edición de datos.", "Actualización Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Mostrar();
+            this.txtBuscar.Text = "";
         }
 
         private string municipioSeleccionado = "ID_MUNICIPIO";
 
         private void dtgPersona_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
-{
-                DataGridViewRow row = dtgPersona.Rows[e.RowIndex];
-
-                // Obtener valores de las celdas que deseas pasar
-                string valorCelda1 = row.Cells["Primer_Nombre"].Value.ToString();
-                string valorCelda2 = row.Cells["Segundo_Nombre"].Value.ToString();
-                string valorCelda3 = row.Cells["Primer_Apellido"].Value.ToString();
-                string valorCelda4 = row.Cells["Segundo_Apellido"].Value.ToString();
-            }
+           
         }
 
-
+        private void button2_Click(object sender, EventArgs e)
+        {
+            BuscarPersona();
+            OcultarColumnas();
+        }
     }
 }

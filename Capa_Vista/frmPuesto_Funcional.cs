@@ -50,8 +50,12 @@ namespace Capa_Vista
             cmbSeccion.ValueMember = "IDUNIDAD_SECCION";
 
             cmbRenglon.DataSource = dataSet.Tables["TYRENGLONPRESUPUESTARIO"];
-            cmbRenglon.DisplayMember = "ABRIATURA";
+            cmbRenglon.DisplayMember = "ABREVIATURA";
             cmbRenglon.ValueMember = "ID_RENGLON";
+
+            cmbcoordinacion.DataSource = dataSet.Tables["TYCOORDINACION"];
+            cmbcoordinacion.DisplayMember = "COORDINACION";
+            cmbcoordinacion.ValueMember = "ID_COORDINACION";
 
         }
         private void BuscarDpi()

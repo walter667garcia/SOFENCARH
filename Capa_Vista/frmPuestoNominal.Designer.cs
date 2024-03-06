@@ -72,11 +72,11 @@
             // Inicio
             // 
             this.Inicio.Controls.Add(this.groupBox1);
-            this.Inicio.Location = new System.Drawing.Point(4, 30);
+            this.Inicio.Location = new System.Drawing.Point(4, 37);
             this.Inicio.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Inicio.Name = "Inicio";
             this.Inicio.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Inicio.Size = new System.Drawing.Size(823, 598);
+            this.Inicio.Size = new System.Drawing.Size(823, 591);
             this.Inicio.TabIndex = 1;
             this.Inicio.Text = ".:--";
             this.Inicio.UseVisualStyleBackColor = true;
@@ -112,7 +112,7 @@
             this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(644, 281);
+            this.button1.Location = new System.Drawing.Point(644, 275);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(156, 30);
             this.button1.TabIndex = 79;
@@ -126,7 +126,7 @@
             this.label21.ForeColor = System.Drawing.SystemColors.GrayText;
             this.label21.Location = new System.Drawing.Point(26, 237);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(221, 21);
+            this.label21.Size = new System.Drawing.Size(278, 28);
             this.label21.TabIndex = 78;
             this.label21.Text = "Busqueda por puesto nominal:";
             // 
@@ -193,7 +193,7 @@
             this.lblTotal.Location = new System.Drawing.Point(337, 281);
             this.lblTotal.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTotal.Name = "lblTotal";
-            this.lblTotal.Size = new System.Drawing.Size(52, 21);
+            this.lblTotal.Size = new System.Drawing.Size(65, 25);
             this.lblTotal.TabIndex = 66;
             this.lblTotal.Text = "label2";
             // 
@@ -202,7 +202,7 @@
             this.txtBuscar.Location = new System.Drawing.Point(31, 281);
             this.txtBuscar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(298, 29);
+            this.txtBuscar.Size = new System.Drawing.Size(298, 34);
             this.txtBuscar.TabIndex = 65;
             this.txtBuscar.TextChanged += new System.EventHandler(this.txtBuscar_TextChanged);
             // 
@@ -214,7 +214,7 @@
             this.Nombre.Location = new System.Drawing.Point(8, 131);
             this.Nombre.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Nombre.Name = "Nombre";
-            this.Nombre.Size = new System.Drawing.Size(57, 21);
+            this.Nombre.Size = new System.Drawing.Size(71, 25);
             this.Nombre.TabIndex = 64;
             this.Nombre.Text = "Puesto";
             this.Nombre.Visible = false;
@@ -280,7 +280,7 @@
             this.txtPuestoNominal.Location = new System.Drawing.Point(216, 62);
             this.txtPuestoNominal.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtPuestoNominal.Name = "txtPuestoNominal";
-            this.txtPuestoNominal.Size = new System.Drawing.Size(371, 28);
+            this.txtPuestoNominal.Size = new System.Drawing.Size(371, 33);
             this.txtPuestoNominal.TabIndex = 4;
             this.txtPuestoNominal.TextChanged += new System.EventHandler(this.txtPuestoNominal_TextChanged);
             // 
@@ -293,7 +293,7 @@
             this.txtCodigo.Location = new System.Drawing.Point(31, 163);
             this.txtCodigo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtCodigo.Name = "txtCodigo";
-            this.txtCodigo.Size = new System.Drawing.Size(31, 29);
+            this.txtCodigo.Size = new System.Drawing.Size(31, 34);
             this.txtCodigo.TabIndex = 3;
             this.txtCodigo.Visible = false;
             // 
@@ -305,7 +305,7 @@
             this.lblPuestoNominal.Location = new System.Drawing.Point(211, 32);
             this.lblPuestoNominal.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPuestoNominal.Name = "lblPuestoNominal";
-            this.lblPuestoNominal.Size = new System.Drawing.Size(118, 21);
+            this.lblPuestoNominal.Size = new System.Drawing.Size(147, 25);
             this.lblPuestoNominal.TabIndex = 1;
             this.lblPuestoNominal.Text = "Puesto nominal";
             // 
@@ -317,7 +317,7 @@
             this.label1.Location = new System.Drawing.Point(321, 9);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(170, 23);
+            this.label1.Size = new System.Drawing.Size(207, 30);
             this.label1.TabIndex = 6;
             this.label1.Text = "Puestos Nominales";
             // 
@@ -327,7 +327,7 @@
             // 
             // frmPuestoNominal
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 28F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.RoyalBlue;
             this.ClientSize = new System.Drawing.Size(848, 684);
