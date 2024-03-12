@@ -150,7 +150,7 @@ namespace Capa_Datos
                 cmd.CommandText = "sp_ActualizarRhIdioma";
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@ID_IDIOMA", idioma.IdPersona).SqlDbType = SqlDbType.Int;
+                cmd.Parameters.AddWithValue("@ID_IDIOMA", idioma.Id_Idioma).SqlDbType = SqlDbType.Int;
                 cmd.Parameters.AddWithValue("@IDPERSONA", idioma.IdPersona).SqlDbType = SqlDbType.Int;
                 cmd.Parameters.AddWithValue("@IDIDIOMA", idioma.IdIdioma).SqlDbType = SqlDbType.Int;
                 cmd.Parameters.AddWithValue("@CONVERSACION", idioma.Conversacion).SqlDbType = SqlDbType.NVarChar;

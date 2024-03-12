@@ -159,12 +159,18 @@ namespace Capa_Vista.ReferenciaPersonal
                 {
                     if (instanciaAbierta == null || instanciaAbierta.IsDisposed)
                     {
-                        id = id.Replace("Ubicacion", "");
+                        id = id.Replace("Editar", "");
                         // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
+                        string Id = this.dtgPersonal.CurrentRow.Cells["Id"].Value.ToString();
+                        string Persona = this.dtgPersonal.CurrentRow.Cells["Nombre"].Value.ToString();
+                        string Telefono = this.dtgPersonal.CurrentRow.Cells["Telefono"].Value.ToString();
+                        string Relacion = this.dtgPersonal.CurrentRow.Cells["Relacion"].Value.ToString();
+
                         instanciaAbierta = new ReferenciaPersonalFormulario();
                         instanciaAbierta.FormClosed += (s, args) => { instanciaAbierta = null; };
                         instanciaAbierta.Idpersona = Idpersona;
                         instanciaAbierta.Evento = "Editar";
+                        instanciaAbierta.CargarDatos(Id, Persona, Telefono, Relacion);
                         instanciaAbierta.ShowDialog();
                     }
                     else

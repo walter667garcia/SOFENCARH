@@ -89,5 +89,10 @@
   <ItemGroup>
     <None Include="Resources\minimizar.png" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SqlServer.Types">
+      <Version>14.0.314.76</Version>
+    </PackageReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

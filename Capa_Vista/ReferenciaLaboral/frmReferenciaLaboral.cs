@@ -161,12 +161,18 @@ namespace Capa_Vista.ReferenciaLaboral
                 {
                     if (instanciaAbierta == null || instanciaAbierta.IsDisposed)
                     {
-                        id = id.Replace("Ubicacion", "");
+                        id = id.Replace("Editar", "");
                         // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
+                        string Id = this.dtgLaboral.CurrentRow.Cells["Id"].Value.ToString();
+                        string Empresa = this.dtgLaboral.CurrentRow.Cells["Empresa"].Value.ToString();
+                        string Telefono = this.dtgLaboral.CurrentRow.Cells["Telefono"].Value.ToString();
+                        string Relacion = this.dtgLaboral.CurrentRow.Cells["Relacion"].Value.ToString();
+
                         instanciaAbierta = new ReferenciaLaboralFormulario();
                         instanciaAbierta.FormClosed += (s, args) => { instanciaAbierta = null; };
                         instanciaAbierta.Idpersona = Idpersona;
                         instanciaAbierta.Evento = "Editar";
+                        instanciaAbierta.CargarDatos(Id,Empresa,Telefono, Relacion);
                         instanciaAbierta.ShowDialog();
                     }
                     else

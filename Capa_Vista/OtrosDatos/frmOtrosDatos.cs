@@ -157,10 +157,29 @@ namespace Capa_Vista.OtrosDatos
                     {
                         id = id.Replace("Ubicacion", "");
                         // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
+                        string Id = this.dtgOtrosDatos.CurrentRow.Cells["ID"].Value.ToString();
+                        string TrabajoEnca = this.dtgOtrosDatos.CurrentRow.Cells["TrabajoEnca"].Value.ToString();
+                        string FechaT = this.dtgOtrosDatos.CurrentRow.Cells["FechaT"].Value.ToString();
+                        string Puesto = this.dtgOtrosDatos.CurrentRow.Cells["Puesto"].Value.ToString();
+                        string SolicitudEnca = this.dtgOtrosDatos.CurrentRow.Cells["SolicitudEnca"].Value.ToString();
+                        string FechaS = this.dtgOtrosDatos.CurrentRow.Cells["FechaS"].Value.ToString();
+                        string Plaza = this.dtgOtrosDatos.CurrentRow.Cells["Plaza"].Value.ToString();
+                        string Disponibilidad = this.dtgOtrosDatos.CurrentRow.Cells["Disponibilidad"].Value.ToString();
+                        string FamilliaEnca = this.dtgOtrosDatos.CurrentRow.Cells["Familiar_Enca"].Value.ToString();
+                        string FamiliaEncaActual = this.dtgOtrosDatos.CurrentRow.Cells["Familiar_Enca1"].Value.ToString();
+                        string xEncaRelacion = this.dtgOtrosDatos.CurrentRow.Cells["Enca_Relacion"].Value.ToString();
+                        string PustoConocido = this.dtgOtrosDatos.CurrentRow.Cells["PUESTO_CONOCIDO"].Value.ToString();
+                        string PlazaVacante = this.dtgOtrosDatos.CurrentRow.Cells["Plaza_Vacante"].Value.ToString();
+
                         instanciaAbierta = new OtrosDatosFormulario();
                         instanciaAbierta.FormClosed += (s, args) => { instanciaAbierta = null; };
                         instanciaAbierta.Idpersona = Idpersona;
                         instanciaAbierta.Evento = "Editar";
+                        instanciaAbierta.CargarDatos(
+                            Id, TrabajoEnca, FechaT, Puesto, SolicitudEnca,
+                            FechaS, Plaza, Disponibilidad, FamilliaEnca, FamiliaEncaActual,
+                            xEncaRelacion,PustoConocido,PlazaVacante
+                            );
                         instanciaAbierta.ShowDialog();
                     }
                     else

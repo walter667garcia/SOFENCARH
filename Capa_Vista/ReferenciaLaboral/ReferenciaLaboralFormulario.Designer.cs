@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel2 = new System.Windows.Forms.Panel();
+            this.txtId = new System.Windows.Forms.TextBox();
             this.txtRelacion = new System.Windows.Forms.TextBox();
             this.lbRelacion = new System.Windows.Forms.Label();
             this.txtTelefono = new System.Windows.Forms.TextBox();
@@ -46,6 +47,7 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.White;
+            this.panel2.Controls.Add(this.txtId);
             this.panel2.Controls.Add(this.txtRelacion);
             this.panel2.Controls.Add(this.lbRelacion);
             this.panel2.Controls.Add(this.txtTelefono);
@@ -57,8 +59,17 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 68);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(508, 384);
+            this.panel2.Size = new System.Drawing.Size(518, 384);
             this.panel2.TabIndex = 7;
+            // 
+            // txtId
+            // 
+            this.txtId.Enabled = false;
+            this.txtId.Location = new System.Drawing.Point(400, 17);
+            this.txtId.Name = "txtId";
+            this.txtId.Size = new System.Drawing.Size(62, 22);
+            this.txtId.TabIndex = 49;
+            this.txtId.Visible = false;
             // 
             // txtRelacion
             // 
@@ -68,7 +79,7 @@
             this.txtRelacion.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtRelacion.Name = "txtRelacion";
             this.txtRelacion.Size = new System.Drawing.Size(376, 33);
-            this.txtRelacion.TabIndex = 48;
+            this.txtRelacion.TabIndex = 10;
             // 
             // lbRelacion
             // 
@@ -89,7 +100,8 @@
             this.txtTelefono.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtTelefono.Name = "txtTelefono";
             this.txtTelefono.Size = new System.Drawing.Size(376, 33);
-            this.txtTelefono.TabIndex = 46;
+            this.txtTelefono.TabIndex = 9;
+            this.txtTelefono.TextChanged += new System.EventHandler(this.txtTelefono_TextChanged);
             // 
             // label4
             // 
@@ -110,7 +122,7 @@
             this.txtEmpresa.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtEmpresa.Name = "txtEmpresa";
             this.txtEmpresa.Size = new System.Drawing.Size(376, 33);
-            this.txtEmpresa.TabIndex = 44;
+            this.txtEmpresa.TabIndex = 8;
             // 
             // label3
             // 
@@ -132,9 +144,10 @@
             this.button2.Location = new System.Drawing.Point(272, 290);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(140, 46);
-            this.button2.TabIndex = 9;
+            this.button2.TabIndex = 11;
             this.button2.Text = "Guardar";
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
@@ -145,7 +158,7 @@
             this.button1.Location = new System.Drawing.Point(93, 290);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(141, 46);
-            this.button1.TabIndex = 8;
+            this.button1.TabIndex = 12;
             this.button1.Text = "Cancelar";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -157,7 +170,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(508, 68);
+            this.panel1.Size = new System.Drawing.Size(518, 68);
             this.panel1.TabIndex = 6;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
             this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseMove);
@@ -178,7 +191,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(508, 452);
+            this.ClientSize = new System.Drawing.Size(518, 452);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -206,5 +219,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtEmpresa;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtId;
     }
 }

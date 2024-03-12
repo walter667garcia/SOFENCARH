@@ -91,7 +91,7 @@ namespace Capa_Datos
                 {
                     sqlcon.Open();
 
-                    using (SqlCommand cmd = new SqlCommand("sp_ActualizarRHActaPosesion", sqlcon))
+                    using (SqlCommand cmd = new SqlCommand("sp_ActualizarRHActa", sqlcon))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@ID_ACTA", ID_ACTA);
@@ -124,7 +124,7 @@ namespace Capa_Datos
             {
                 sqlcon.Open();
                 // Comando para eliminar
-                SqlCommand command = new SqlCommand("EliminarRHActaPosesion", sqlcon);
+                SqlCommand command = new SqlCommand("EliminarRHActa", sqlcon);
                 command.CommandType = System.Data.CommandType.StoredProcedure;
                 // Parámetro
                 command.Parameters.AddWithValue("@ID_ACTA", ID_ACTA);
@@ -165,11 +165,11 @@ namespace Capa_Datos
                 sqlconn.ConnectionString = Conexion.Cn;
                 SqlCommand sqlcmd = new SqlCommand();
                 sqlcmd.Connection = sqlconn;
-                sqlcmd.CommandText = "sp_BuscarRHActa";
+                sqlcmd.CommandText = "sp_BuscarActas";
                 sqlcmd.CommandType = CommandType.StoredProcedure;
 
                 SqlParameter ParBuscar = new SqlParameter();
-                ParBuscar.ParameterName = "@Persona";
+                ParBuscar.ParameterName = "@Empleado";
                 ParBuscar.SqlDbType = SqlDbType.VarChar;
                 ParBuscar.Size = 200;
                 ParBuscar.Value = acta.Persona;

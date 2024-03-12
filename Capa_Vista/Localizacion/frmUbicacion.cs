@@ -156,12 +156,17 @@ namespace Capa_Vista.Localizacion
                 {
                     if (instanciaAbierta == null || instanciaAbierta.IsDisposed)
                     {
-                        id = id.Replace("Ubicacion", "");
+                        id = id.Replace("Editar", "");
                         // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
+                        string Id = this.dtgUbicacion.CurrentRow.Cells["id"].Value.ToString();
+                        string Descripcion = this.dtgUbicacion.CurrentRow.Cells["Descripcion"].Value.ToString();
+                        string Localizacion = this.dtgUbicacion.CurrentRow.Cells["Localizacion"].Value.ToString();
+                        
                         instanciaAbierta = new UbicacionFormulario();
                         instanciaAbierta.FormClosed += (s, args) => { instanciaAbierta = null; };
                         instanciaAbierta.Idpersona = Idpersona;
                         instanciaAbierta.Evento = "Editar";
+                        instanciaAbierta.CargarDatos(Id, Descripcion, Localizacion);
                         instanciaAbierta.ShowDialog();
                     }
                     else

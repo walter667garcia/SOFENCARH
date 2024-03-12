@@ -164,12 +164,35 @@ namespace Capa_Vista.FisicoBiologico
                 {
                     if (instanciaAbierta == null || instanciaAbierta.IsDisposed)
                     {
-                        id = id.Replace("Ubicacion", "");
+                        id = id.Replace("Editar", "");
                         // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
+                        string Id = this.dtgFisicoBiologico.CurrentRow.Cells["ID"].Value.ToString();
+                        string cmbEmfermedad = this.dtgFisicoBiologico.CurrentRow.Cells["ENFERMEDAD"].Value.ToString();
+                        string cmbDiabetes = this.dtgFisicoBiologico.CurrentRow.Cells["DIABETES"].Value.ToString();
+                        string Accidente = this.dtgFisicoBiologico.CurrentRow.Cells["ACCIDENTE"].Value.ToString();
+                        string Operacion = this.dtgFisicoBiologico.CurrentRow.Cells["OPERACION"].Value.ToString();
+                        string Alergias = this.dtgFisicoBiologico.CurrentRow.Cells["ALERGIAS"].Value.ToString();
+                        string cmbtratamiento = this.dtgFisicoBiologico.CurrentRow.Cells["TRATAMIENTO"].Value.ToString();
+                        string Especifique = this.dtgFisicoBiologico.CurrentRow.Cells["ESPECIFIQUE"].Value.ToString();
+                        string cmblentes = this.dtgFisicoBiologico.CurrentRow.Cells["LENTES"].Value.ToString();
+                        string cmbauditivo = this.dtgFisicoBiologico.CurrentRow.Cells["AUDITIVO"].Value.ToString();
+                        string Discapacidad = this.dtgFisicoBiologico.CurrentRow.Cells["DISCAPACIDAD"].Value.ToString();
+                        string cmbdrogas = this.dtgFisicoBiologico.CurrentRow.Cells["DROGAS"].Value.ToString();
+                        string cmbalcohol = this.dtgFisicoBiologico.CurrentRow.Cells["ALCOHOL"].Value.ToString();
+                        string cmbfuma = this.dtgFisicoBiologico.CurrentRow.Cells["FUMA"].Value.ToString();
+                        string Peso = this.dtgFisicoBiologico.CurrentRow.Cells["PESO"].Value.ToString();
+                        string Estatura = this.dtgFisicoBiologico.CurrentRow.Cells["ESTATURA"].Value.ToString();
+                        string cmbsangre = this.dtgFisicoBiologico.CurrentRow.Cells["SANGRE"].Value.ToString();
+                        string Pasatienpo = this.dtgFisicoBiologico.CurrentRow.Cells["PASATIEMPOS"].Value.ToString();
+                        string Deporte = this.dtgFisicoBiologico.CurrentRow.Cells["DEPORTES"].Value.ToString();
                         instanciaAbierta = new FisicoBiologicoFormulario();
                         instanciaAbierta.FormClosed += (s, args) => { instanciaAbierta = null; };
                         instanciaAbierta.Idpersona = Idpersona;
                         instanciaAbierta.Evento = "Editar";
+                        instanciaAbierta.CargarDatos(Id, cmbEmfermedad, cmbDiabetes, Accidente, Operacion, 
+                                                      Alergias, cmbtratamiento, Especifique, cmblentes, cmbauditivo, Discapacidad, cmbdrogas, 
+                                                     cmbalcohol, cmbfuma, Peso, Estatura, cmbsangre, Pasatienpo, Deporte);
+
                         instanciaAbierta.ShowDialog();
                     }
                     else

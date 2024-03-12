@@ -55,13 +55,13 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 68);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(443, 331);
+            this.panel2.Size = new System.Drawing.Size(622, 331);
             this.panel2.TabIndex = 3;
             // 
             // txtID
             // 
             this.txtID.Enabled = false;
-            this.txtID.Location = new System.Drawing.Point(361, 16);
+            this.txtID.Location = new System.Drawing.Point(521, 16);
             this.txtID.Name = "txtID";
             this.txtID.Size = new System.Drawing.Size(54, 22);
             this.txtID.TabIndex = 14;
@@ -96,9 +96,11 @@
             this.txtLocalizacion.ForeColor = System.Drawing.Color.Black;
             this.txtLocalizacion.Location = new System.Drawing.Point(39, 154);
             this.txtLocalizacion.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtLocalizacion.Multiline = true;
             this.txtLocalizacion.Name = "txtLocalizacion";
-            this.txtLocalizacion.Size = new System.Drawing.Size(355, 33);
-            this.txtLocalizacion.TabIndex = 11;
+            this.txtLocalizacion.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtLocalizacion.Size = new System.Drawing.Size(548, 75);
+            this.txtLocalizacion.TabIndex = 9;
             // 
             // cmbLocalizacion
             // 
@@ -110,8 +112,8 @@
             this.cmbLocalizacion.Location = new System.Drawing.Point(39, 56);
             this.cmbLocalizacion.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmbLocalizacion.Name = "cmbLocalizacion";
-            this.cmbLocalizacion.Size = new System.Drawing.Size(355, 33);
-            this.cmbLocalizacion.TabIndex = 10;
+            this.cmbLocalizacion.Size = new System.Drawing.Size(548, 33);
+            this.cmbLocalizacion.TabIndex = 8;
             // 
             // button2
             // 
@@ -119,10 +121,10 @@
             this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.ForeColor = System.Drawing.Color.White;
-            this.button2.Location = new System.Drawing.Point(238, 247);
+            this.button2.Location = new System.Drawing.Point(435, 247);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(140, 46);
-            this.button2.TabIndex = 9;
+            this.button2.TabIndex = 10;
             this.button2.Text = "Guardar";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -133,10 +135,10 @@
             this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(59, 247);
+            this.button1.Location = new System.Drawing.Point(39, 247);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(141, 46);
-            this.button1.TabIndex = 8;
+            this.button1.TabIndex = 11;
             this.button1.Text = "Cancelar";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -148,7 +150,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(443, 68);
+            this.panel1.Size = new System.Drawing.Size(622, 68);
             this.panel1.TabIndex = 2;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
             this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseMove);
@@ -159,7 +161,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(77, 19);
+            this.label1.Location = new System.Drawing.Point(198, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(283, 32);
             this.label1.TabIndex = 0;
@@ -169,7 +171,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(443, 399);
+            this.ClientSize = new System.Drawing.Size(622, 399);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

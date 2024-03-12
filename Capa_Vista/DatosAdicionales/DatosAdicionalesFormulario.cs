@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -102,9 +103,9 @@ namespace Capa_Vista.DatosAdicionales
                 {
                     rpta = nDatosAdicionales.Insertar(
                         Idpersona,
-                        this.txtEmergencia.Text.Trim().ToUpper(),
-                        this.txtParentesco.Text.Trim().ToUpper(),
-                        this.txtTelefono.Text.Trim().ToUpper()
+                        this.txtEmergencia.Text.Trim(),
+                        this.txtParentesco.Text.Trim(),
+                        this.txtTelefono.Text.Trim()
                     );
                 }
                 else if (this.Evento == "Editar")
@@ -112,10 +113,11 @@ namespace Capa_Vista.DatosAdicionales
                     rpta = nDatosAdicionales.Actualizar(
                         Convert.ToInt32(this.txtId.Text),
                         this.Idpersona,
-                        this.txtEmergencia.Text.Trim().ToUpper(),
-                        this.txtParentesco.Text.Trim().ToUpper(),
-                        this.txtTelefono.Text.Trim().ToUpper()
+                        this.txtEmergencia.Text.Trim(),
+                        this.txtParentesco.Text.Trim(),
+                        this.txtTelefono.Text.Trim()
                     );
+
                 }
 
                 if (rpta.Equals("OK"))
@@ -145,5 +147,21 @@ namespace Capa_Vista.DatosAdicionales
             txtTelefono.Text = Telefono;
         }
 
+        private void txtTelefono_TextChanged(object sender, EventArgs e)
+        {
+            // Elimina cualquier caracter que no sea dígito
+            string TelefonoNumerico = Regex.Replace(txtTelefono.Text, @"[^\d]", "");
+
+            // Limita a 13 caracteres
+            if (TelefonoNumerico.Length > 8)
+            {
+                TelefonoNumerico = TelefonoNumerico.Substring(0, 8);
+            }
+
+            // Asigna el texto limpio al TextBox
+            txtTelefono.Text = TelefonoNumerico;
+            // Coloca el cursor al final del texto
+            txtTelefono.SelectionStart = txtTelefono.Text.Length;
+        }
     }
 }

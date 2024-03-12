@@ -61,7 +61,8 @@ namespace SOFENCARH
 
                 if (isValidUser)
                 {
-                    Menu menu = new Menu(userType);
+                    Menu menu = new Menu();
+                    menu.ValidarUsuario(userType);
                     menu.Show();
                     this.Hide();
                     // MessageBox.Show($"¡Login exitoso! Tipo de usuario: {userType}");

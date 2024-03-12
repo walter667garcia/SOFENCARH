@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Capa_Negocio;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -62,9 +63,93 @@ namespace Capa_Vista.OtrosDatos
 
         private void button2_Click(object sender, EventArgs e)
         {
+            DateTime fechat = this.dtmFechaT.Value;
+            DateTime fechaS = this.dtmFechasS.Value;
+            if (string.IsNullOrEmpty(this.txtPuesto.Text) ||
+             string.IsNullOrEmpty(this.txtPustoConocido.Text) ||
+             string.IsNullOrEmpty(this.txtxEncaRelacion.Text))
+            {
+                MensajeError("Falta ingresar algunos datos Remarcados");
+            }
+
+
+            else
+            {
+                string rpta = "";
+                if (this.Evento == "Nuevo")
+                {
+                    rpta = nOtrosDatos.Insertar(
+                       Idpersona,
+                        this.cmbTrabajoEnca.Text.Trim(),
+                        fechat,
+                        this.txtPuesto.Text.Trim(),
+                        this.cmbSolicitudEnca.Text.Trim(),
+                        fechaS,
+                        this.txtPlaza.Text.Trim(),
+                        this.cmbDisponibilidad.Text.Trim(),
+                        this.txtFamilliaEnca.Text.Trim(),
+                        this.txtFamiliaEncaActual.Text.Trim(),
+                        this.txtxEncaRelacion.Text.Trim(),
+                        this.txtPustoConocido.Text.Trim(),
+                        this.cmbPlazaVacante.Text.Trim()
+                    );
+                }
+                else if (this.Evento == "Editar")
+                {
+                    rpta = nOtrosDatos.Actualizar(
+                        Convert.ToInt32(this.txtId.Text),
+                        Idpersona,
+                        this.cmbTrabajoEnca.Text.Trim(),
+                        fechat,
+                        this.txtPuesto.Text.Trim(),
+                        this.cmbSolicitudEnca.Text.Trim(),
+                        fechaS,
+                        this.txtPlaza.Text.Trim(),
+                        this.cmbDisponibilidad.Text.Trim(),
+                        this.txtFamilliaEnca.Text.Trim(),
+                        this.txtFamiliaEncaActual.Text.Trim(),
+                        this.txtxEncaRelacion.Text.Trim(),
+                        this.txtPustoConocido.Text.Trim(),
+                        this.cmbPlazaVacante.Text.Trim()
+                    );
+                }
+                if (rpta.Equals("OK"))
+                {
+                    this.MensajeOk(this.Evento == "Nuevo" ? "Se insertó de forma correcta el registro" : "Se actualizó de forma correcta el registro");
+                    LimpiarCampos();
+                    this.Close();
+                }
+                else
+                {
+                    this.MensajeError(rpta);
+                }
+            }
+        }
+        private void LimpiarCampos()
+        {
+            this.cmbTrabajoEnca.Text = string.Empty;
+            this.dtmFechaT.Value = DateTime.Today;
+            this.txtPuesto.Text = string.Empty;
+            this.cmbSolicitudEnca.Text = string.Empty;
+            this.dtmFechasS.Value = DateTime.Today;
+            this.txtPlaza.Text = string.Empty;
+            this.cmbDisponibilidad.Text = string.Empty;
+            this.txtFamilliaEnca.Text = string.Empty;
+            this.txtFamiliaEncaActual.Text = string.Empty;
+            this.txtxEncaRelacion.Text = string.Empty;
+            this.cmbPlazaVacante.Text = string.Empty;
+            this.txtPustoConocido.Text = string.Empty;
 
         }
-        public void CargarOtrosDatos(string id, string trabajoEnca, string fechaT, string puesto,
+        private void MensajeError(string mensaje)
+        {
+            MessageBox.Show(mensaje, "Sistema ENCA", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        private void MensajeOk(string mensaje)
+        {
+            MessageBox.Show(mensaje, "Sistema ENCA", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        public void CargarDatos(string id, string trabajoEnca, string fechaT, string puesto,
                              string solicitudEnca, string fechaS, string plaza, string disponibilidad,
                              string familiaEnca, string familiaEncaActual, string encaRelacion,
                              string puestoConocido, string plazaVacante)

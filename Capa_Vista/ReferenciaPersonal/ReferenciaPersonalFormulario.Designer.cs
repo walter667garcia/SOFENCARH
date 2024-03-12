@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel2 = new System.Windows.Forms.Panel();
+            this.txtId = new System.Windows.Forms.TextBox();
             this.txtRelacion = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.lbRelacion = new System.Windows.Forms.Label();
@@ -36,7 +37,7 @@
             this.txtTelefono = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.txtEmpresa = new System.Windows.Forms.TextBox();
+            this.txtPersona = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
@@ -46,6 +47,7 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.White;
+            this.panel2.Controls.Add(this.txtId);
             this.panel2.Controls.Add(this.txtRelacion);
             this.panel2.Controls.Add(this.button2);
             this.panel2.Controls.Add(this.lbRelacion);
@@ -53,12 +55,21 @@
             this.panel2.Controls.Add(this.txtTelefono);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.label4);
-            this.panel2.Controls.Add(this.txtEmpresa);
+            this.panel2.Controls.Add(this.txtPersona);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 68);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(518, 378);
+            this.panel2.Size = new System.Drawing.Size(514, 378);
             this.panel2.TabIndex = 9;
+            // 
+            // txtId
+            // 
+            this.txtId.Enabled = false;
+            this.txtId.Location = new System.Drawing.Point(395, 13);
+            this.txtId.Name = "txtId";
+            this.txtId.Size = new System.Drawing.Size(46, 22);
+            this.txtId.TabIndex = 55;
+            this.txtId.Visible = false;
             // 
             // txtRelacion
             // 
@@ -68,7 +79,7 @@
             this.txtRelacion.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtRelacion.Name = "txtRelacion";
             this.txtRelacion.Size = new System.Drawing.Size(382, 30);
-            this.txtRelacion.TabIndex = 54;
+            this.txtRelacion.TabIndex = 10;
             // 
             // button2
             // 
@@ -79,7 +90,7 @@
             this.button2.Location = new System.Drawing.Point(290, 293);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(140, 46);
-            this.button2.TabIndex = 9;
+            this.button2.TabIndex = 11;
             this.button2.Text = "Guardar";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -104,7 +115,7 @@
             this.button1.Location = new System.Drawing.Point(46, 293);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(141, 46);
-            this.button1.TabIndex = 8;
+            this.button1.TabIndex = 12;
             this.button1.Text = "Cancelar";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -117,7 +128,8 @@
             this.txtTelefono.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtTelefono.Name = "txtTelefono";
             this.txtTelefono.Size = new System.Drawing.Size(384, 30);
-            this.txtTelefono.TabIndex = 52;
+            this.txtTelefono.TabIndex = 9;
+            this.txtTelefono.TextChanged += new System.EventHandler(this.txtTelefono_TextChanged);
             // 
             // label3
             // 
@@ -141,15 +153,15 @@
             this.label4.TabIndex = 51;
             this.label4.Text = "Teléfono:";
             // 
-            // txtEmpresa
+            // txtPersona
             // 
-            this.txtEmpresa.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEmpresa.ForeColor = System.Drawing.Color.Black;
-            this.txtEmpresa.Location = new System.Drawing.Point(46, 53);
-            this.txtEmpresa.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtEmpresa.Name = "txtEmpresa";
-            this.txtEmpresa.Size = new System.Drawing.Size(384, 30);
-            this.txtEmpresa.TabIndex = 50;
+            this.txtPersona.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPersona.ForeColor = System.Drawing.Color.Black;
+            this.txtPersona.Location = new System.Drawing.Point(46, 53);
+            this.txtPersona.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtPersona.Name = "txtPersona";
+            this.txtPersona.Size = new System.Drawing.Size(384, 30);
+            this.txtPersona.TabIndex = 8;
             // 
             // panel1
             // 
@@ -158,7 +170,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(518, 68);
+            this.panel1.Size = new System.Drawing.Size(514, 68);
             this.panel1.TabIndex = 8;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
             this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseMove);
@@ -169,7 +181,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(40, 33);
+            this.label1.Location = new System.Drawing.Point(42, 18);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(426, 32);
             this.label1.TabIndex = 0;
@@ -179,7 +191,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(518, 446);
+            this.ClientSize = new System.Drawing.Size(514, 446);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -206,6 +218,7 @@
         private System.Windows.Forms.TextBox txtTelefono;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtEmpresa;
+        private System.Windows.Forms.TextBox txtPersona;
+        private System.Windows.Forms.TextBox txtId;
     }
 }

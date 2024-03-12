@@ -85,18 +85,108 @@ namespace Capa_Vista.SocioEconomico
         {
 
         }
-
-        private void button2_Click(object sender, EventArgs e)
+        private void MensajeOk(string mensaje)
         {
-
+            MessageBox.Show(mensaje, "Sistema de Empleados", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        public void CargarDatos(string agrupacion, string vivienda, string vehiculo,
+        private void MensajeError(string mensaje)
+        {
+            MessageBox.Show(mensaje, "Sistema de Empleados", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        private void LimpiarCampos()
+        {
+            this.cmbAgrupacion.SelectedIndex = -1;
+            this.txtDetalleAgrupacion.Text = string.Empty;
+            this.txtDependencias.Text = string.Empty;
+            this.txtDetalleDependencias.Text = string.Empty;
+            this.cmbVivienda.SelectedIndex = -1;
+            this.txtPagoVivienda.Text = string.Empty;
+            this.cmbFlagDeuda.Text = string.Empty;
+            this.txtMontoDeuda.Text = string.Empty;
+            this.txtMotivoDeuda.Text = string.Empty;
+            this.cmbFlagOtrosIngresos.SelectedIndex = -1;
+            this.txtMontoOtrosIngresos.Text = string.Empty;
+            this.txtFuenteOtrosIngresos.Text = string.Empty;
+            this.cmbVehiculo.SelectedIndex = -1;
+            this.txtTipoVehiculo.Text = string.Empty;
+            this.txtPlacaVehiculo.Text = string.Empty;
+            this.txtModeloVehiculo.Text = string.Empty;
+        }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(this.txtDependencias.Text) || string.IsNullOrEmpty(this.txtModeloVehiculo.Text))
+            {
+                MensajeError("Falta ingresar algunos datos Remarcados");
+
+            }
+            else
+            {
+                string rpta = "";
+                if (this.Evento == "Nuevo")
+                {
+                    rpta = nSocioEconomico.Insertar(
+                       Idpersona,
+                        Convert.ToInt32(this.cmbAgrupacion.SelectedValue),
+                        this.txtDetalleAgrupacion.Text.Trim(),
+                        this.txtDependencias.Text.Trim(),
+                        this.txtDetalleDependencias.Text.Trim(),
+                        Convert.ToInt32(this.cmbVivienda.SelectedValue),
+                        this.txtPagoVivienda.Text.Trim(),
+                        this.cmbFlagDeuda.Text.Trim(),
+                        this.txtMontoDeuda.Text.Trim(),
+                        this.txtMotivoDeuda.Text.Trim(),
+                        this.cmbFlagOtrosIngresos.Text.Trim(),
+                        this.txtMontoOtrosIngresos.Text.Trim(),
+                        this.txtFuenteOtrosIngresos.Text.Trim(),
+                        Convert.ToInt32(this.cmbVehiculo.SelectedValue),
+                        this.txtTipoVehiculo.Text.Trim(),
+                        this.txtPlacaVehiculo.Text.Trim(),
+                        this.txtModeloVehiculo.Text.Trim()
+                        );
+                }
+                else if (this.Evento == "Editar")
+                {
+                    rpta = nSocioEconomico.Actualizar(
+                        Convert.ToInt32(this.txtId.Text),
+                      Idpersona,
+                        Convert.ToInt32(this.cmbAgrupacion.SelectedValue),
+                        this.txtDetalleAgrupacion.Text.Trim(),
+                        this.txtDependencias.Text.Trim(),
+                        this.txtDetalleDependencias.Text.Trim(),
+                        Convert.ToInt32(this.cmbVivienda.SelectedValue),
+                        this.txtPagoVivienda.Text.Trim(),
+                        this.cmbFlagDeuda.Text.Trim(),
+                        this.txtMontoDeuda.Text.Trim(),
+                        this.txtMotivoDeuda.Text.Trim(),
+                        this.cmbFlagOtrosIngresos.Text.Trim(),
+                        this.txtMontoOtrosIngresos.Text.Trim(),
+                        this.txtFuenteOtrosIngresos.Text.Trim(),
+                        Convert.ToInt32(this.cmbVehiculo.SelectedValue),
+                        this.txtTipoVehiculo.Text.Trim(),
+                        this.txtPlacaVehiculo.Text.Trim(),
+                        this.txtModeloVehiculo.Text.Trim()
+                        );
+                }
+                if (rpta.Equals("OK"))
+                {
+                    this.MensajeOk(this.Evento == "Nuevo" ? "Se insertó de forma correcta el registro" : "Se actualizó de forma correcta el registro");
+                    LimpiarCampos();
+                    this.Close();
+                }
+                else
+                {
+                    this.MensajeError(rpta);
+                }
+            }
+        }
+
+        public void CargarDatos(string id,string agrupacion, string vivienda, string vehiculo,
                          string detalleAgrupacion, string pagoVivienda, string flagDeuda,
                          string dependencias, string detalleDependencias, string montoDeuda,
                          string motivoDeuda, string flagOtrosIngresos, string montoOtrosIngresos,
                          string fuenteOtrosIngresos, string tipoVehiculo, string placaVehiculo,
-                         string modeloVehiculo, string id)
+                         string modeloVehiculo)
         {
             int idAgrupacion = cmbAgrupacion.FindStringExact(agrupacion);
             cmbAgrupacion.SelectedIndex = idAgrupacion;

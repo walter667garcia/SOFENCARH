@@ -20,7 +20,7 @@ namespace Capa_Negocio
                 Localizacion = localizacion,
             };
 
-            return localizacionDatos.Insertar(localizacionDatos);
+            return localizacionDatos.Insertar();
         }
 
         public static DataTable BuscarLocalizacion(string dpi)
@@ -45,7 +45,7 @@ namespace Capa_Negocio
             obj.IdLocalizacionTipo = idLocalizacionTipo;
             obj.Localizacion = localizacion;
 
-            return obj.Actualizar(obj);
+            return obj.Actualizar();
         }
 
  

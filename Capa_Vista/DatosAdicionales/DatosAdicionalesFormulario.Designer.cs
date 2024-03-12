@@ -47,6 +47,7 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.White;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.txtId);
             this.panel2.Controls.Add(this.label4);
             this.panel2.Controls.Add(this.label3);
@@ -59,13 +60,13 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 68);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(495, 511);
+            this.panel2.Size = new System.Drawing.Size(641, 511);
             this.panel2.TabIndex = 5;
             // 
             // txtId
             // 
             this.txtId.Enabled = false;
-            this.txtId.Location = new System.Drawing.Point(374, 6);
+            this.txtId.Location = new System.Drawing.Point(567, 18);
             this.txtId.Name = "txtId";
             this.txtId.Size = new System.Drawing.Size(45, 22);
             this.txtId.TabIndex = 16;
@@ -110,8 +111,9 @@
             this.txtTelefono.ForeColor = System.Drawing.Color.Black;
             this.txtTelefono.Location = new System.Drawing.Point(88, 317);
             this.txtTelefono.Name = "txtTelefono";
-            this.txtTelefono.Size = new System.Drawing.Size(319, 33);
-            this.txtTelefono.TabIndex = 12;
+            this.txtTelefono.Size = new System.Drawing.Size(488, 33);
+            this.txtTelefono.TabIndex = 10;
+            this.txtTelefono.TextChanged += new System.EventHandler(this.txtTelefono_TextChanged);
             // 
             // txtParentesco
             // 
@@ -126,8 +128,8 @@
             "Amig@"});
             this.txtParentesco.Location = new System.Drawing.Point(88, 188);
             this.txtParentesco.Name = "txtParentesco";
-            this.txtParentesco.Size = new System.Drawing.Size(319, 33);
-            this.txtParentesco.TabIndex = 11;
+            this.txtParentesco.Size = new System.Drawing.Size(488, 33);
+            this.txtParentesco.TabIndex = 9;
             // 
             // txtEmergencia
             // 
@@ -135,8 +137,8 @@
             this.txtEmergencia.ForeColor = System.Drawing.Color.Black;
             this.txtEmergencia.Location = new System.Drawing.Point(88, 79);
             this.txtEmergencia.Name = "txtEmergencia";
-            this.txtEmergencia.Size = new System.Drawing.Size(319, 30);
-            this.txtEmergencia.TabIndex = 10;
+            this.txtEmergencia.Size = new System.Drawing.Size(488, 30);
+            this.txtEmergencia.TabIndex = 8;
             // 
             // button2
             // 
@@ -144,10 +146,10 @@
             this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.ForeColor = System.Drawing.Color.White;
-            this.button2.Location = new System.Drawing.Point(267, 417);
+            this.button2.Location = new System.Drawing.Point(358, 417);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(140, 46);
-            this.button2.TabIndex = 9;
+            this.button2.TabIndex = 11;
             this.button2.Text = "Guardar";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -158,22 +160,23 @@
             this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(88, 417);
+            this.button1.Location = new System.Drawing.Point(141, 417);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(141, 46);
-            this.button1.TabIndex = 8;
+            this.button1.TabIndex = 12;
             this.button1.Text = "Cancelar";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.DodgerBlue;
+            this.panel1.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(495, 68);
+            this.panel1.Size = new System.Drawing.Size(641, 68);
             this.panel1.TabIndex = 4;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
             this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseMove);
@@ -182,19 +185,19 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Tai Le", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(42, 33);
+            this.label1.Location = new System.Drawing.Point(167, 18);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(354, 32);
+            this.label1.Size = new System.Drawing.Size(280, 29);
             this.label1.TabIndex = 0;
-            this.label1.Text = ".: DATOS ADIIONALES :.";
+            this.label1.Text = ".: DATOS ADICIONALES :.";
             // 
             // DatosAdicionalesFormulario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(495, 579);
+            this.ClientSize = new System.Drawing.Size(641, 579);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

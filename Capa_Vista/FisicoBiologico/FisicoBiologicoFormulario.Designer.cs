@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.panel2 = new System.Windows.Forms.Panel();
+            this.cmbOperacion = new System.Windows.Forms.ComboBox();
+            this.cmbAccidente = new System.Windows.Forms.ComboBox();
+            this.txtId = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.cmbsangre = new System.Windows.Forms.ComboBox();
@@ -60,9 +63,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.txtAlergias = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.txtOperacion = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtAccidente = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -70,7 +71,6 @@
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtId = new System.Windows.Forms.TextBox();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -79,6 +79,8 @@
             // 
             this.panel2.AutoScroll = true;
             this.panel2.BackColor = System.Drawing.Color.White;
+            this.panel2.Controls.Add(this.cmbOperacion);
+            this.panel2.Controls.Add(this.cmbAccidente);
             this.panel2.Controls.Add(this.txtId);
             this.panel2.Controls.Add(this.label15);
             this.panel2.Controls.Add(this.label2);
@@ -111,9 +113,7 @@
             this.panel2.Controls.Add(this.label8);
             this.panel2.Controls.Add(this.txtAlergias);
             this.panel2.Controls.Add(this.label7);
-            this.panel2.Controls.Add(this.txtOperacion);
             this.panel2.Controls.Add(this.label6);
-            this.panel2.Controls.Add(this.txtAccidente);
             this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.label4);
             this.panel2.Controls.Add(this.label3);
@@ -122,8 +122,43 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 68);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(719, 713);
+            this.panel2.Size = new System.Drawing.Size(764, 833);
             this.panel2.TabIndex = 5;
+            // 
+            // cmbOperacion
+            // 
+            this.cmbOperacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbOperacion.FormattingEnabled = true;
+            this.cmbOperacion.Items.AddRange(new object[] {
+            "Si",
+            "No"});
+            this.cmbOperacion.Location = new System.Drawing.Point(353, 129);
+            this.cmbOperacion.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cmbOperacion.Name = "cmbOperacion";
+            this.cmbOperacion.Size = new System.Drawing.Size(305, 33);
+            this.cmbOperacion.TabIndex = 126;
+            // 
+            // cmbAccidente
+            // 
+            this.cmbAccidente.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbAccidente.FormattingEnabled = true;
+            this.cmbAccidente.Items.AddRange(new object[] {
+            "Si",
+            "No"});
+            this.cmbAccidente.Location = new System.Drawing.Point(12, 129);
+            this.cmbAccidente.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cmbAccidente.Name = "cmbAccidente";
+            this.cmbAccidente.Size = new System.Drawing.Size(329, 33);
+            this.cmbAccidente.TabIndex = 125;
+            // 
+            // txtId
+            // 
+            this.txtId.Enabled = false;
+            this.txtId.Location = new System.Drawing.Point(652, 4);
+            this.txtId.Name = "txtId";
+            this.txtId.Size = new System.Drawing.Size(22, 22);
+            this.txtId.TabIndex = 124;
+            this.txtId.Visible = false;
             // 
             // label15
             // 
@@ -139,12 +174,14 @@
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.Enabled = false;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(277, 793);
+            this.label2.Location = new System.Drawing.Point(288, 799);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(70, 25);
             this.label2.TabIndex = 122;
             this.label2.Text = "label2";
+            this.label2.Visible = false;
             // 
             // cmbsangre
             // 
@@ -163,7 +200,7 @@
             this.cmbsangre.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmbsangre.Name = "cmbsangre";
             this.cmbsangre.Size = new System.Drawing.Size(240, 33);
-            this.cmbsangre.TabIndex = 121;
+            this.cmbsangre.TabIndex = 21;
             // 
             // cmbfuma
             // 
@@ -176,7 +213,7 @@
             this.cmbfuma.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmbfuma.Name = "cmbfuma";
             this.cmbfuma.Size = new System.Drawing.Size(175, 33);
-            this.cmbfuma.TabIndex = 120;
+            this.cmbfuma.TabIndex = 23;
             // 
             // cmbalcohol
             // 
@@ -189,7 +226,7 @@
             this.cmbalcohol.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmbalcohol.Name = "cmbalcohol";
             this.cmbalcohol.Size = new System.Drawing.Size(205, 33);
-            this.cmbalcohol.TabIndex = 119;
+            this.cmbalcohol.TabIndex = 22;
             // 
             // cmbdrogas
             // 
@@ -198,11 +235,11 @@
             this.cmbdrogas.Items.AddRange(new object[] {
             "Si",
             "No"});
-            this.cmbdrogas.Location = new System.Drawing.Point(23, 480);
+            this.cmbdrogas.Location = new System.Drawing.Point(23, 483);
             this.cmbdrogas.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmbdrogas.Name = "cmbdrogas";
             this.cmbdrogas.Size = new System.Drawing.Size(243, 33);
-            this.cmbdrogas.TabIndex = 118;
+            this.cmbdrogas.TabIndex = 18;
             // 
             // cmbauditivo
             // 
@@ -215,7 +252,7 @@
             this.cmbauditivo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmbauditivo.Name = "cmbauditivo";
             this.cmbauditivo.Size = new System.Drawing.Size(324, 33);
-            this.cmbauditivo.TabIndex = 117;
+            this.cmbauditivo.TabIndex = 16;
             // 
             // cmbtratamiento
             // 
@@ -228,7 +265,7 @@
             this.cmbtratamiento.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmbtratamiento.Name = "cmbtratamiento";
             this.cmbtratamiento.Size = new System.Drawing.Size(350, 33);
-            this.cmbtratamiento.TabIndex = 116;
+            this.cmbtratamiento.TabIndex = 13;
             // 
             // cmblentes
             // 
@@ -241,7 +278,7 @@
             this.cmblentes.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmblentes.Name = "cmblentes";
             this.cmblentes.Size = new System.Drawing.Size(205, 33);
-            this.cmblentes.TabIndex = 115;
+            this.cmblentes.TabIndex = 15;
             // 
             // cmbDiabetes
             // 
@@ -254,7 +291,7 @@
             this.cmbDiabetes.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmbDiabetes.Name = "cmbDiabetes";
             this.cmbDiabetes.Size = new System.Drawing.Size(274, 33);
-            this.cmbDiabetes.TabIndex = 114;
+            this.cmbDiabetes.TabIndex = 9;
             // 
             // cmbEmfermedad
             // 
@@ -263,11 +300,11 @@
             this.cmbEmfermedad.Items.AddRange(new object[] {
             "Si",
             "No"});
-            this.cmbEmfermedad.Location = new System.Drawing.Point(23, 45);
+            this.cmbEmfermedad.Location = new System.Drawing.Point(12, 45);
             this.cmbEmfermedad.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmbEmfermedad.Name = "cmbEmfermedad";
             this.cmbEmfermedad.Size = new System.Drawing.Size(355, 33);
-            this.cmbEmfermedad.TabIndex = 104;
+            this.cmbEmfermedad.TabIndex = 8;
             // 
             // txtDeporte
             // 
@@ -277,7 +314,7 @@
             this.txtDeporte.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtDeporte.Name = "txtDeporte";
             this.txtDeporte.Size = new System.Drawing.Size(279, 30);
-            this.txtDeporte.TabIndex = 113;
+            this.txtDeporte.TabIndex = 24;
             // 
             // label20
             // 
@@ -298,7 +335,7 @@
             this.txtPasatienpo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtPasatienpo.Name = "txtPasatienpo";
             this.txtPasatienpo.Size = new System.Drawing.Size(350, 30);
-            this.txtPasatienpo.TabIndex = 111;
+            this.txtPasatienpo.TabIndex = 25;
             // 
             // label19
             // 
@@ -330,7 +367,8 @@
             this.txtEstatura.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtEstatura.Name = "txtEstatura";
             this.txtEstatura.Size = new System.Drawing.Size(175, 30);
-            this.txtEstatura.TabIndex = 108;
+            this.txtEstatura.TabIndex = 20;
+            this.txtEstatura.TextChanged += new System.EventHandler(this.txtEstatura_TextChanged);
             // 
             // label17
             // 
@@ -351,7 +389,8 @@
             this.txtPeso.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtPeso.Name = "txtPeso";
             this.txtPeso.Size = new System.Drawing.Size(205, 30);
-            this.txtPeso.TabIndex = 106;
+            this.txtPeso.TabIndex = 19;
+            this.txtPeso.TextChanged += new System.EventHandler(this.txtPeso_TextChanged);
             // 
             // label16
             // 
@@ -394,7 +433,7 @@
             this.txtDiscapacidad.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtDiscapacidad.Name = "txtDiscapacidad";
             this.txtDiscapacidad.Size = new System.Drawing.Size(305, 30);
-            this.txtDiscapacidad.TabIndex = 101;
+            this.txtDiscapacidad.TabIndex = 17;
             // 
             // label12
             // 
@@ -437,7 +476,7 @@
             this.txtEspecifique.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtEspecifique.Name = "txtEspecifique";
             this.txtEspecifique.Size = new System.Drawing.Size(424, 30);
-            this.txtEspecifique.TabIndex = 97;
+            this.txtEspecifique.TabIndex = 14;
             // 
             // label9
             // 
@@ -469,7 +508,7 @@
             this.txtAlergias.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtAlergias.Name = "txtAlergias";
             this.txtAlergias.Size = new System.Drawing.Size(279, 30);
-            this.txtAlergias.TabIndex = 94;
+            this.txtAlergias.TabIndex = 12;
             // 
             // label7
             // 
@@ -482,43 +521,23 @@
             this.label7.TabIndex = 93;
             this.label7.Text = "Tiene alergias:";
             // 
-            // txtOperacion
-            // 
-            this.txtOperacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtOperacion.ForeColor = System.Drawing.Color.Black;
-            this.txtOperacion.Location = new System.Drawing.Point(351, 132);
-            this.txtOperacion.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtOperacion.Name = "txtOperacion";
-            this.txtOperacion.Size = new System.Drawing.Size(307, 30);
-            this.txtOperacion.TabIndex = 92;
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.label6.Location = new System.Drawing.Point(325, 89);
+            this.label6.Location = new System.Drawing.Point(366, 89);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(283, 25);
             this.label6.TabIndex = 91;
             this.label6.Text = "Ha tenido algúna operación:";
-            // 
-            // txtAccidente
-            // 
-            this.txtAccidente.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAccidente.ForeColor = System.Drawing.Color.Black;
-            this.txtAccidente.Location = new System.Drawing.Point(23, 132);
-            this.txtAccidente.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtAccidente.Name = "txtAccidente";
-            this.txtAccidente.Size = new System.Drawing.Size(322, 30);
-            this.txtAccidente.TabIndex = 90;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.label5.Location = new System.Drawing.Point(18, 89);
+            this.label5.Location = new System.Drawing.Point(12, 89);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(269, 25);
             this.label5.TabIndex = 89;
@@ -529,7 +548,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.label4.Location = new System.Drawing.Point(398, 3);
+            this.label4.Location = new System.Drawing.Point(412, 4);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(210, 25);
             this.label4.TabIndex = 88;
@@ -540,7 +559,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.label3.Location = new System.Drawing.Point(18, 3);
+            this.label3.Location = new System.Drawing.Point(12, 4);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(340, 25);
             this.label3.TabIndex = 87;
@@ -552,10 +571,10 @@
             this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.ForeColor = System.Drawing.Color.White;
-            this.button2.Location = new System.Drawing.Point(421, 729);
+            this.button2.Location = new System.Drawing.Point(371, 745);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(140, 46);
-            this.button2.TabIndex = 9;
+            this.button2.TabIndex = 26;
             this.button2.Text = "Guardar";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -566,10 +585,10 @@
             this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(99, 729);
+            this.button1.Location = new System.Drawing.Point(161, 745);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(141, 46);
-            this.button1.TabIndex = 8;
+            this.button1.TabIndex = 27;
             this.button1.Text = "Cancelar";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -581,7 +600,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(719, 68);
+            this.panel1.Size = new System.Drawing.Size(764, 68);
             this.panel1.TabIndex = 4;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
             this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseMove);
@@ -592,26 +611,17 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(161, 22);
+            this.label1.Location = new System.Drawing.Point(208, 18);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(338, 32);
             this.label1.TabIndex = 0;
             this.label1.Text = ".: FISICO BIOLOGICO :.";
             // 
-            // txtId
-            // 
-            this.txtId.Enabled = false;
-            this.txtId.Location = new System.Drawing.Point(652, 4);
-            this.txtId.Name = "txtId";
-            this.txtId.Size = new System.Drawing.Size(22, 22);
-            this.txtId.TabIndex = 124;
-            this.txtId.Visible = false;
-            // 
             // FisicoBiologicoFormulario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(719, 781);
+            this.ClientSize = new System.Drawing.Size(764, 901);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -662,14 +672,14 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtAlergias;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox txtOperacion;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtAccidente;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.TextBox txtId;
+        private System.Windows.Forms.ComboBox cmbAccidente;
+        private System.Windows.Forms.ComboBox cmbOperacion;
     }
 }

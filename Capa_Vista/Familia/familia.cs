@@ -169,11 +169,22 @@ namespace Capa_Vista.Familia
                     if (instanciaAbierta == null || instanciaAbierta.IsDisposed)
                     {
                         id = id.Replace("Ubicacion", "");
+                        string Id = this.dtgFamilia.CurrentRow.Cells["Id"].Value.ToString();
+                        string Familia = dtgFamilia.CurrentRow.Cells["Familiar"].Value.ToString();
+                        string Nombre = this.dtgFamilia.CurrentRow.Cells["Nombre"].Value.ToString();
+                        string Fecha = dtgFamilia.CurrentRow.Cells["f_nacimiento"].Value.ToString();
+                        string Ocupacion = this.dtgFamilia.CurrentRow.Cells["Ocupacion"].Value.ToString();
+                        string Telefono = this.dtgFamilia.CurrentRow.Cells["Telefono"].Value.ToString();
+                        string LTrabajo = this.dtgFamilia.CurrentRow.Cells["Lug_TRabajo"].Value.ToString();
+                        string DTrabajo = this.dtgFamilia.CurrentRow.Cells["Dir_Trabajo"].Value.ToString();
+                        string TelTrabajo = this.dtgFamilia.CurrentRow.Cells["Tel_TRabajo"].Value.ToString();
                         // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
                         instanciaAbierta = new FamiliaFormulario();
                         instanciaAbierta.FormClosed += (s, args) => { instanciaAbierta = null; };
                         instanciaAbierta.Idpersona = Idpersona;
                         instanciaAbierta.Evento = "Editar";
+                        instanciaAbierta.CargarDatos( Id,Familia,Nombre, Fecha,Ocupacion,
+                            Telefono, LTrabajo, DTrabajo, TelTrabajo);
                         instanciaAbierta.ShowDialog();
                     }
                     else

@@ -166,11 +166,28 @@ namespace Capa_Vista.ExperienciaLaboral
                     if (instanciaAbierta == null || instanciaAbierta.IsDisposed)
                     {
                         id = id.Replace("Editar", "");
+
+                        //Llenado de los datos para enviar al formulario
+                        string Id = this.dtgExperiencia.CurrentRow.Cells["ID"].Value.ToString();
+
+                        string Empresa = this.dtgExperiencia.CurrentRow.Cells["EMPRESA"].Value.ToString();
+                        string FechaIngreso = this.dtgExperiencia.CurrentRow.Cells["FECHA_INGRESO"].Value.ToString();
+                        string FechaRetiro = this.dtgExperiencia.CurrentRow.Cells["FECHA_RETIRO"].Value.ToString();
+                        string Telefono = this.dtgExperiencia.CurrentRow.Cells["TELEFONO"].Value.ToString();
+                        string Jefe = this.dtgExperiencia.CurrentRow.Cells["JEFE"].Value.ToString();
+                        string Puesto = this.dtgExperiencia.CurrentRow.Cells["PUESTO"].Value.ToString();
+                        string Salario = this.dtgExperiencia.CurrentRow.Cells["SALARIO"].Value.ToString();
+                        string Motivo = this.dtgExperiencia.CurrentRow.Cells["MOTIVO_RETIRO"].Value.ToString();
+                        string Referencia = this.dtgExperiencia.CurrentRow.Cells["REFERENCIAS"].Value.ToString();
+                        string Descripcion = this.dtgExperiencia.CurrentRow.Cells["DESCRIPCION"].Value.ToString();
+                       
                         // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
                         instanciaAbierta = new ExperienciaLaboralFormulario();
                         instanciaAbierta.FormClosed += (s, args) => { instanciaAbierta = null; };
                         instanciaAbierta.Idpersona = Idpersona;
                         instanciaAbierta.Evento = "Editar";
+                        instanciaAbierta.CargarDatos(Id,Empresa,FechaIngreso,FechaRetiro,Telefono, Jefe,
+                                                           Puesto,Salario,Motivo,Referencia,Descripcion);
                         instanciaAbierta.ShowDialog();
                     }
                     else

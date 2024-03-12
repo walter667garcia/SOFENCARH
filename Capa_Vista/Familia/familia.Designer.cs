@@ -56,8 +56,9 @@
             this.plMenu.Dock = System.Windows.Forms.DockStyle.Top;
             this.plMenu.ForeColor = System.Drawing.Color.White;
             this.plMenu.Location = new System.Drawing.Point(0, 0);
+            this.plMenu.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.plMenu.Name = "plMenu";
-            this.plMenu.Size = new System.Drawing.Size(1200, 62);
+            this.plMenu.Size = new System.Drawing.Size(1200, 85);
             this.plMenu.TabIndex = 1;
             this.plMenu.MouseDown += new System.Windows.Forms.MouseEventHandler(this.plMenu_MouseDown);
             this.plMenu.MouseMove += new System.Windows.Forms.MouseEventHandler(this.plMenu_MouseMove);
@@ -67,9 +68,10 @@
             // 
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(1119, 6);
+            this.pictureBox1.Location = new System.Drawing.Point(1113, 8);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(58, 51);
+            this.pictureBox1.Size = new System.Drawing.Size(65, 70);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
@@ -79,9 +81,10 @@
             // 
             this.pcbNuevo.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pcbNuevo.Image = ((System.Drawing.Image)(resources.GetObject("pcbNuevo.Image")));
-            this.pcbNuevo.Location = new System.Drawing.Point(1043, 6);
+            this.pcbNuevo.Location = new System.Drawing.Point(1013, 11);
+            this.pcbNuevo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pcbNuevo.Name = "pcbNuevo";
-            this.pcbNuevo.Size = new System.Drawing.Size(58, 51);
+            this.pcbNuevo.Size = new System.Drawing.Size(65, 70);
             this.pcbNuevo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pcbNuevo.TabIndex = 2;
             this.pcbNuevo.TabStop = false;
@@ -90,9 +93,10 @@
             // pcbTitulo
             // 
             this.pcbTitulo.Image = ((System.Drawing.Image)(resources.GetObject("pcbTitulo.Image")));
-            this.pcbTitulo.Location = new System.Drawing.Point(12, 3);
+            this.pcbTitulo.Location = new System.Drawing.Point(14, 4);
+            this.pcbTitulo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pcbTitulo.Name = "pcbTitulo";
-            this.pcbTitulo.Size = new System.Drawing.Size(58, 51);
+            this.pcbTitulo.Size = new System.Drawing.Size(65, 70);
             this.pcbTitulo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pcbTitulo.TabIndex = 1;
             this.pcbTitulo.TabStop = false;
@@ -101,10 +105,10 @@
             // lbPersona
             // 
             this.lbPersona.AutoSize = true;
-            this.lbPersona.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbPersona.Location = new System.Drawing.Point(157, 29);
+            this.lbPersona.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbPersona.Location = new System.Drawing.Point(85, 49);
             this.lbPersona.Name = "lbPersona";
-            this.lbPersona.Size = new System.Drawing.Size(70, 25);
+            this.lbPersona.Size = new System.Drawing.Size(70, 26);
             this.lbPersona.TabIndex = 0;
             this.lbPersona.Text = "label1";
             // 
@@ -125,7 +129,7 @@
             this.dtgFamilia.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Tai Le", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.CornflowerBlue;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
@@ -135,22 +139,21 @@
             this.dtgFamilia.Cursor = System.Windows.Forms.Cursors.Default;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Tai Le", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.GrayText;
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.CornflowerBlue;
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dtgFamilia.DefaultCellStyle = dataGridViewCellStyle3;
             this.dtgFamilia.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dtgFamilia.GridColor = System.Drawing.SystemColors.GrayText;
-            this.dtgFamilia.Location = new System.Drawing.Point(0, 62);
-            this.dtgFamilia.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dtgFamilia.Location = new System.Drawing.Point(0, 85);
             this.dtgFamilia.MultiSelect = false;
             this.dtgFamilia.Name = "dtgFamilia";
             this.dtgFamilia.ReadOnly = true;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Tai Le", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Red;
             dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.White;
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Red;
@@ -159,18 +162,21 @@
             this.dtgFamilia.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToFirstHeader;
             this.dtgFamilia.RowTemplate.Height = 24;
             this.dtgFamilia.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dtgFamilia.Size = new System.Drawing.Size(1200, 438);
+            this.dtgFamilia.Size = new System.Drawing.Size(1200, 515);
             this.dtgFamilia.TabIndex = 9;
             this.dtgFamilia.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dtgFamilia_MouseClick);
             // 
             // familia
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 22F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1200, 500);
+            this.ClientSize = new System.Drawing.Size(1200, 600);
             this.Controls.Add(this.dtgFamilia);
             this.Controls.Add(this.plMenu);
+            this.Font = new System.Drawing.Font("Microsoft Tai Le", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForeColor = System.Drawing.SystemColors.GrayText;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "familia";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "familia";

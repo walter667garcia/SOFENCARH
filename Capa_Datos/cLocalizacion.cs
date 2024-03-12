@@ -32,7 +32,7 @@ namespace Capa_Datos
             ID = ID;
         }
 
-        public string Insertar(cLocalizacion localizacionDatos)
+        public string Insertar()
         {
             string respuesta = "";
 
@@ -45,10 +45,10 @@ namespace Capa_Datos
                     using (SqlCommand cmd = new SqlCommand("sp_InsertarRHLocalizacion", sqlcon))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@IDPersona", localizacionDatos.IdPersona).SqlDbType = SqlDbType.Int;
-                        cmd.Parameters.AddWithValue("@IDLocalizacion", localizacionDatos.IdLocalizacionTipo).SqlDbType = SqlDbType.Int;
-                        cmd.Parameters.AddWithValue("@Localizacion", localizacionDatos.Localizacion).SqlDbType = SqlDbType.NVarChar;
-               
+                        cmd.Parameters.AddWithValue("@IDPersona", IdPersona);
+                        cmd.Parameters.AddWithValue("@IDLocalizacion", IdLocalizacionTipo);
+                        cmd.Parameters.AddWithValue("@Localizacion",Localizacion);
+
                         respuesta = cmd.ExecuteNonQuery() == 1 ? "OK" : "No se insertó el registro";
                     }
                 }
@@ -61,7 +61,7 @@ namespace Capa_Datos
             return respuesta;
         }
 
-        public string Actualizar(cLocalizacion localizacionDatos)
+        public string Actualizar( )
         {
             string respuesta = "";
 
@@ -74,10 +74,10 @@ namespace Capa_Datos
                     using (SqlCommand cmd = new SqlCommand("sp_ActualizarRhLocalizacion", sqlcon))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@ID", localizacionDatos.IdLocalizacion).SqlDbType = SqlDbType.Int;
-                        cmd.Parameters.AddWithValue("@IDPersona", localizacionDatos.IdPersona).SqlDbType = SqlDbType.Int;
-                        cmd.Parameters.AddWithValue("@IDLocalizacion", localizacionDatos.IdLocalizacionTipo).SqlDbType = SqlDbType.Int;
-                        cmd.Parameters.AddWithValue("@Localizacion", localizacionDatos.Localizacion).SqlDbType = SqlDbType.NVarChar;
+                        cmd.Parameters.AddWithValue("@ID", IdLocalizacion);
+                        cmd.Parameters.AddWithValue("@IDPersona", IdPersona);
+                        cmd.Parameters.AddWithValue("@IDLocalizacion", IdLocalizacionTipo);
+                        cmd.Parameters.AddWithValue("@Localizacion", Localizacion);
                         respuesta = cmd.ExecuteNonQuery() == 1 ? "OK" : "No se actualizó el registro";
                     }
                 }

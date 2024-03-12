@@ -165,10 +165,18 @@ namespace Capa_Vista.Idioma
                     {
                         id = id.Replace("Ubicacion", "");
                         // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
+                        string Id = dtgIdioma.CurrentRow.Cells["Id"].Value.ToString();
+                        string Idioma = dtgIdioma.CurrentRow.Cells["Idioma"].Value.ToString();
+                        string Conversacion = dtgIdioma.CurrentRow.Cells["Conversacion"].Value.ToString();
+                        string Escritura = dtgIdioma.CurrentRow.Cells["Escritura"].Value.ToString();
+                        string Lectura = dtgIdioma.CurrentRow.Cells["Lectura"].Value.ToString();
+                        string Documento = dtgIdioma.CurrentRow.Cells["Documento"].Value.ToString();
+
                         instanciaAbierta = new IdiomaContenido();
                         instanciaAbierta.FormClosed += (s, args) => { instanciaAbierta = null; };
                         instanciaAbierta.Idpersona = Idpersona;
                         instanciaAbierta.Evento = "Editar";
+                        instanciaAbierta.CargarDatos(Id, Idioma, Conversacion, Escritura, Lectura, Documento);
                         instanciaAbierta.ShowDialog();
                     }
                     else

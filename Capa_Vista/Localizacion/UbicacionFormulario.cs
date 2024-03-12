@@ -1,4 +1,5 @@
 ﻿using Capa_Negocio;
+using DocumentFormat.OpenXml.Wordprocessing;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,10 +25,11 @@ namespace Capa_Vista.Localizacion
         public UbicacionFormulario()
         {
             InitializeComponent();
+            LlenarComboBoxes();
         }
         private void UbicacionFormulario_Load(object sender, EventArgs e)
         {
-            LlenarComboBoxes();
+           
         }
         //Eventos necesarios para movilizar el formulario
         private void panel1_MouseDown(object sender, MouseEventArgs e)
@@ -67,12 +69,78 @@ namespace Capa_Vista.Localizacion
         {
             this.Close();
         }
-
+        private void Limpiar()
+        {
+            this.cmbLocalizacion.SelectedIndex = -1;
+            this.txtLocalizacion.Text = string.Empty;
+        }
+        private void LimpiarCampos()
+        {
+            this.cmbLocalizacion.SelectedIndex = -1;
+            this.txtLocalizacion.Text = string.Empty;
+        }
         private void button2_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(this.txtLocalizacion.Text) )
+            {
+                MensajeError("Falta ingresar algunos datos Remarcados");
+              
+            }
+            else
+            {
+                string rpta = "";
+            if (this.Evento == "Nuevo")
+            {
+                rpta = nLocalizacion.InsertarLocalizacion(
+                     Idpersona,
+                     Convert.ToInt32(cmbLocalizacion.SelectedValue),
+                    this.txtLocalizacion.Text.Trim()
+                     
+             );
 
+             
+            }
+            else if (this.Evento == "Editar")
+            {
+              rpta= nLocalizacion.ActualizarLocalizacion(
+                      Convert.ToInt32(txtID.Text),
+                      Idpersona,
+                      Convert.ToInt32(cmbLocalizacion.SelectedValue),
+                      txtLocalizacion.Text.Trim()
+
+               );
+            }
+                if (rpta.Equals("OK"))
+                {
+                    this.MensajeOk(this.Evento == "Nuevo" ? "Se insertó de forma correcta el registro" : "Se actualizó de forma correcta el registro");
+                    LimpiarCampos();
+                    this.Close();
+                }
+                else
+                {
+                    this.MensajeError(rpta);
+                }
+
+
+            }
         }
 
-       
+        private void MensajeOk(string mensaje)
+        {
+            MessageBox.Show(mensaje, "Sistema de Empleados", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void MensajeError(string mensaje)
+        {
+            MessageBox.Show(mensaje, "Sistema de Empleados", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        public void CargarDatos(string id, string descripcion, string localizacion )
+        {
+            txtID.Text = id;
+            int idLocalizacion = cmbLocalizacion.FindStringExact(descripcion);
+            cmbLocalizacion.SelectedIndex = idLocalizacion;
+            txtLocalizacion.Text = localizacion;
+           
+        }
     }
 }

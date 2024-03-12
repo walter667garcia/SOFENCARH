@@ -161,10 +161,33 @@ namespace Capa_Vista.SocioEconomico
                     {
                         id = id.Replace("Ubicacion", "");
                         // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
+                        string Id = this.dtgSocioEconomico.CurrentRow.Cells["id"].Value.ToString();
+                        string Agrupacion = dtgSocioEconomico.CurrentRow.Cells["AGRUPACION"].Value.ToString();
+                        string Vivienda = dtgSocioEconomico.CurrentRow.Cells["VIVIENDA"].Value.ToString();
+                        string Vehiculo = dtgSocioEconomico.CurrentRow.Cells["VEHICULO"].Value.ToString();
+                        string DetalleAgrupacion = this.dtgSocioEconomico.CurrentRow.Cells["DETALLE_AGRUPACION"].Value.ToString();
+                        string Dependencias = this.dtgSocioEconomico.CurrentRow.Cells["DEPENDIENTES"].Value.ToString();
+                        string DetalleDependencias = this.dtgSocioEconomico.CurrentRow.Cells["DETALLE_DEPENDIENTES"].Value.ToString();
+                        string PagoVivienda = this.dtgSocioEconomico.CurrentRow.Cells["PAGO_VIVIENDA"].Value.ToString();
+                        string FlagDeuda = this.dtgSocioEconomico.CurrentRow.Cells["FLAG_DEUDAS"].Value.ToString();
+                        string MontoDeuda = this.dtgSocioEconomico.CurrentRow.Cells["MONTO_DEUDA"].Value.ToString();
+                        string MotivoDeuda = this.dtgSocioEconomico.CurrentRow.Cells["MOTIVO_DEUDA"].Value.ToString();
+                        string FlagOtrosIngresos = this.dtgSocioEconomico.CurrentRow.Cells["FLAG_OTROS_INGRESOS"].Value.ToString();
+                        string MontoOtrosIngresos = this.dtgSocioEconomico.CurrentRow.Cells["MONTO_OTROS_INGRESOS"].Value.ToString();
+                        string FuenteOtrosIngresos = this.dtgSocioEconomico.CurrentRow.Cells["FUENTES_OTROS_INGRESOS"].Value.ToString();
+                        string TipoVehiculo = this.dtgSocioEconomico.CurrentRow.Cells["TIPO_VEHICULO"].Value.ToString();
+                        string PlacaVehiculo = this.dtgSocioEconomico.CurrentRow.Cells["MODELO_VEHICULO"].Value.ToString();
+                        string ModeloVehiculo = this.dtgSocioEconomico.CurrentRow.Cells["PLACA_VEHICULO"].Value.ToString();
+                       
+
                         instanciaAbierta = new SocioEconomicoFormulario();
                         instanciaAbierta.FormClosed += (s, args) => { instanciaAbierta = null; };
                         instanciaAbierta.Idpersona = Idpersona;
                         instanciaAbierta.Evento = "Editar";
+                        instanciaAbierta.CargarDatos(
+                            Id,Agrupacion,Vivienda,Vehiculo,DetalleAgrupacion,Dependencias,
+                           DetalleDependencias, PagoVivienda,FlagDeuda,MontoDeuda ,MotivoDeuda,FlagOtrosIngresos,
+                            MontoOtrosIngresos,FuenteOtrosIngresos,TipoVehiculo,PlacaVehiculo,ModeloVehiculo);
                         instanciaAbierta.ShowDialog();
                     }
                     else

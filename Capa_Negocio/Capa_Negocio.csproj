@@ -53,6 +53,7 @@
     <Compile Include="nLogin.cs" />
     <Compile Include="nNivelAcademico.cs" />
     <Compile Include="nOtrosDatos.cs" />
+    <Compile Include="nPeriodos.cs" />
     <Compile Include="nPersona.cs" />
     <Compile Include="nPuestoFuncional.cs" />
     <Compile Include="nPuestoNominal.cs" />

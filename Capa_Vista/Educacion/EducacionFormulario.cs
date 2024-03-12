@@ -110,9 +110,7 @@ namespace Capa_Vista.Educacion
             if (string.IsNullOrEmpty(this.txtEstablecimiento.Text) || string.IsNullOrEmpty(this.txtTitulo.Text) || string.IsNullOrEmpty(this.txtEspecialidad.Text))
             {
                 MensajeError("Falta ingresar algunos datos Remarcados");
-                this.txtEstablecimiento.Text = "***";
-                this.txtTitulo.Text = "***";
-                this.txtEspecialidad.Text = "***";
+                
             }
             else
             {
@@ -123,11 +121,11 @@ namespace Capa_Vista.Educacion
                     rpta = nNivelAcademico.Insertar(
                         Idpersona,
                         Convert.ToInt32(this.cmbEducacion.SelectedValue),
-                        this.txtEstablecimiento.Text.Trim().ToUpper(),
+                        this.txtEstablecimiento.Text.Trim(),
                         fechaInicio,
                         fechaFin,
-                        this.txtTitulo.Text.Trim().ToUpper(),
-                        this.txtEspecialidad.Text.Trim().ToUpper()
+                        this.txtTitulo.Text.Trim(),
+                        this.txtEspecialidad.Text.Trim()
                     );
                 }
                 else if (this.Evento == "Editar")
@@ -137,17 +135,19 @@ namespace Capa_Vista.Educacion
                          Convert.ToInt32(this.txtId.Text),
                         Idpersona,
                         Convert.ToInt32(this.cmbEducacion.SelectedValue),
-                        this.txtEstablecimiento.Text.Trim().ToUpper(),
+                        this.txtEstablecimiento.Text.Trim(),
                         fechaInicio,
                         fechaFin,
-                        this.txtTitulo.Text.Trim().ToUpper(),
-                        this.txtEspecialidad.Text.Trim().ToUpper()
+                        this.txtTitulo.Text.Trim(),
+                        this.txtEspecialidad.Text.Trim()
                     );
+                    
                 }
 
                 if (rpta.Equals("OK"))
                 {
                     this.MensajeOk(this.Evento == "Nuevo" ? "Se insertó de forma correcta el registro" : "Se actualizó de forma correcta el registro");
+                    LimpiarCampos();
                     this.Close();
                 }
                 else
@@ -155,12 +155,9 @@ namespace Capa_Vista.Educacion
                     this.MensajeError(rpta);
                 }
 
-                LimpiarCampos();
+              
             }
         }
-
-       
-
        
     }
 }

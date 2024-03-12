@@ -1,4 +1,6 @@
 ﻿using Capa_Negocio;
+using Capa_Vista.Educacion;
+using Capa_Vista.Reportes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,10 +31,10 @@ namespace Capa_Vista.Actas
             try
             {
                 // Verificar si hay al menos una columna
-                if (this.dtgFamilia.Columns.Count > 0)
+                if (this.dtgActas.Columns.Count > 0)
                 {
-                    this.dtgFamilia.Columns[0].Visible = false;
-                    this.dtgFamilia.Columns[1].Visible = false;
+                    this.dtgActas.Columns[0].Visible = false;
+                    this.dtgActas.Columns[1].Visible = false;
                 }
                 else
                 {
@@ -46,16 +48,17 @@ namespace Capa_Vista.Actas
         }
         private void Mostrar()
         {
-            this.dtgFamilia.DataSource = nActas.MostrarActas();
+            this.dtgActas.DataSource = nActas.MostrarActas();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            this.dtgFamilia.DataSource = nActas.Buscar(this.txtBuscar.Text);
+            this.dtgActas.DataSource = nActas.Buscar(this.txtBuscar.Text);
         }
 
         private void btnlimpiar_Click(object sender, EventArgs e)
         {
+            this.txtBuscar.Text = "";
             Mostrar();
         }
 
@@ -64,36 +67,70 @@ namespace Capa_Vista.Actas
 
             if (e.Button == MouseButtons.Right)
             {
-                var hti = dtgFamilia.HitTest(e.X, e.Y);
+                var hti = dtgActas.HitTest(e.X, e.Y);
                 if (hti.RowIndex >= 0)
                 {
-                    dtgFamilia.Rows[hti.RowIndex].Selected = true;
+                    dtgActas.Rows[hti.RowIndex].Selected = true;
                 }
             }
 
             if (e.Button == MouseButtons.Right)
             {
                 ContextMenuStrip menu = new System.Windows.Forms.ContextMenuStrip();
-                int posicion = dtgFamilia.HitTest(e.X, e.Y).RowIndex;
+                int posicion = dtgActas.HitTest(e.X, e.Y).RowIndex;
                 if (posicion > -1)
                 {
-                    menu.Items.Add("Reporte").Name = "Reporte" + posicion;
+                    menu.Items.Add("Editar").Name = "Editar" + posicion;
                     menu.Items.Add("Eliminar").Name = "Eliminar" + posicion;
+                    menu.Items.Add("Reporte").Name = "Reporte" + posicion;
                 }
-                menu.Show(dtgFamilia, e.X, e.Y);
+                menu.Show(dtgActas, e.X, e.Y);
                 menu.ItemClicked += new ToolStripItemClickedEventHandler(menuclick1);
             }
         }
         private static frmReporteActas actas = null;
+        private static ActasFormulario formulario = null;
 
         private void menuclick1(object sender, ToolStripItemClickedEventArgs e)
         {
-            int Idpersona = Convert.ToInt32(this.dtgFamilia.CurrentRow.Cells["ID_ACTA"].Value);
-            string Persona = "Ejemplo";
+            int Idpersona = Convert.ToInt32(this.dtgActas.CurrentRow.Cells["IdPersona"].Value);
             string id = e.ClickedItem.Name.ToString();
 
             try
             {
+                if (id.Contains("Editar"))
+                {
+                    if (actas == null || actas.IsDisposed)
+                    {
+                        id = id.Replace("Editar", "");
+                        // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
+                        string Id = this.dtgActas.CurrentRow.Cells["ID_ACTA"].Value.ToString();
+                      string fecha =  this.dtgActas.CurrentRow.Cells["FECHA_INGRESO"].Value.ToString();
+                        string puestoFuncional = this.dtgActas.CurrentRow.Cells["PUESTO_FUNCIONAL"].Value.ToString();
+                      string coordinacion=  this.dtgActas.CurrentRow.Cells["COORDINACION"].Value.ToString();
+                      string puestoNominal=  this.dtgActas.CurrentRow.Cells["PUESTO_NOMINAL"].Value.ToString();
+                       string renglon = this.dtgActas.CurrentRow.Cells["ABREVIATURA"].Value.ToString();
+                       string unidad = this.dtgActas.CurrentRow.Cells["UNIDAD_SECCION"].Value.ToString();
+                       string salrio= this.dtgActas.CurrentRow.Cells["SALARIO_BASE"].Value.ToString();
+                       string descripcion= this.dtgActas.CurrentRow.Cells["DESCRIPCION"].Value.ToString();
+
+                        formulario = new ActasFormulario();
+                        formulario.FormClosed += (s, args) => { formulario = null; };
+                        formulario.Idpersona = Idpersona;
+
+                        formulario.CargarDatos(Id, fecha,puestoFuncional, coordinacion,
+                            puestoNominal, renglon, unidad, salrio, descripcion
+                            );
+                        formulario.Evento = "Editar";
+                        formulario.ShowDialog();
+                    }
+                    else
+                    {
+                        actas.Activate();
+                        // Si ya hay una instancia abierta, mostrar un mensaje de advertencia
+                        MessageBox.Show("Actualmente está ingresando un dato. No puede actualizar un registro.");
+                    }
+                }else
                 if (id.Contains("Reporte"))
                 {
                     if (actas == null || actas.IsDisposed)
@@ -102,8 +139,7 @@ namespace Capa_Vista.Actas
                         // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
                         actas = new frmReporteActas();
                         actas.FormClosed += (s, args) => { actas = null; }; // Establece actas a null cuando se cierra el formulario
-                        actas.Idacta = Idpersona;
-                        actas.Persona = Persona;
+                       // actas.Idacta = Idpersona;
                         actas.ShowDialog();
                     }
                     else
