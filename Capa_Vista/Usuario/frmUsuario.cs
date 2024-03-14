@@ -34,9 +34,17 @@ namespace Capa_Vista.Usuario
         private void MostrarEmpleado()
         {
             this.dtgPersona.DataSource = nUsuarios.MostrarPersonaEstado();
-
+            Imagen();
         }
-        
+        private void Imagen()
+        {
+            DataGridViewImageColumn image = dtgPersona.Columns["Foto"] as DataGridViewImageColumn;
+            if (image != null)
+            {
+                image.ImageLayout = DataGridViewImageCellLayout.Zoom;
+                image.DefaultCellStyle.NullValue = null;
+            }
+        }
 
         private void dtgPersona_MouseClick(object sender, MouseEventArgs e)
         {
@@ -258,7 +266,24 @@ namespace Capa_Vista.Usuario
 
         private void btnlimpiar_Click(object sender, EventArgs e)
         {
+            txtBuscarUsuario.Text = "";
             MostrarUsuarios();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.dtgUsuarios.DataSource = nUsuarios.BuscarUsuario(txtBuscarUsuario.Text);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.dtgPersona.DataSource = nUsuarios.BuscarPersona(txtBuscarPersona.Text);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            txtBuscarPersona.Text = "";
+            MostrarEmpleado();
         }
     }
 }

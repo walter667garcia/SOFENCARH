@@ -74,6 +74,13 @@ namespace Capa_Negocio
             return usuario.Buscar(usuario);
         }
 
+        public static DataTable BuscarPersona(string textoBuscar)
+        {
+            cUsuario usuario = new cUsuario();
+            usuario.BuscarPersona = textoBuscar;
+            return usuario.BuscarPersonaId(usuario);
+        }
+
 
     }
 }

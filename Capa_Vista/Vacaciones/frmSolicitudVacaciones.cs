@@ -17,6 +17,8 @@ namespace Capa_Vista
        public int IdPeriodo {  get; set; } //ID_PERIODO
        public int IdPersona {  get; set; }
         public string Evento {  get; set; }
+        public int diasTomados { get; set; }
+        public int Acumulados { get; set; }
         public frmSolicitudVacaciones()
         {
             InitializeComponent();
@@ -36,6 +38,7 @@ namespace Capa_Vista
                 txtDPI.Text = dpi;
                 txtPeriodo.Text = periodo;
                 txtDiasDisponibles.Text = diasDisponibles.ToString();
+                lbAcomulados.Text = Acumulados.ToString();
             }
             else if(Evento == "Incompleto")
             {
@@ -46,7 +49,9 @@ namespace Capa_Vista
                 // Calcular cuántos días proporcionalmente te corresponderían
                 double proporcion = (double)dias / 365;
                 int diasVacaciones = (int)Math.Round(23 * proporcion);
-                txtDiasDisponibles.Text = diasVacaciones.ToString();
+                int sub = (diasVacaciones - diasTomados);
+                txtDiasDisponibles.Text = sub.ToString();
+                lbAcomulados.Text = Acumulados.ToString();
             }
         }
 
@@ -118,19 +123,31 @@ namespace Capa_Vista
 
             }
             else
-            { 
+            {
+                
                 string rpta = "";
                 if (this.Evento == "Nuevo")
                 {
-                    rpta = nVacaciones.InsertarVacaciones(
-                         IdPersona,
-                         IdPeriodo,
-                         fechaInicio,
-                         fechaFin,
-                         Convert.ToInt32(this.txtDiasFestivos.Text),
-                         Convert.ToInt32(this.txtTotal.Text),
-                         this.txtDescripcion.Text
-                        );
+                    int disponibles, total;
+                    total = Convert.ToInt32(this.txtTotal.Text);
+                    disponibles = Convert.ToInt32(this.txtDiasDisponibles.Text);
+                    if (total <= disponibles)
+                    {
+                        rpta = nVacaciones.InsertarVacaciones(
+                        IdPersona,
+                        IdPeriodo,
+                        fechaInicio,
+                        fechaFin,
+                        Convert.ToInt32(this.txtDiasFestivos.Text),
+                        Convert.ToInt32(this.txtTotal.Text),
+                        this.txtDescripcion.Text
+                       );
+                    }
+                    else
+                    {
+                        MessageBox.Show("No puedes tomas mas dias de los disponibles en este periodo");
+                    }
+                   
                 }
                 else if (this.Evento == "Editar")
                 {
@@ -138,12 +155,13 @@ namespace Capa_Vista
                 }
                 if (rpta.Equals("OK"))
                 {
+                    int subtotal = (diasTomados + Convert.ToInt32(txtTotal.Text));
                     string rptaP = ""; 
                     this.MensajeOk(this.Evento == "Nuevo" ? "Se insertó de forma correcta el registro" : "Se actualizó de forma correcta el registro");
                     rptaP = nVacaciones.DescontarPeriodo(
                         IdPeriodo,
                         Convert.ToInt32(txtRestantes.Text),
-                        Convert.ToInt32(txtTotal.Text),
+                        subtotal,
                         Convert.ToInt32(txtRestantes.Text)
 
                         );

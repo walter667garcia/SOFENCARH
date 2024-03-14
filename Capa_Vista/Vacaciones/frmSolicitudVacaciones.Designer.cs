@@ -59,6 +59,9 @@
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label10 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.lbAcomulados = new System.Windows.Forms.Label();
+            this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel3.SuspendLayout();
@@ -70,6 +73,8 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.PaleGreen;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.lbAcomulados);
+            this.panel1.Controls.Add(this.label12);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
@@ -388,6 +393,24 @@
             this.label10.TabIndex = 0;
             this.label10.Text = "Hora";
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(40, 31);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(152, 22);
+            this.label12.TabIndex = 0;
+            this.label12.Text = "Dias Acumulados:";
+            // 
+            // lbAcomulados
+            // 
+            this.lbAcomulados.AutoSize = true;
+            this.lbAcomulados.Location = new System.Drawing.Point(213, 31);
+            this.lbAcomulados.Name = "lbAcomulados";
+            this.lbAcomulados.Size = new System.Drawing.Size(20, 22);
+            this.lbAcomulados.TabIndex = 1;
+            this.lbAcomulados.Text = "0";
+            // 
             // frmSolicitudVacaciones
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 22F);
@@ -400,6 +423,8 @@
             this.Name = "frmSolicitudVacaciones";
             this.Text = "frmSolicitudVacaciones";
             this.Load += new System.EventHandler(this.frmSolicitudVacaciones_Load);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -443,5 +468,7 @@
         private System.Windows.Forms.TextBox txtDescripcion;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label lbAcomulados;
+        private System.Windows.Forms.Label label12;
     }
 }

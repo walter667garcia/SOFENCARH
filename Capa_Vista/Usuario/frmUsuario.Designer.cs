@@ -48,7 +48,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
-            this.txtBuscar = new System.Windows.Forms.TextBox();
+            this.txtBuscarUsuario = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dtgPersona = new System.Windows.Forms.DataGridView();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -56,7 +56,7 @@
             this.button5 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtBuscarPersona = new System.Windows.Forms.TextBox();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -174,7 +174,7 @@
             this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.label7);
-            this.panel1.Controls.Add(this.txtBuscar);
+            this.panel1.Controls.Add(this.txtBuscarUsuario);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
@@ -235,6 +235,7 @@
             this.button2.Size = new System.Drawing.Size(51, 47);
             this.button2.TabIndex = 13;
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label7
             // 
@@ -246,17 +247,17 @@
             this.label7.TabIndex = 12;
             this.label7.Text = "Buscar Usuario:";
             // 
-            // txtBuscar
+            // txtBuscarUsuario
             // 
-            this.txtBuscar.BackColor = System.Drawing.Color.White;
-            this.txtBuscar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtBuscar.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBuscar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.txtBuscar.Location = new System.Drawing.Point(145, 17);
-            this.txtBuscar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(363, 34);
-            this.txtBuscar.TabIndex = 11;
+            this.txtBuscarUsuario.BackColor = System.Drawing.Color.White;
+            this.txtBuscarUsuario.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBuscarUsuario.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBuscarUsuario.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.txtBuscarUsuario.Location = new System.Drawing.Point(145, 17);
+            this.txtBuscarUsuario.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtBuscarUsuario.Name = "txtBuscarUsuario";
+            this.txtBuscarUsuario.Size = new System.Drawing.Size(363, 34);
+            this.txtBuscarUsuario.TabIndex = 11;
             // 
             // tabPage2
             // 
@@ -332,7 +333,7 @@
             this.panel4.Controls.Add(this.button5);
             this.panel4.Controls.Add(this.button1);
             this.panel4.Controls.Add(this.label1);
-            this.panel4.Controls.Add(this.textBox1);
+            this.panel4.Controls.Add(this.txtBuscarPersona);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(3, 3);
             this.panel4.Name = "panel4";
@@ -345,12 +346,13 @@
             this.button4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button4.BackgroundImage")));
             this.button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.button4.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
-            this.button4.Location = new System.Drawing.Point(962, 0);
+            this.button4.Location = new System.Drawing.Point(732, 4);
             this.button4.Margin = new System.Windows.Forms.Padding(4);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(71, 53);
+            this.button4.Size = new System.Drawing.Size(71, 44);
             this.button4.TabIndex = 15;
             this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
             // 
@@ -379,6 +381,7 @@
             this.button1.Size = new System.Drawing.Size(51, 47);
             this.button1.TabIndex = 13;
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label1
             // 
@@ -390,17 +393,17 @@
             this.label1.TabIndex = 12;
             this.label1.Text = "Buscar Persona:";
             // 
-            // textBox1
+            // txtBuscarPersona
             // 
-            this.textBox1.BackColor = System.Drawing.Color.White;
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.textBox1.Location = new System.Drawing.Point(191, 13);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(475, 34);
-            this.textBox1.TabIndex = 11;
+            this.txtBuscarPersona.BackColor = System.Drawing.Color.White;
+            this.txtBuscarPersona.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBuscarPersona.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBuscarPersona.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.txtBuscarPersona.Location = new System.Drawing.Point(191, 13);
+            this.txtBuscarPersona.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtBuscarPersona.Name = "txtBuscarPersona";
+            this.txtBuscarPersona.Size = new System.Drawing.Size(475, 34);
+            this.txtBuscarPersona.TabIndex = 11;
             // 
             // frmUsuario
             // 
@@ -442,10 +445,10 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox txtBuscar;
+        private System.Windows.Forms.TextBox txtBuscarUsuario;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtBuscarPersona;
         private System.Windows.Forms.Button btnlimpiar;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;

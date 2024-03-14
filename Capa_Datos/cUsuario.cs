@@ -19,12 +19,13 @@ namespace Capa_Datos
 
         public string BuscarUsuario {  get; set; }
 
+        public string BuscarPersona { get; set; }
         public cUsuario()
         {
             // Constructor vacío
         }
 
-        public cUsuario(int usuarioID, string nombreUsuario, string contrasena, bool activo, int tipoUsuario, byte[] foto, string buscar)
+        public cUsuario(int usuarioID, string nombreUsuario, string contrasena, bool activo, int tipoUsuario, byte[] foto, string buscar, string buscarPersona)
         {
             UsuarioID = usuarioID;
             NombreUsuario = nombreUsuario;
@@ -33,6 +34,7 @@ namespace Capa_Datos
             TipoUsuario = tipoUsuario;
             Foto = foto;
             BuscarUsuario = buscar;
+            BuscarPersona = buscarPersona;
         }
         public DataTable Mostrar()
         {
@@ -226,7 +228,36 @@ namespace Capa_Datos
             return DtResultado1;
         }
 
-       
+        public DataTable BuscarPersonaId(cUsuario usuario)
+        {
+            DataTable DtResultado1 = new DataTable("RHPersona");
+            SqlConnection sqlconn = new SqlConnection();
+            try
+            {
+                sqlconn.ConnectionString = Conexion.Cn;
+                SqlCommand sqlcmd = new SqlCommand();
+                sqlcmd.Connection = sqlconn;
+                sqlcmd.CommandText = "sp_MostrarRHPersonaestadoID";
+                sqlcmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter ParBuscar = new SqlParameter();
+                ParBuscar.ParameterName = "@Persona";
+                ParBuscar.SqlDbType = SqlDbType.VarChar;
+                ParBuscar.Size = 200;
+                ParBuscar.Value = usuario.BuscarPersona;
+                sqlcmd.Parameters.Add(ParBuscar);
+
+                SqlDataAdapter sqlDat = new SqlDataAdapter(sqlcmd);
+                sqlDat.Fill(DtResultado1);
+            }
+            catch (Exception ex)
+            {
+                DtResultado1 = null;
+            }
+            return DtResultado1;
+        }
+
+
 
 
     }

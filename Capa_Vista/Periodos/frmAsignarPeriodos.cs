@@ -244,12 +244,16 @@ namespace Capa_Vista.Vacaciones
             string DPI = this.dtgAsignarPeriodos.CurrentRow.Cells["DPI"].Value.ToString();
             string Periodo = this.dtgAsignarPeriodos.CurrentRow.Cells["PERIODO"].Value.ToString();
             string Dias = this.dtgAsignarPeriodos.CurrentRow.Cells["DIAS_DISPONIBLES"].Value.ToString();
+            int DiasTomados = Convert.ToInt32(this.dtgAsignarPeriodos.CurrentRow.Cells["DIAS_TOMADOS"].Value);
+
 
             vacaciones = new frmSolicitudVacaciones();
             vacaciones.FormClosed += (s, args) => { vacaciones = null; };
             vacaciones.IdPeriodo = IDPERIODO;
             vacaciones.IdPersona = idPersona;
             vacaciones.Evento = "Nuevo";
+            vacaciones.diasTomados = DiasTomados;
+            vacaciones.Acumulados = Convert.ToInt32(this.lbTotalDias.Text);
             vacaciones.CargarDatos(diferencia, Evento,Empleado, DPI, Periodo, Dias);
             vacaciones.ShowDialog();
         }

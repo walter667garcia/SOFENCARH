@@ -61,6 +61,8 @@ namespace Capa_Datos
         public string Municipio { get; set; }
 
         public string Departamento { get; set; }
+
+        public bool Estado {  get; set; }
        
 
 
@@ -77,7 +79,7 @@ namespace Capa_Datos
                         string l_NACIMIENTO, DateTime f_NACIMIENTO, int iD_GENERO,
                         int iD_ETNIA, string nACIONALIDAD, int iD_RELIGION,
                         string dPI, int iD_MUNICIPIO, string iGSS, string nIT,
-                        byte[] foto, string lICENCIA, string tIPO_LICENCIA, string persona, string municipio, string departamento)
+                        byte[] foto, string lICENCIA, string tIPO_LICENCIA, string persona, string municipio, string departamento, bool estado)
         {
             IdPersona = idPersona;
             P_NOMBRE = p_NOMBRE;
@@ -104,6 +106,7 @@ namespace Capa_Datos
             Persona = persona;
             Municipio = municipio;
             Departamento = departamento;
+            Estado = estado;
         }
         public string Insertar(cPersona persona)
         {
