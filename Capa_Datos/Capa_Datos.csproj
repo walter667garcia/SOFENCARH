@@ -54,6 +54,8 @@
     <Compile Include="cPuestoNominal.cs" />
     <Compile Include="cReferenciaLaboral.cs" />
     <Compile Include="cReferenciaPersonal.cs" />
+    <Compile Include="cUsuario.cs" />
+    <Compile Include="cVacaciones.cs" />
     <Compile Include="Datos.cs" />
     <Compile Include="cLocalizacion.cs" />
     <Compile Include="cNivelAcademico.cs" />

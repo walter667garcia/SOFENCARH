@@ -42,19 +42,18 @@
             this.iconMenuItem2 = new FontAwesome.Sharp.IconMenuItem();
             this.mVacaciones = new FontAwesome.Sharp.IconMenuItem();
             this.iconMenuItem3 = new FontAwesome.Sharp.IconMenuItem();
-            this.iconMenuItem4 = new FontAwesome.Sharp.IconMenuItem();
+            this.mUsuarios = new FontAwesome.Sharp.IconMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.lbUsuario = new System.Windows.Forms.Label();
             this.pContainer = new System.Windows.Forms.Panel();
             this.lbFecha = new System.Windows.Forms.Label();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.iconMenuItem4 = new FontAwesome.Sharp.IconMenuItem();
             this.Menus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.SuspendLayout();
             // 
@@ -84,11 +83,12 @@
             this.mPersona,
             this.mPuesto,
             this.mSolicitud,
-            this.mVacaciones});
+            this.mVacaciones,
+            this.mUsuarios});
             this.Menus.Location = new System.Drawing.Point(0, 63);
             this.Menus.Name = "Menus";
-            this.Menus.Padding = new System.Windows.Forms.Padding(0, 150, 0, 0);
-            this.Menus.Size = new System.Drawing.Size(250, 682);
+            this.Menus.Padding = new System.Windows.Forms.Padding(0, 200, 0, 0);
+            this.Menus.Size = new System.Drawing.Size(280, 682);
             this.Menus.TabIndex = 4;
             // 
             // mHome
@@ -151,6 +151,7 @@
             this.mPuesto.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mNominal,
             this.mFuncional,
+            this.iconMenuItem4,
             this.iconMenuItem1});
             this.mPuesto.Enabled = false;
             this.mPuesto.Font = new System.Drawing.Font("Microsoft Tai Le", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -184,8 +185,8 @@
             this.mFuncional.IconColor = System.Drawing.Color.Black;
             this.mFuncional.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.mFuncional.Name = "mFuncional";
-            this.mFuncional.Size = new System.Drawing.Size(228, 34);
-            this.mFuncional.Text = "FUNCIONAL";
+            this.mFuncional.Size = new System.Drawing.Size(253, 34);
+            this.mFuncional.Text = "CORDINACION";
             this.mFuncional.Click += new System.EventHandler(this.mFuncional_Click);
             // 
             // iconMenuItem1
@@ -239,8 +240,7 @@
             this.mVacaciones.AutoSize = false;
             this.mVacaciones.BackColor = System.Drawing.Color.Gray;
             this.mVacaciones.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.iconMenuItem3,
-            this.iconMenuItem4});
+            this.iconMenuItem3});
             this.mVacaciones.Enabled = false;
             this.mVacaciones.Font = new System.Drawing.Font("Microsoft Tai Le", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mVacaciones.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(45)))));
@@ -262,20 +262,23 @@
             this.iconMenuItem3.IconColor = System.Drawing.Color.Black;
             this.iconMenuItem3.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.iconMenuItem3.Name = "iconMenuItem3";
-            this.iconMenuItem3.Size = new System.Drawing.Size(386, 34);
+            this.iconMenuItem3.Size = new System.Drawing.Size(308, 34);
             this.iconMenuItem3.Text = "ASIGNAR PERIODOS";
             this.iconMenuItem3.Click += new System.EventHandler(this.iconMenuItem3_Click);
             // 
-            // iconMenuItem4
+            // mUsuarios
             // 
-            this.iconMenuItem4.ForeColor = System.Drawing.Color.Gray;
-            this.iconMenuItem4.IconChar = FontAwesome.Sharp.IconChar.None;
-            this.iconMenuItem4.IconColor = System.Drawing.Color.Black;
-            this.iconMenuItem4.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.iconMenuItem4.Name = "iconMenuItem4";
-            this.iconMenuItem4.Size = new System.Drawing.Size(386, 34);
-            this.iconMenuItem4.Text = "SOLICITUD DE VACACIONES";
-            this.iconMenuItem4.Click += new System.EventHandler(this.iconMenuItem4_Click);
+            this.mUsuarios.AutoSize = false;
+            this.mUsuarios.Enabled = false;
+            this.mUsuarios.IconChar = FontAwesome.Sharp.IconChar.UserEdit;
+            this.mUsuarios.IconColor = System.Drawing.Color.Black;
+            this.mUsuarios.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.mUsuarios.IconSize = 50;
+            this.mUsuarios.Name = "mUsuarios";
+            this.mUsuarios.Size = new System.Drawing.Size(200, 40);
+            this.mUsuarios.Text = "Usuarios";
+            this.mUsuarios.Visible = false;
+            this.mUsuarios.Click += new System.EventHandler(this.mUsuarios_Click);
             // 
             // label1
             // 
@@ -283,7 +286,7 @@
             this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(106, 19);
+            this.label1.Location = new System.Drawing.Point(96, 19);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(96, 32);
             this.label1.TabIndex = 11;
@@ -292,9 +295,9 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(36, 4);
+            this.pictureBox1.Location = new System.Drawing.Point(81, 66);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(54, 56);
+            this.pictureBox1.Size = new System.Drawing.Size(121, 131);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 12;
             this.pictureBox1.TabStop = false;
@@ -313,22 +316,12 @@
             this.pictureBox2.TabStop = false;
             this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(12, 66);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(109, 95);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox3.TabIndex = 14;
-            this.pictureBox3.TabStop = false;
-            // 
             // lbUsuario
             // 
             this.lbUsuario.AutoSize = true;
             this.lbUsuario.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.lbUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbUsuario.Location = new System.Drawing.Point(12, 164);
+            this.lbUsuario.Location = new System.Drawing.Point(38, 213);
             this.lbUsuario.Name = "lbUsuario";
             this.lbUsuario.Size = new System.Drawing.Size(70, 25);
             this.lbUsuario.TabIndex = 15;
@@ -341,10 +334,10 @@
             this.pContainer.Cursor = System.Windows.Forms.Cursors.Default;
             this.pContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pContainer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.pContainer.Location = new System.Drawing.Point(250, 63);
+            this.pContainer.Location = new System.Drawing.Point(280, 63);
             this.pContainer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pContainer.Name = "pContainer";
-            this.pContainer.Size = new System.Drawing.Size(1115, 682);
+            this.pContainer.Size = new System.Drawing.Size(1085, 682);
             this.pContainer.TabIndex = 5;
             this.pContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.pContainer_Paint);
             // 
@@ -373,6 +366,16 @@
             this.pictureBox4.TabStop = false;
             this.pictureBox4.Click += new System.EventHandler(this.pictureBox4_Click);
             // 
+            // iconMenuItem4
+            // 
+            this.iconMenuItem4.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.iconMenuItem4.IconChar = FontAwesome.Sharp.IconChar.BookJournalWhills;
+            this.iconMenuItem4.IconColor = System.Drawing.Color.Black;
+            this.iconMenuItem4.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.iconMenuItem4.Name = "iconMenuItem4";
+            this.iconMenuItem4.Size = new System.Drawing.Size(253, 34);
+            this.iconMenuItem4.Text = "U/SECCION";
+            // 
             // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -382,7 +385,6 @@
             this.Controls.Add(this.pictureBox4);
             this.Controls.Add(this.lbFecha);
             this.Controls.Add(this.lbUsuario);
-            this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
@@ -401,7 +403,6 @@
             this.Menus.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -419,17 +420,17 @@
         private FontAwesome.Sharp.IconMenuItem mNominal;
         private FontAwesome.Sharp.IconMenuItem mFuncional;
         private FontAwesome.Sharp.IconMenuItem iconMenuItem3;
-        private FontAwesome.Sharp.IconMenuItem iconMenuItem4;
         private FontAwesome.Sharp.IconMenuItem mSolicitud;
         private FontAwesome.Sharp.IconMenuItem iconMenuItem2;
         private FontAwesome.Sharp.IconMenuItem iconMenuItem1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Label lbUsuario;
         private System.Windows.Forms.Panel pContainer;
         private System.Windows.Forms.Label lbFecha;
         private System.Windows.Forms.PictureBox pictureBox4;
+        private FontAwesome.Sharp.IconMenuItem mUsuarios;
+        private FontAwesome.Sharp.IconMenuItem iconMenuItem4;
     }
 }

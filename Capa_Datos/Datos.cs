@@ -27,6 +27,7 @@ namespace Capa_Datos
                 SqlDataAdapter municipioAdapter = new SqlDataAdapter("sp_ListarMunicipio", sqlconn);
                 SqlDataAdapter estadoCivilAdapter = new SqlDataAdapter("sp_EstadoCivilMostrar", sqlconn);
                 SqlDataAdapter departamento = new SqlDataAdapter("sp_LIstarDepartamento", sqlconn);
+                SqlDataAdapter tipoUsuario = new SqlDataAdapter("sp_ListarTipoUsuario", sqlconn);
 
                 // Llenar los DataTable en el DataSet
                 religionAdapter.Fill(dataSet, "TYRELIGION");
@@ -35,6 +36,7 @@ namespace Capa_Datos
                 municipioAdapter.Fill(dataSet, "TYMUNICIPIO");
                 estadoCivilAdapter.Fill(dataSet, "TYESTADOCIVIL");
                 departamento.Fill(dataSet, "TYDEPARTAMENTO");
+                tipoUsuario.Fill(dataSet, "TiposUsuario");
             }
             catch (Exception ex)
             {

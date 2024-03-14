@@ -60,6 +60,8 @@
     <Compile Include="nReferenciaLaboral.cs" />
     <Compile Include="nReferenciaPersonal.cs" />
     <Compile Include="nSocioEconomico.cs" />
+    <Compile Include="nUsuarios.cs" />
+    <Compile Include="nVacaciones.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

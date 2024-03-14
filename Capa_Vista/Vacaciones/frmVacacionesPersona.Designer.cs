@@ -63,12 +63,13 @@
             this.btnlimpiar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnlimpiar.BackgroundImage")));
             this.btnlimpiar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnlimpiar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
-            this.btnlimpiar.Location = new System.Drawing.Point(1094, 13);
+            this.btnlimpiar.Location = new System.Drawing.Point(483, 17);
             this.btnlimpiar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnlimpiar.Name = "btnlimpiar";
             this.btnlimpiar.Size = new System.Drawing.Size(58, 58);
             this.btnlimpiar.TabIndex = 18;
             this.btnlimpiar.UseVisualStyleBackColor = false;
+            this.btnlimpiar.Click += new System.EventHandler(this.btnlimpiar_Click);
             // 
             // button2
             // 
@@ -80,6 +81,7 @@
             this.button2.Size = new System.Drawing.Size(46, 58);
             this.button2.TabIndex = 17;
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // txtBuscar
             // 

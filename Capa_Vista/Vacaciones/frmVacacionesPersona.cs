@@ -1,5 +1,6 @@
 ﻿using Capa_Negocio;
 using Capa_Vista.Actas;
+using DocumentFormat.OpenXml.Office2021.PowerPoint.Tasks;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -47,14 +48,18 @@ namespace Capa_Vista.Vacaciones
                 if (posicion > -1)
                 {
                     menu.Items.Add("Agregar Periodos").Name = "Agregar Periodos" + posicion;
-                  
+                    menu.Items.Add("Historial Vacaciones").Name = "Historial Vacaciones" + posicion;
+
                 }
                 menu.Show(dtgVacacionesPersona, e.X, e.Y);
                 menu.ItemClicked += new ToolStripItemClickedEventHandler(menuclick1);
             }
         }
+
         private static frmAsignarPeriodos asignarPeriodos = null;
-       
+        private static Vacaciones historialVacaciones = null;
+        
+
 
         private void menuclick1(object sender, ToolStripItemClickedEventArgs e)
         {
@@ -84,12 +89,46 @@ namespace Capa_Vista.Vacaciones
                         MessageBox.Show("Actualmente está ingresando un dato. No puede actualizar un registro.");
                     }
                 }
-               
+                else if (id.Contains("Historial Vacaciones"))
+                {
+                    // Verificar si ya hay una instancia abierta
+                    if (historialVacaciones == null || historialVacaciones.IsDisposed)
+                    {
+                        id = id.Replace("Historial Vacaciones", "");
+                        // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
+                        historialVacaciones = new Vacaciones();
+                        historialVacaciones.FormClosed += (s, args) => { historialVacaciones = null; };
+                        historialVacaciones.IdPersona = Idpersona;
+                        historialVacaciones.ShowDialog();
+                    }
+                    else
+                    {
+                        historialVacaciones.Activate();
+                        // Si ya hay una instancia abierta, mostrar un mensaje de advertencia
+                        MessageBox.Show("Actualmente está ingresando solicitando un reporte. No puede abrir nuevamente el formulario.");
+                    }
+                }
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error al abrir el formulario: " + ex.Message);
             }
+        }
+
+        private void BuscarPersona()
+        {
+            this.dtgVacacionesPersona.DataSource = nVacaciones.BuscarPersona(this.txtBuscar.Text);
+        }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            BuscarPersona();
+        }
+
+        private void btnlimpiar_Click(object sender, EventArgs e)
+        {
+            Mostrar();
+            txtBuscar.Text = "";
         }
     }
 }

@@ -16,5 +16,11 @@ namespace Capa_Vista.Reportes
         {
             InitializeComponent();
         }
+
+        private void frmReporteActas_Load(object sender, EventArgs e)
+        {
+            this.sp_ReporteActasTableAdapter.Fill(this.reporteDataSet.sp_ReporteActas, 1);
+            this.reportViewer1.RefreshReport();
+        }
     }
 }

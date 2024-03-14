@@ -1,6 +1,7 @@
 ﻿using Capa_Vista;
 using Capa_Vista.Actas;
 using Capa_Vista.Home;
+using Capa_Vista.Usuario;
 using Capa_Vista.Vacaciones;
 using FontAwesome.Sharp;
 using System;
@@ -89,6 +90,8 @@ namespace SOFENCARH
                 mSolicitud.Enabled = true;
                 mVacaciones.Visible = true;
                 mVacaciones.Enabled = true;
+                mUsuarios.Visible = true;
+                mUsuarios.Enabled = true;
                 lbUsuario.Text = tipoUsuario;
             }
             else if (tipoUsuario == "Empleado")
@@ -254,6 +257,12 @@ namespace SOFENCARH
         private void pictureBox4_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void mUsuarios_Click(object sender, EventArgs e)
+        {
+            frmUsuario usuarios = new frmUsuario();
+            AbrirFormulario((IconMenuItem)sender, usuarios);
         }
     }
 }

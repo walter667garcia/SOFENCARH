@@ -21,6 +21,7 @@ namespace Capa_Vista.Vacaciones
         //Variables necesarias para iniciar el formulario
         public int Idpersona {  get; set; }
         public string Evento {  get; set; }
+        public int totalRegistros {  get; set; }
         public frmPeriodos()
         {
             InitializeComponent();
@@ -80,16 +81,26 @@ namespace Capa_Vista.Vacaciones
                 MensajeError("Falta ingresar algunos datos Remarcados");
             }
             else
+
             {
                 int diasDisponibles, diasTomados, diasRestantes;
-                diasDisponibles = 23;
-                diasTomados = 0;
-                diasRestantes = diasDisponibles;
-              
+                if(totalRegistros > 4)
+                {
+                    diasDisponibles = 25;
+                    diasRestantes = diasDisponibles;
+                    diasTomados = 0;
+                }
+                else
+                {
+                    diasDisponibles = 23;
+                    diasRestantes = diasDisponibles;
+                    diasTomados = 0;
+                }
 
                 string rpta = "";
                 if (this.Evento == "Nuevo")
                 {
+                
                     rpta = nPeriodos.Insertar(
                     Idpersona,
                     this.txtPeriodos.Text.Trim(),
