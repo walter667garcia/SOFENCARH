@@ -21,7 +21,10 @@ namespace Capa_Negocio
         {
             return new cUsuario().MostrarPersonaEstado();
         }
-
+        public static DataTable MostrarActasEstado()
+        {
+            return new cUsuario().MostrarActasEstado();
+        }
         public static string ActualizarEstadoPersona(int idPeriodo, bool estado)
         {
             cUsuario Obj = new cUsuario();
@@ -33,6 +36,13 @@ namespace Capa_Negocio
         {
             cUsuario Obj = new cUsuario();
             return Obj.ActualizarEstadoUsuario(idPeriodo, estado);
+
+        }
+
+        public static string DesactivarActa(int idPeriodo)
+        {
+            cUsuario Obj = new cUsuario();
+            return Obj.ActualizarEstadoActa(idPeriodo);
 
         }
         public static string InsertarUsuario( string nombreUsuario, string contrasena, bool activo, int tipoUsuario, byte[] foto)

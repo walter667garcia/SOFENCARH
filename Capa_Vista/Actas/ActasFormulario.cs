@@ -26,6 +26,8 @@ namespace Capa_Vista.Actas
            
             InitializeComponent();
             LlenarComboBoxes();
+            dtmingreso.Format = DateTimePickerFormat.Custom;
+            dtmingreso.CustomFormat = "dd/MM/yyyy";
         }
 
         private void panel2_Paint(object sender, PaintEventArgs e)
@@ -272,6 +274,11 @@ namespace Capa_Vista.Actas
                 // También puedes establecer el cursor al final del texto para mejorar la experiencia del usuario.
                 txtdescripcion.SelectionStart = textoValidado.Length;
             }
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

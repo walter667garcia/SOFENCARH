@@ -1,6 +1,12 @@
 ﻿using Capa_Negocio;
+using Capa_Vista.Actas;
+using Capa_Vista.Contratos;
+using Capa_Vista.Familia;
 using Capa_Vista.Localizacion;
+using Capa_Vista.Reporte;
 using Capa_Vista.SocioEconomico;
+using ClosedXML.Excel;
+using ClosedXML.Graphics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,16 +31,44 @@ namespace Capa_Vista.Usuario
         {
             MostrarUsuarios();
             MostrarEmpleado();
+            MostrarActas();
         }
         private void MostrarUsuarios()
         {
-            this.dtgUsuarios.DataSource = nUsuarios.MostrarUsuarios();
+            try {
+                this.dtgUsuarios.DataSource = nUsuarios.MostrarUsuarios(); 
+                 }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Se produjo un error al intenta mostrar : {ex.Message}");
+            }
+
 
         }
         private void MostrarEmpleado()
         {
-            this.dtgPersona.DataSource = nUsuarios.MostrarPersonaEstado();
-            Imagen();
+            try
+            {
+                this.dtgPersona.DataSource = nUsuarios.MostrarPersonaEstado();
+                Imagen();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Se produjo un error al intenta mostrar : {ex.Message}");
+            }
+        }
+
+        private void MostrarActas()
+        {
+            try
+            {
+                this.dtgActas.DataSource = nUsuarios.MostrarActasEstado();
+                Imagen();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Se produjo un error al intenta mostrar : {ex.Message}");
+            }
         }
         private void Imagen()
         {
@@ -117,6 +151,7 @@ namespace Capa_Vista.Usuario
                             string rpta = "";
                             int Id = Convert.ToInt32(this.dtgPersona.CurrentRow.Cells["ID"].Value);
                             rpta = nUsuarios.ActualizarEstadoPersona(Id,false);
+                            
                             if (rpta.Equals("OK"))
                             {
                                 this.MensajeOk("Se Desactivo el empleado");
@@ -284,6 +319,156 @@ namespace Capa_Vista.Usuario
         {
             txtBuscarPersona.Text = "";
             MostrarEmpleado();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            ExportarDataGridViewAExcel(dtgUsuarios);
+        }
+
+        private void ExportarDataGridViewAExcel(DataGridView dataGridView)
+        {
+            // Verificar si hay datos en el DataGridView
+            if (dataGridView.Rows.Count == 0)
+            {
+                MessageBox.Show("No hay datos para exportar.", "Exportar a Excel", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Crear un nuevo libro de Excel
+            var workbook = new XLWorkbook();
+            var worksheet = workbook.Worksheets.Add("Hoja1");
+
+            // Agregar los encabezados de columnas
+            for (int i = 1; i <= dataGridView.Columns.Count; i++)
+            {
+                worksheet.Cell(1, i).Value = dataGridView.Columns[i - 1].HeaderText;
+            }
+
+            // Agregar los datos de las filas
+            for (int i = 0; i < dataGridView.Rows.Count; i++)
+            {
+                for (int j = 0; j < dataGridView.Columns.Count; j++)
+                {
+                    worksheet.Cell(i + 2, j + 1).Value = dataGridView.Rows[i].Cells[j].Value?.ToString();
+                }
+            }
+            // Guardar el archivo de Excel
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Archivos Excel (*.xlsx)|*.xlsx";
+            saveFileDialog.FileName = "ArchivoExcel.xlsx";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    workbook.SaveAs(saveFileDialog.FileName);
+                    MessageBox.Show("El archivo Excel se ha exportado correctamente.", "Exportar a Excel", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Abrir el archivo de Excel después de guardarlo
+                    System.Diagnostics.Process.Start(saveFileDialog.FileName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al guardar el archivo Excel: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            ExportarDataGridViewAExcel(dtgPersona);
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            frmReporteUsuarios reporteUsuarios = new frmReporteUsuarios();
+            reporteUsuarios.ShowDialog();
+        }
+
+        private void dtgActas_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var hti = dtgActas.HitTest(e.X, e.Y);
+                if (hti.RowIndex >= 0)
+                {
+                    dtgActas.Rows[hti.RowIndex].Selected = true;
+                }
+            }
+
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenuStrip menu = new System.Windows.Forms.ContextMenuStrip();
+                int posicion = dtgActas.HitTest(e.X, e.Y).RowIndex;
+                if (posicion > -1)
+                {
+
+                    menu.Items.Add("Entrega de Puesto").Name = "Entrega de Puesto" + posicion;
+                    menu.Items.Add("Resolucion").Name = "Resolucion" + posicion;
+                }
+                menu.Show(dtgActas, e.X, e.Y);
+                menu.ItemClicked += new ToolStripItemClickedEventHandler(actasmenu);
+            }
+        }
+        private static frmResolucionBajas resolucion = null;
+        private static frmEntregaPuesto entregaPuesto = null;
+        private void actasmenu(object sender, ToolStripItemClickedEventArgs e)
+        {
+            string id = e.ClickedItem.Name.ToString();
+            try
+            {
+                string puestoFuncional = this.dtgActas.CurrentRow.Cells["Puesto_Nominal"].Value.ToString();
+                string puestoNominal = this.dtgActas.CurrentRow.Cells["Puesto_Funcional"].Value.ToString();
+                string nombre = this.dtgActas.CurrentRow.Cells["Empleado"].Value.ToString();
+                string DPI = this.dtgActas.CurrentRow.Cells["DPI"].Value.ToString();
+                string profesion = this.dtgActas.CurrentRow.Cells["PROFESION_OFICIO"].Value.ToString();
+
+                if (id.Contains("Entrega de Puesto"))
+                {
+
+                   
+                  
+                    if (entregaPuesto == null || entregaPuesto.IsDisposed)
+                    {
+                        id = id.Replace("Entrega de Puesto", "");
+                        // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
+                        entregaPuesto = new frmEntregaPuesto();
+                        entregaPuesto.FormClosed += (s, args) => { entregaPuesto = null; };
+                        entregaPuesto.CargarDatos(DPI, puestoFuncional, puestoNominal,profesion,nombre);
+                        entregaPuesto.ShowDialog();
+                    }
+                    else
+                    {
+                        entregaPuesto.Activate();
+                        // Si ya hay una instancia abierta, mostrar un mensaje de advertencia
+                        MessageBox.Show("Actualmente tiene en proceso una Entrega de Puesto.");
+                    }
+                }
+                else if (id.Contains("Resolucion"))
+                {
+                       if (resolucion == null || resolucion.IsDisposed)
+                    {
+                        id = id.Replace("Resolucion", "");
+                        // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
+                        resolucion = new frmResolucionBajas();
+                        resolucion.FormClosed += (s, args) => { resolucion = null; };
+                        resolucion.CargarDatos(puestoFuncional, puestoNominal, nombre,DPI);
+                        resolucion.ShowDialog();
+                    }
+                    else
+                    {
+                        resolucion.Activate();
+                        // Si ya hay una instancia abierta, mostrar un mensaje de advertencia
+                        MessageBox.Show("Actualmente tiene en ejecucion una Resolucion.");
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al intentar abrir el formulario: " + ex.Message);
+            }
         }
     }
 }

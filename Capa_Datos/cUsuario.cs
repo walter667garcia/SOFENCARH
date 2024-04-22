@@ -58,6 +58,7 @@ namespace Capa_Datos
             return DtResultado;
         }
 
+        
         public DataTable MostrarPersonaEstado()
         {
             DataTable DtResultado = new DataTable("RHPersona");
@@ -68,6 +69,28 @@ namespace Capa_Datos
                 SqlCommand sqlcmd = new SqlCommand();
                 sqlcmd.Connection = sqlconn;
                 sqlcmd.CommandText = "sp_MostrarRHPersonaestado";
+                sqlcmd.CommandType = CommandType.StoredProcedure;
+
+                SqlDataAdapter sqlDat = new SqlDataAdapter(sqlcmd);
+                sqlDat.Fill(DtResultado);
+            }
+            catch (Exception ex)
+            {
+                DtResultado = null;
+            }
+            return DtResultado;
+        }
+
+        public DataTable MostrarActasEstado()
+        {
+            DataTable DtResultado = new DataTable("RHACTAPOSESION");
+            SqlConnection sqlconn = new SqlConnection();
+            try
+            {
+                sqlconn.ConnectionString = Conexion.Cn;
+                SqlCommand sqlcmd = new SqlCommand();
+                sqlcmd.Connection = sqlconn;
+                sqlcmd.CommandText = "sp_ListarRHActaMantenimiento";
                 sqlcmd.CommandType = CommandType.StoredProcedure;
 
                 SqlDataAdapter sqlDat = new SqlDataAdapter(sqlcmd);
@@ -139,7 +162,34 @@ namespace Capa_Datos
 
             return rpta;
         }
+        public string ActualizarEstadoActa(int idActa)
+        {
+            string rpta = "";
 
+            using (SqlConnection sqlcon = new SqlConnection(Conexion.Cn))
+            {
+                try
+                {
+                    sqlcon.Open();
+
+                    using (SqlCommand cmd = new SqlCommand("sp_DesactivarActa", sqlcon))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue("@Id", idActa).SqlDbType = SqlDbType.Int;
+
+                        int filasAfectadas = cmd.ExecuteNonQuery();
+                        rpta = filasAfectadas > 0 ? "OK" : "No se actualizó ningún registro";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    rpta = ex.Message;
+                }
+            }
+
+            return rpta;
+        }
 
 
         public string Insertar(cUsuario usuario)

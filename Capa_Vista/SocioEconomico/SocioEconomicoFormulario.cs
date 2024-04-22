@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -213,5 +215,56 @@ namespace Capa_Vista.SocioEconomico
             this.txtId.Text = id;
         }
 
+        private void txtMontoDeuda_TextChanged(object sender, EventArgs e)
+        {
+            // Elimina cualquier caracter que no sea dígito
+            string Q = Regex.Replace(txtMontoDeuda.Text, @"[^\d]", "");
+
+            // Limita a 9 caracteres
+            if (Q.Length > 9)
+            {
+                Q = Q.Substring(0, 9);
+            }
+
+            // Formatea el número como moneda local (Quetzal en Guatemala)
+            if (long.TryParse(Q, out long numero))
+            {
+                txtMontoDeuda.Text = numero.ToString("C0", new CultureInfo("es-GT"));
+
+            }
+            else
+            {
+                txtMontoDeuda.Text = "";  // Si no se puede convertir, se deja en blanco
+            }
+
+            // Coloca el cursor al final del texto
+            txtMontoDeuda.SelectionStart = txtMontoDeuda.Text.Length;
+        }
+
+        private void txtMontoOtrosIngresos_TextChanged(object sender, EventArgs e)
+        {
+            // Elimina cualquier caracter que no sea dígito
+            string Q = Regex.Replace(txtMontoOtrosIngresos.Text, @"[^\d]", "");
+
+            // Limita a 9 caracteres
+            if (Q.Length > 9)
+            {
+                Q = Q.Substring(0, 9);
+            }
+
+            // Formatea el número como moneda local (Quetzal en Guatemala)
+            if (long.TryParse(Q, out long numero))
+            {
+                txtMontoOtrosIngresos.Text = numero.ToString("C0", new CultureInfo("es-GT"));
+
+            }
+            else
+            {
+                txtMontoOtrosIngresos.Text = "";  // Si no se puede convertir, se deja en blanco
+            }
+
+            // Coloca el cursor al final del texto
+            txtMontoOtrosIngresos.SelectionStart = txtMontoOtrosIngresos.Text.Length;
+        }
     }
 }

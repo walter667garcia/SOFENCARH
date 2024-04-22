@@ -81,9 +81,16 @@ namespace Capa_Vista.Familia
         //Funcion para mostrar los datos
         private void Mostrar()
         {
-            lbPersona.Text = Persona;
-            this.dtgFamilia.DataSource = nHome.BuscarFamilia(Idpersona);
-            OcultarColumnas();
+            try
+            {
+                lbPersona.Text = Persona;
+                this.dtgFamilia.DataSource = nHome.BuscarFamilia(Idpersona);
+                OcultarColumnas();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Se produjo un error al intenta mostrar : {ex.Message}");
+            }
         }
 
         private void pcbNuevo_Click(object sender, EventArgs e)

@@ -34,6 +34,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Messaging" />
@@ -62,6 +63,64 @@
     </Compile>
     <Compile Include="Actas\frmActas.Designer.cs">
       <DependentUpon>frmActas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Actas\frmTomaPosesion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Actas\frmTomaPosesion.Designer.cs">
+      <DependentUpon>frmTomaPosesion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmConexion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConexion.Designer.cs">
+      <DependentUpon>frmConexion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reporte\dataVacaciones.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dataVacaciones.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reporte\periodosenca.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reporte\periodosenca.Designer.cs">
+      <DependentUpon>periodosenca.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reporte\periodoEnca.cs">
+      <DependentUpon>periodoEnca.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reporte\periodoEnca.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>periodoEnca.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reporte\periodosPersona.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reporte\periodosPersona.Designer.cs">
+      <DependentUpon>periodosPersona.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reporte\PersonaDataSet.cs">
+      <DependentUpon>PersonaDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reporte\Reportecertificacionpersona.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reporte\Reportecertificacionpersona.Designer.cs">
+      <DependentUpon>Reportecertificacionpersona.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reporte\Reportepersonacoordinacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reporte\Reportepersonacoordinacion.Designer.cs">
+      <DependentUpon>Reportepersonacoordinacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Usuario\frmResolucionBajas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Usuario\frmResolucionBajas.Designer.cs">
+      <DependentUpon>frmResolucionBajas.cs</DependentUpon>
     </Compile>
     <Compile Include="DatosAdicionales\frmDatosAdicionales.cs">
       <SubType>Form</SubType>
@@ -123,11 +182,64 @@
     <Compile Include="FisicoBiologico\FisicoBiologicoFormulario.Designer.cs">
       <DependentUpon>FisicoBiologicoFormulario.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmreporteWeb.cs">
+    <Compile Include="Menu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmreporteWeb.Designer.cs">
-      <DependentUpon>frmreporteWeb.cs</DependentUpon>
+    <Compile Include="Menu.Designer.cs">
+      <DependentUpon>Menu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMantenimineto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMantenimineto.Designer.cs">
+      <DependentUpon>frmMantenimineto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmProfesion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmProfesion.Designer.cs">
+      <DependentUpon>frmProfesion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reporte\frmReporteEmpleado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reporte\frmReporteEmpleado.Designer.cs">
+      <DependentUpon>frmReporteEmpleado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reporte\frmReportePeriodo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reporte\frmReportePeriodo.Designer.cs">
+      <DependentUpon>frmReportePeriodo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reporte\frmReporteProfesion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reporte\frmReporteProfesion.Designer.cs">
+      <DependentUpon>frmReporteProfesion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reporte\frmReporteUsuarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reporte\frmReporteUsuarios.Designer.cs">
+      <DependentUpon>frmReporteUsuarios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reporte\frmReporteVacaciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reporte\frmReporteVacaciones.Designer.cs">
+      <DependentUpon>frmReporteVacaciones.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reporte\PersonaDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PersonaDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Usuario\frmEntregaPuesto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Usuario\frmEntregaPuesto.Designer.cs">
+      <DependentUpon>frmEntregaPuesto.cs</DependentUpon>
     </Compile>
     <Compile Include="Vacaciones\frmSolicitudVacaciones.cs">
       <SubType>Form</SubType>
@@ -140,12 +252,6 @@
     </Compile>
     <Compile Include="Home\frmHome.Designer.cs">
       <DependentUpon>frmHome.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Home\frmGraficas.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Home\frmGraficas.Designer.cs">
-      <DependentUpon>frmGraficas.cs</DependentUpon>
     </Compile>
     <Compile Include="Idioma\frmIdioma.cs">
       <SubType>Form</SubType>
@@ -182,12 +288,6 @@
     </Compile>
     <Compile Include="Localizacion\UbicacionFormulario.Designer.cs">
       <DependentUpon>UbicacionFormulario.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Home\Menu.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Home\Menu.Designer.cs">
-      <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
     <Compile Include="OtrosDatos\frmOtrosDatos.cs">
       <SubType>Form</SubType>
@@ -235,23 +335,6 @@
     </Compile>
     <Compile Include="ReferenciaPersonal\ReferenciaPersonalFormulario.Designer.cs">
       <DependentUpon>ReferenciaPersonalFormulario.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ReporteDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ReporteDataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Reportes\frmReporteActas.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Reportes\frmReporteActas.Designer.cs">
-      <DependentUpon>frmReporteActas.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Reportes\frmReportePersona.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Reportes\frmReportePersona.Designer.cs">
-      <DependentUpon>frmReportePersona.cs</DependentUpon>
     </Compile>
     <Compile Include="SocioEconomico\frmSocioEconomico.cs">
       <SubType>Form</SubType>
@@ -310,6 +393,35 @@
     <EmbeddedResource Include="Actas\frmActas.resx">
       <DependentUpon>frmActas.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Actas\frmTomaPosesion.resx">
+      <DependentUpon>frmTomaPosesion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmConexion.resx">
+      <DependentUpon>frmConexion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporte\certificacionempleado.rdlc" />
+    <EmbeddedResource Include="Reporte\datosgeneralcoordinacion.rdlc" />
+    <EmbeddedResource Include="Reporte\periodosenca.resx">
+      <DependentUpon>periodosenca.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporte\periodosPersona.resx">
+      <DependentUpon>periodosPersona.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporte\Reportecertificacionpersona.resx">
+      <DependentUpon>Reportecertificacionpersona.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporte\Reporteperidospersona.rdlc" />
+    <EmbeddedResource Include="Reporte\Reporteperiodosenca.rdlc" />
+    <EmbeddedResource Include="Reporte\Reportepersonacoordinacion.resx">
+      <DependentUpon>Reportepersonacoordinacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Usuario\frmEntregaPuesto.resx">
+      <DependentUpon>frmEntregaPuesto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Usuario\frmResolucionBajas.resx">
+      <DependentUpon>frmResolucionBajas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Contratos\Report1.rdlc" />
     <EmbeddedResource Include="DatosAdicionales\frmDatosAdicionales.resx">
       <DependentUpon>frmDatosAdicionales.cs</DependentUpon>
     </EmbeddedResource>
@@ -340,17 +452,40 @@
     <EmbeddedResource Include="FisicoBiologico\FisicoBiologicoFormulario.resx">
       <DependentUpon>FisicoBiologicoFormulario.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmreporteWeb.resx">
-      <DependentUpon>frmreporteWeb.cs</DependentUpon>
+    <EmbeddedResource Include="Menu.resx">
+      <DependentUpon>Menu.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmMantenimineto.resx">
+      <DependentUpon>frmMantenimineto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmProfesion.resx">
+      <DependentUpon>frmProfesion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporte\frmReporteEmpleado.resx">
+      <DependentUpon>frmReporteEmpleado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporte\frmReportePeriodo.resx">
+      <DependentUpon>frmReportePeriodo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporte\frmReporteProfesion.resx">
+      <DependentUpon>frmReporteProfesion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporte\frmReporteUsuarios.resx">
+      <DependentUpon>frmReporteUsuarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporte\frmReporteVacaciones.resx">
+      <DependentUpon>frmReporteVacaciones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporte\ReporteHistorialVacaciones.rdlc" />
+    <EmbeddedResource Include="Reporte\ReportePeriodos.rdlc" />
+    <EmbeddedResource Include="Reporte\ReportePersona.rdlc" />
+    <EmbeddedResource Include="Reporte\ReporteProfesion.rdlc" />
+    <EmbeddedResource Include="Reporte\ReporteUsuarios.rdlc" />
     <EmbeddedResource Include="Vacaciones\frmSolicitudVacaciones.resx">
       <DependentUpon>frmSolicitudVacaciones.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Home\frmHome.resx">
       <DependentUpon>frmHome.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Home\frmGraficas.resx">
-      <DependentUpon>frmGraficas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Idioma\frmIdioma.resx">
       <DependentUpon>frmIdioma.cs</DependentUpon>
@@ -369,9 +504,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Localizacion\UbicacionFormulario.resx">
       <DependentUpon>UbicacionFormulario.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Home\Menu.resx">
-      <DependentUpon>Menu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OtrosDatos\frmOtrosDatos.resx">
       <DependentUpon>frmOtrosDatos.cs</DependentUpon>
@@ -395,15 +527,6 @@
     <EmbeddedResource Include="ReferenciaPersonal\ReferenciaPersonalFormulario.resx">
       <DependentUpon>ReferenciaPersonalFormulario.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\frmReporteActas.resx">
-      <DependentUpon>frmReporteActas.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\frmReportePersona.resx">
-      <DependentUpon>frmReportePersona.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\Report1.rdlc" />
-    <EmbeddedResource Include="Reportes\ReporteActas.rdlc" />
-    <EmbeddedResource Include="Reportes\ReportePersona.rdlc" />
     <EmbeddedResource Include="SocioEconomico\frmSocioEconomico.resx">
       <DependentUpon>frmSocioEconomico.cs</DependentUpon>
     </EmbeddedResource>
@@ -445,11 +568,11 @@
     <PackageReference Include="FontAwesome.Sharp">
       <Version>6.3.0</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.ReportingServices.ReportViewerControl.WebForms">
-      <Version>150.1620.0</Version>
+    <PackageReference Include="Microsoft.Office.Interop.Word">
+      <Version>15.0.4797.1004</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.ReportingServices.ReportViewerControl.Winforms">
-      <Version>150.1404.0-rc</Version>
+      <Version>150.1620.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -458,18 +581,42 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="ReporteDataSet.xsc">
-      <DependentUpon>ReporteDataSet.xsd</DependentUpon>
+    <None Include="Reporte\dataVacaciones.xsc">
+      <DependentUpon>dataVacaciones.xsd</DependentUpon>
     </None>
-    <None Include="ReporteDataSet.xsd">
+    <None Include="Reporte\dataVacaciones.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>ReporteDataSet.Designer.cs</LastGenOutput>
+      <LastGenOutput>dataVacaciones.Designer.cs</LastGenOutput>
     </None>
-    <None Include="ReporteDataSet.xss">
-      <DependentUpon>ReporteDataSet.xsd</DependentUpon>
+    <None Include="Reporte\dataVacaciones.xss">
+      <DependentUpon>dataVacaciones.xsd</DependentUpon>
+    </None>
+    <None Include="Reporte\periodoEnca.xsc">
+      <DependentUpon>periodoEnca.xsd</DependentUpon>
+    </None>
+    <None Include="Reporte\periodoEnca.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>periodoEnca.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reporte\periodoEnca.xss">
+      <DependentUpon>periodoEnca.xsd</DependentUpon>
+    </None>
+    <None Include="Reporte\PersonaDataSet.xsc">
+      <DependentUpon>PersonaDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Reporte\PersonaDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PersonaDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reporte\PersonaDataSet.xss">
+      <DependentUpon>PersonaDataSet.xsd</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Documentos\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

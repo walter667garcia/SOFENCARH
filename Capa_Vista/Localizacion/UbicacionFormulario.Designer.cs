@@ -45,6 +45,7 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.White;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.txtID);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.label2);
@@ -55,7 +56,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 68);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(622, 331);
+            this.panel2.Size = new System.Drawing.Size(631, 331);
             this.panel2.TabIndex = 3;
             // 
             // txtID
@@ -101,6 +102,7 @@
             this.txtLocalizacion.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtLocalizacion.Size = new System.Drawing.Size(548, 75);
             this.txtLocalizacion.TabIndex = 9;
+            this.txtLocalizacion.TextChanged += new System.EventHandler(this.txtLocalizacion_TextChanged);
             // 
             // cmbLocalizacion
             // 
@@ -114,6 +116,7 @@
             this.cmbLocalizacion.Name = "cmbLocalizacion";
             this.cmbLocalizacion.Size = new System.Drawing.Size(548, 33);
             this.cmbLocalizacion.TabIndex = 8;
+            this.cmbLocalizacion.SelectedIndexChanged += new System.EventHandler(this.cmbLocalizacion_SelectedIndexChanged);
             // 
             // button2
             // 
@@ -146,11 +149,12 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.DodgerBlue;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(622, 68);
+            this.panel1.Size = new System.Drawing.Size(631, 68);
             this.panel1.TabIndex = 2;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
             this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseMove);
@@ -171,7 +175,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(622, 399);
+            this.ClientSize = new System.Drawing.Size(631, 399);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

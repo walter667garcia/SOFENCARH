@@ -26,6 +26,8 @@ namespace Capa_Datos
 
         public string C_APELLIDO { get; set; }
 
+        public string PROFESION_OFICIO { get; set; }
+
         public string EDAD { get; set; }
 
         public int ID_ESTADO_CIVIL { get; set; }
@@ -74,7 +76,7 @@ namespace Capa_Datos
 
         // Constructor con parámetros
         public cPersona(int idPersona, string p_NOMBRE, string s_NOMBRE, string t_NOMBRE,
-                        string p_APELLIDO, string s_APELLIDO, string c_APELLIDO,
+                        string p_APELLIDO, string s_APELLIDO, string c_APELLIDO, string profesion_oficio,
                         string eDAD, string pRETENCION_SALARIO, int iD_ESTADO_CIVIL,
                         string l_NACIMIENTO, DateTime f_NACIMIENTO, int iD_GENERO,
                         int iD_ETNIA, string nACIONALIDAD, int iD_RELIGION,
@@ -88,6 +90,7 @@ namespace Capa_Datos
             P_APELLIDO = p_APELLIDO;
             S_APELLIDO = s_APELLIDO;
             C_APELLIDO = c_APELLIDO;
+            PROFESION_OFICIO = profesion_oficio;
             EDAD = eDAD;
             ID_ESTADO_CIVIL = iD_ESTADO_CIVIL;
             L_NACIMIENTO = l_NACIMIENTO;
@@ -126,6 +129,7 @@ namespace Capa_Datos
                         cmd.Parameters.AddWithValue("@P_APELLIDO", persona.P_APELLIDO).SqlDbType = SqlDbType.NVarChar;
                         cmd.Parameters.AddWithValue("@S_APELLIDO", persona.S_APELLIDO).SqlDbType = SqlDbType.NVarChar;
                         cmd.Parameters.AddWithValue("@C_APELLIDO", persona.C_APELLIDO).SqlDbType = SqlDbType.NVarChar;
+                        cmd.Parameters.AddWithValue("@PROFESION_OFICIO", persona.PROFESION_OFICIO).SqlDbType = SqlDbType.NVarChar;
                         cmd.Parameters.AddWithValue("@EDAD", persona.EDAD).SqlDbType = SqlDbType.NVarChar;
                         cmd.Parameters.AddWithValue("@ID_ESTADO_CIVIL", persona.ID_ESTADO_CIVIL).SqlDbType = SqlDbType.Int;
                         cmd.Parameters.AddWithValue("@L_NACIMIENTO", persona.L_NACIMIENTO).SqlDbType = SqlDbType.NVarChar;
@@ -174,6 +178,7 @@ namespace Capa_Datos
                         cmd.Parameters.AddWithValue("@P_APELLIDO", persona.P_APELLIDO).SqlDbType = SqlDbType.NVarChar;
                         cmd.Parameters.AddWithValue("@S_APELLIDO", persona.S_APELLIDO).SqlDbType = SqlDbType.NVarChar;
                         cmd.Parameters.AddWithValue("@C_APELLIDO", persona.C_APELLIDO).SqlDbType = SqlDbType.NVarChar;
+                        cmd.Parameters.AddWithValue("@PROFESION_OFICIO", persona.PROFESION_OFICIO).SqlDbType = SqlDbType.NVarChar;
                         cmd.Parameters.AddWithValue("@EDAD", persona.EDAD).SqlDbType = SqlDbType.NVarChar;
                         cmd.Parameters.AddWithValue("@ID_ESTADO_CIVIL", persona.ID_ESTADO_CIVIL).SqlDbType = SqlDbType.Int;
                         cmd.Parameters.AddWithValue("@L_NACIMIENTO", persona.L_NACIMIENTO).SqlDbType = SqlDbType.NVarChar;

@@ -23,6 +23,7 @@ namespace Capa_Datos
         public string MOTIVO_RETIRO { get; set; }
         public string REFERENCIAS { get; set; }
         public string DESCRIPCION { get; set; }
+        public string DOCUMENTO { get; set; }
 
         public string Persona { get; set; }
 
@@ -37,7 +38,7 @@ namespace Capa_Datos
         // Constructor con datos
         public cExperienciaLaboral(int idPersona, string empresa, string telefono, string jefe, string puesto,
             string salario, DateTime fechaIngreso, DateTime fechaRetiro, string motivoRetiro,
-            string referencias, string descripcion, string persona, int iD)
+            string referencias, string descripcion,string documento, string persona, int iD)
         {
             IdPersona = idPersona;
             EMPRESA = empresa;
@@ -50,6 +51,7 @@ namespace Capa_Datos
             MOTIVO_RETIRO = motivoRetiro;
             REFERENCIAS = referencias;
             DESCRIPCION = descripcion;
+            DOCUMENTO = documento;
             Persona = persona;
             ID = iD;
         }
@@ -77,7 +79,7 @@ namespace Capa_Datos
                         cmd.Parameters.AddWithValue("@Motivo_Retiro", experiencia.MOTIVO_RETIRO);
                         cmd.Parameters.AddWithValue("@Referencias", experiencia.REFERENCIAS);
                         cmd.Parameters.AddWithValue("@Descripcion", experiencia.DESCRIPCION);
-
+                        cmd.Parameters.AddWithValue("@Documento", experiencia.DOCUMENTO);
 
                         rpta = cmd.ExecuteNonQuery() == 1 ? "OK" : "No ingresó el registro";
                     }
@@ -118,6 +120,7 @@ namespace Capa_Datos
                         cmd.Parameters.AddWithValue("@Motivo_Retiro", experiencia.MOTIVO_RETIRO);
                         cmd.Parameters.AddWithValue("@Referencias", experiencia.REFERENCIAS);
                         cmd.Parameters.AddWithValue("@Descripcion", experiencia.DESCRIPCION);
+                        cmd.Parameters.AddWithValue("@Documento", experiencia.DOCUMENTO);
                         // Agregar parámetros para otros campos...
 
                         int filasAfectadas = cmd.ExecuteNonQuery();

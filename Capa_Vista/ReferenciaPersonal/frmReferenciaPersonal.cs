@@ -85,9 +85,16 @@ namespace Capa_Vista.ReferenciaPersonal
         }
         public void Mostrar()
         {
-            this.lbPersona.Text = Persona;
-            this.dtgPersonal.DataSource = nHome.BuscarReferenciaPersonal(Idpersona);
-            OcultarColumnas();
+            try
+            {
+                this.lbPersona.Text = Persona;
+                this.dtgPersonal.DataSource = nHome.BuscarReferenciaPersonal(Idpersona);
+                OcultarColumnas();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Se produjo un error al intenta mostrar : {ex.Message}");
+            }
         }
         private void pcbNuevo_Click(object sender, EventArgs e)
         {
@@ -165,12 +172,14 @@ namespace Capa_Vista.ReferenciaPersonal
                         string Persona = this.dtgPersonal.CurrentRow.Cells["Nombre"].Value.ToString();
                         string Telefono = this.dtgPersonal.CurrentRow.Cells["Telefono"].Value.ToString();
                         string Relacion = this.dtgPersonal.CurrentRow.Cells["Relacion"].Value.ToString();
+                        string Documento = this.dtgPersonal.CurrentRow.Cells["Documento"].Value.ToString();
+
 
                         instanciaAbierta = new ReferenciaPersonalFormulario();
                         instanciaAbierta.FormClosed += (s, args) => { instanciaAbierta = null; };
                         instanciaAbierta.Idpersona = Idpersona;
                         instanciaAbierta.Evento = "Editar";
-                        instanciaAbierta.CargarDatos(Id, Persona, Telefono, Relacion);
+                        instanciaAbierta.CargarDatos(Id, Persona, Telefono, Relacion, Documento);
                         instanciaAbierta.ShowDialog();
                     }
                     else

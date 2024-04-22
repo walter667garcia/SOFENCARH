@@ -25,6 +25,12 @@ namespace Capa_Vista.Vacaciones
         public frmPeriodos()
         {
             InitializeComponent();
+
+            dtmFechaInicial.Format = DateTimePickerFormat.Custom;
+            dtmFechaInicial.CustomFormat = "dd/MM/yyyy";
+
+            dtmFechaFinal.Format = DateTimePickerFormat.Custom;
+            dtmFechaFinal.CustomFormat = "dd/MM/yyyy";
         }
 
        
@@ -66,7 +72,7 @@ namespace Capa_Vista.Vacaciones
 
         private void dtmFechaInicial_ValueChanged(object sender, EventArgs e)
         {
-            Calcularfecha();
+           // Calcularfecha();
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
@@ -83,20 +89,9 @@ namespace Capa_Vista.Vacaciones
             else
 
             {
-                int diasDisponibles, diasTomados, diasRestantes;
-                if(totalRegistros > 4)
-                {
-                    diasDisponibles = 25;
-                    diasRestantes = diasDisponibles;
-                    diasTomados = 0;
-                }
-                else
-                {
-                    diasDisponibles = 23;
-                    diasRestantes = diasDisponibles;
-                    diasTomados = 0;
-                }
-
+                int tomados = 0;
+                int restantes = 0;
+               
                 string rpta = "";
                 if (this.Evento == "Nuevo")
                 {
@@ -106,9 +101,9 @@ namespace Capa_Vista.Vacaciones
                     this.txtPeriodos.Text.Trim(),
                     fechaInicio,
                     fechaFin,
-                    diasDisponibles,
-                    diasTomados,
-                    diasRestantes,
+                    Convert.ToInt32( txtDiasVacaciones.Text),
+                    tomados,
+                    restantes ,
                    true
                 );
 

@@ -58,12 +58,11 @@
             this.dtgEducacion.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dtgEducacion.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dtgEducacion.BackgroundColor = System.Drawing.Color.White;
-            this.dtgEducacion.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dtgEducacion.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SunkenHorizontal;
             this.dtgEducacion.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Tai Le", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Tai Le", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.CornflowerBlue;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
@@ -73,7 +72,7 @@
             this.dtgEducacion.Cursor = System.Windows.Forms.Cursors.Default;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Tai Le", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Tai Le", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.GrayText;
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.CornflowerBlue;
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
@@ -81,13 +80,14 @@
             this.dtgEducacion.DefaultCellStyle = dataGridViewCellStyle3;
             this.dtgEducacion.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dtgEducacion.GridColor = System.Drawing.SystemColors.GrayText;
-            this.dtgEducacion.Location = new System.Drawing.Point(0, 85);
+            this.dtgEducacion.Location = new System.Drawing.Point(0, 73);
+            this.dtgEducacion.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dtgEducacion.MultiSelect = false;
             this.dtgEducacion.Name = "dtgEducacion";
             this.dtgEducacion.ReadOnly = true;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Tai Le", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Tai Le", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Red;
             dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.White;
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Red;
@@ -96,7 +96,7 @@
             this.dtgEducacion.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToFirstHeader;
             this.dtgEducacion.RowTemplate.Height = 24;
             this.dtgEducacion.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dtgEducacion.Size = new System.Drawing.Size(1200, 515);
+            this.dtgEducacion.Size = new System.Drawing.Size(1066, 445);
             this.dtgEducacion.TabIndex = 11;
             this.dtgEducacion.DoubleClick += new System.EventHandler(this.dtgEducacion_DoubleClick);
             this.dtgEducacion.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dtgEducacion_MouseClick);
@@ -104,16 +104,18 @@
             // plMenu
             // 
             this.plMenu.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.plMenu.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.plMenu.Controls.Add(this.pictureBox1);
             this.plMenu.Controls.Add(this.pcbNuevo);
             this.plMenu.Controls.Add(this.pcbTitulo);
             this.plMenu.Controls.Add(this.lbPersona);
             this.plMenu.Dock = System.Windows.Forms.DockStyle.Top;
+            this.plMenu.Font = new System.Drawing.Font("Microsoft Tai Le", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.plMenu.ForeColor = System.Drawing.Color.White;
             this.plMenu.Location = new System.Drawing.Point(0, 0);
-            this.plMenu.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.plMenu.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.plMenu.Name = "plMenu";
-            this.plMenu.Size = new System.Drawing.Size(1200, 85);
+            this.plMenu.Size = new System.Drawing.Size(1066, 73);
             this.plMenu.TabIndex = 10;
             this.plMenu.MouseDown += new System.Windows.Forms.MouseEventHandler(this.plMenu_MouseDown);
             this.plMenu.MouseMove += new System.Windows.Forms.MouseEventHandler(this.plMenu_MouseMove);
@@ -123,10 +125,10 @@
             // 
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(1114, 8);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.pictureBox1.Location = new System.Drawing.Point(990, 7);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(57, 66);
+            this.pictureBox1.Size = new System.Drawing.Size(50, 57);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
@@ -136,10 +138,10 @@
             // 
             this.pcbNuevo.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pcbNuevo.Image = ((System.Drawing.Image)(resources.GetObject("pcbNuevo.Image")));
-            this.pcbNuevo.Location = new System.Drawing.Point(1032, 8);
-            this.pcbNuevo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.pcbNuevo.Location = new System.Drawing.Point(918, 7);
+            this.pcbNuevo.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.pcbNuevo.Name = "pcbNuevo";
-            this.pcbNuevo.Size = new System.Drawing.Size(59, 66);
+            this.pcbNuevo.Size = new System.Drawing.Size(53, 57);
             this.pcbNuevo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pcbNuevo.TabIndex = 2;
             this.pcbNuevo.TabStop = false;
@@ -149,10 +151,10 @@
             // 
             this.pcbTitulo.Cursor = System.Windows.Forms.Cursors.AppStarting;
             this.pcbTitulo.Image = ((System.Drawing.Image)(resources.GetObject("pcbTitulo.Image")));
-            this.pcbTitulo.Location = new System.Drawing.Point(14, 4);
-            this.pcbTitulo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.pcbTitulo.Location = new System.Drawing.Point(13, 4);
+            this.pcbTitulo.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.pcbTitulo.Name = "pcbTitulo";
-            this.pcbTitulo.Size = new System.Drawing.Size(65, 70);
+            this.pcbTitulo.Size = new System.Drawing.Size(58, 61);
             this.pcbTitulo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pcbTitulo.TabIndex = 1;
             this.pcbTitulo.TabStop = false;
@@ -162,7 +164,8 @@
             // 
             this.lbPersona.AutoSize = true;
             this.lbPersona.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbPersona.Location = new System.Drawing.Point(85, 49);
+            this.lbPersona.Location = new System.Drawing.Point(75, 43);
+            this.lbPersona.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbPersona.Name = "lbPersona";
             this.lbPersona.Size = new System.Drawing.Size(70, 26);
             this.lbPersona.TabIndex = 0;
@@ -171,15 +174,15 @@
             // 
             // frmEducacion
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 22F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1200, 600);
+            this.ClientSize = new System.Drawing.Size(1066, 518);
             this.Controls.Add(this.dtgEducacion);
             this.Controls.Add(this.plMenu);
-            this.Font = new System.Drawing.Font("Microsoft Tai Le", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Microsoft Tai Le", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.SystemColors.GrayText;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.Name = "frmEducacion";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Educacion";

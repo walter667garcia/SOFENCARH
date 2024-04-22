@@ -60,7 +60,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 68);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(641, 511);
+            this.panel2.Size = new System.Drawing.Size(655, 511);
             this.panel2.TabIndex = 5;
             // 
             // txtId
@@ -111,7 +111,7 @@
             this.txtTelefono.ForeColor = System.Drawing.Color.Black;
             this.txtTelefono.Location = new System.Drawing.Point(88, 317);
             this.txtTelefono.Name = "txtTelefono";
-            this.txtTelefono.Size = new System.Drawing.Size(488, 33);
+            this.txtTelefono.Size = new System.Drawing.Size(524, 33);
             this.txtTelefono.TabIndex = 10;
             this.txtTelefono.TextChanged += new System.EventHandler(this.txtTelefono_TextChanged);
             // 
@@ -128,7 +128,7 @@
             "Amig@"});
             this.txtParentesco.Location = new System.Drawing.Point(88, 188);
             this.txtParentesco.Name = "txtParentesco";
-            this.txtParentesco.Size = new System.Drawing.Size(488, 33);
+            this.txtParentesco.Size = new System.Drawing.Size(524, 33);
             this.txtParentesco.TabIndex = 9;
             // 
             // txtEmergencia
@@ -137,7 +137,7 @@
             this.txtEmergencia.ForeColor = System.Drawing.Color.Black;
             this.txtEmergencia.Location = new System.Drawing.Point(88, 79);
             this.txtEmergencia.Name = "txtEmergencia";
-            this.txtEmergencia.Size = new System.Drawing.Size(488, 30);
+            this.txtEmergencia.Size = new System.Drawing.Size(524, 30);
             this.txtEmergencia.TabIndex = 8;
             // 
             // button2
@@ -176,7 +176,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(641, 68);
+            this.panel1.Size = new System.Drawing.Size(655, 68);
             this.panel1.TabIndex = 4;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
             this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseMove);
@@ -197,7 +197,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(641, 579);
+            this.ClientSize = new System.Drawing.Size(655, 579);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

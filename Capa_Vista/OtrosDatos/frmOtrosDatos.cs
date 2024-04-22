@@ -81,9 +81,16 @@ namespace Capa_Vista.OtrosDatos
         }
         public void Mostrar()
         {
-            this.lbPersona.Text = Persona;
-            this.dtgOtrosDatos.DataSource = nHome.BuscarOtrosDatos(Idpersona);
-            OcultarColumnas();
+            try
+            {
+                this.lbPersona.Text = Persona;
+                this.dtgOtrosDatos.DataSource = nHome.BuscarOtrosDatos(Idpersona);
+                OcultarColumnas();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Se produjo un error al intenta mostrar : {ex.Message}");
+            }
         }
         private void pcbNuevo_Click(object sender, EventArgs e)
         {

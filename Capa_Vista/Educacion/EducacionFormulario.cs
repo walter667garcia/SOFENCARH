@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Capa_Vista.Educacion
 {
@@ -28,6 +29,10 @@ namespace Capa_Vista.Educacion
         {
             InitializeComponent();
             LlenarComboBoxes();
+            dtmInicio.Format = DateTimePickerFormat.Custom;
+            dtmInicio.CustomFormat = "dd/MM/yyyy";
+            dtmFin.Format = DateTimePickerFormat.Custom;
+            dtmFin.CustomFormat = "dd/MM/yyyy";
         }
         private void LlenarComboBoxes()
         {
@@ -58,7 +63,7 @@ namespace Capa_Vista.Educacion
         }
 
 
-        public void CargarDatos(string id, string educacion, string establecimiento, string fechainicio, string fechafin, string titulo, string especialidad)
+        public void CargarDatos(string id, string educacion, string establecimiento, string fechainicio, string fechafin, string titulo, string especialidad, string documento)
         {
             txtId.Text = id;
           //  LlenarComboBoxes();
@@ -70,6 +75,7 @@ namespace Capa_Vista.Educacion
             dtmFin.Text = fechafin;
             txtTitulo.Text = titulo;
             txtEspecialidad.Text = especialidad;
+            txtDocumento.Text = documento;
            
         }
         private void panel1_MouseUp(object sender, MouseEventArgs e)
@@ -101,6 +107,7 @@ namespace Capa_Vista.Educacion
             this.txtEstablecimiento.Text = string.Empty;
             this.txtTitulo.Text = string.Empty;
             this.txtEspecialidad.Text = string.Empty;
+            this.txtDocumento.Text = string.Empty;
         }
         private void button2_Click(object sender, EventArgs e)
         {
@@ -125,7 +132,8 @@ namespace Capa_Vista.Educacion
                         fechaInicio,
                         fechaFin,
                         this.txtTitulo.Text.Trim(),
-                        this.txtEspecialidad.Text.Trim()
+                        this.txtEspecialidad.Text.Trim(),
+                        this.txtDocumento.Text.Trim()
                     );
                 }
                 else if (this.Evento == "Editar")
@@ -139,7 +147,8 @@ namespace Capa_Vista.Educacion
                         fechaInicio,
                         fechaFin,
                         this.txtTitulo.Text.Trim(),
-                        this.txtEspecialidad.Text.Trim()
+                        this.txtEspecialidad.Text.Trim(),
+                        this.txtDocumento.Text.Trim()
                     );
                     
                 }
@@ -158,6 +167,45 @@ namespace Capa_Vista.Educacion
               
             }
         }
-       
+
+        private string rutaArchivo;
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Archivos PDF|*.pdf|Todos los archivos|*.*";
+            openFileDialog.FilterIndex = 1; // Establece el filtro predeterminado como PDF
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                rutaArchivo = openFileDialog.FileName; // Asignación del valor a la variable miembro
+
+                // Verificar si el archivo seleccionado es un archivo PDF
+                if (Path.GetExtension(rutaArchivo).Equals(".pdf", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Mostrar la ruta del archivo en el cuadro de texto
+                    txtDocumento.Text = rutaArchivo;
+                }
+                else
+                {
+                    MessageBox.Show("Por favor, seleccione un archivo PDF.", "Archivo no válido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string rutaActual = txtDocumento.Text;
+
+            if (!string.IsNullOrEmpty(rutaActual) && System.IO.File.Exists(rutaActual))
+            {
+                // Abrir el archivo con el visor predeterminado del sistema
+                System.Diagnostics.Process.Start(rutaActual);
+            }
+            else
+            {
+                MessageBox.Show("Por favor, seleccione un archivo válido o la ruta del archivo no existe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

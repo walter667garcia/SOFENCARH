@@ -17,7 +17,9 @@ namespace Capa_Negocio
             DateTime fechaRetiro,
             string motivoRetiro,
             string referencias,
-            string descripcion)
+            string descripcion,
+            string documento)
+           
         {
             cExperienciaLaboral Obj = new cExperienciaLaboral();
             Obj.IdPersona = idpersona;
@@ -31,6 +33,7 @@ namespace Capa_Negocio
             Obj.MOTIVO_RETIRO = motivoRetiro;
             Obj.REFERENCIAS = referencias;
             Obj.DESCRIPCION = descripcion;
+            Obj.DOCUMENTO = documento;
 
             return Obj.Insertar(Obj);
 
@@ -47,7 +50,8 @@ namespace Capa_Negocio
             DateTime fechaRetiro,
             string motivoRetiro,
             string referencias,
-            string descripcion)
+            string descripcion,
+            string documento)
         {
             cExperienciaLaboral Obj = new cExperienciaLaboral();
 
@@ -63,6 +67,7 @@ namespace Capa_Negocio
             Obj.MOTIVO_RETIRO = motivoRetiro;
             Obj.REFERENCIAS = referencias;
             Obj.DESCRIPCION = descripcion;
+            Obj.DOCUMENTO = documento;
 
             return Obj.Actualizar(Obj);
         }

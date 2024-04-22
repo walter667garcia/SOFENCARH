@@ -22,27 +22,5 @@ namespace SOFENCARH.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-3JCE2HN;Initial Catalog=encaagro;User ID=sa;Password=1234;Tru" +
-            "stServerCertificate=True")]
-        public string encaagroConnectionString {
-            get {
-                return ((string)(this["encaagroConnectionString"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-3JCE2HN;Initial Catalog=dbaEnca;User ID=sa;Password=1234;Conn" +
-            "ect Timeout=30;Encrypt=True;TrustServerCertificate=True")]
-        public string dbaEncaConnectionString {
-            get {
-                return ((string)(this["dbaEncaConnectionString"]));
-            }
-        }
     }
 }

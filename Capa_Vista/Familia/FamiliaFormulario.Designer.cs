@@ -60,6 +60,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.DodgerBlue;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.label11);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -85,6 +86,7 @@
             // 
             this.panel2.AutoScroll = true;
             this.panel2.BackColor = System.Drawing.Color.White;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.txtId);
             this.panel2.Controls.Add(this.label10);
             this.panel2.Controls.Add(this.txtEdad);
@@ -110,7 +112,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 68);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(601, 818);
+            this.panel2.Size = new System.Drawing.Size(601, 948);
             this.panel2.TabIndex = 1;
             // 
             // txtId
@@ -127,7 +129,7 @@
             this.label10.AutoSize = true;
             this.label10.Enabled = false;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(197, 910);
+            this.label10.Location = new System.Drawing.Point(209, 914);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(82, 25);
             this.label10.TabIndex = 83;
@@ -172,6 +174,7 @@
             this.dtmFecha.ShowCheckBox = true;
             this.dtmFecha.Size = new System.Drawing.Size(363, 33);
             this.dtmFecha.TabIndex = 10;
+            this.dtmFecha.ValueChanged += new System.EventHandler(this.dtmFecha_ValueChanged);
             // 
             // label9
             // 
@@ -345,7 +348,7 @@
             this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.ForeColor = System.Drawing.Color.White;
-            this.button2.Location = new System.Drawing.Point(277, 856);
+            this.button2.Location = new System.Drawing.Point(303, 856);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(140, 46);
             this.button2.TabIndex = 17;
@@ -359,7 +362,7 @@
             this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(98, 856);
+            this.button1.Location = new System.Drawing.Point(121, 856);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(141, 46);
             this.button1.TabIndex = 18;
@@ -371,7 +374,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(601, 886);
+            this.ClientSize = new System.Drawing.Size(601, 1016);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

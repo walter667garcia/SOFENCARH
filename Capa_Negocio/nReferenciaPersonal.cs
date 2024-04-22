@@ -12,17 +12,18 @@ namespace Capa_Negocio
     {
 
 
-        public static string Insertar(int idpersona, string nombre, string telefono, string relacion)
+        public static string Insertar(int idpersona, string nombre, string telefono, string relacion , string documento)
         {
             cReferenciaPersonal Obj  = new cReferenciaPersonal();
             Obj.IdPersona = idpersona;
             Obj.Nombre = nombre;
             Obj.Telefono = telefono;
             Obj.Relacion = relacion;
+            Obj.Documento = documento;
             return Obj.Insertar(Obj);
         }
 
-        public static string Actualizar(int idrefpersonal ,int idpersona, string nombre, string telefono, string relacion)
+        public static string Actualizar(int idrefpersonal ,int idpersona, string nombre, string telefono, string relacion, string documento)
         {
             cReferenciaPersonal Obj = new cReferenciaPersonal();
             Obj.IdRefpersonal = idrefpersonal;
@@ -30,6 +31,7 @@ namespace Capa_Negocio
             Obj.Nombre = nombre;
             Obj.Telefono = telefono;
             Obj.Relacion = relacion;
+            Obj.Documento= documento;
             return Obj.Actualizar(Obj);
         }
 

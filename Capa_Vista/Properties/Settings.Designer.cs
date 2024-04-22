@@ -26,22 +26,22 @@ namespace Capa_Vista.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-3JCE2HN;Initial Catalog=encaagro;User ID=sa;Password=1234;Tru" +
-            "stServerCertificate=True")]
-        public string encaagroConnectionString {
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-3JCE2HN;Initial Catalog=Enca;User ID=Enca;Password=1234;Encry" +
+            "pt=False")]
+        public string EncaConnectionString {
             get {
-                return ((string)(this["encaagroConnectionString"]));
+                return ((string)(this["EncaConnectionString"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.;Initial Catalog=dbaEnca;Integrated Security=True;TrustServerCertifi" +
-            "cate=True")]
-        public string dbaEncaConnectionString {
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-3JCE2HN\\WALTER;Initial Catalog=Enca;User ID=Enca;Password=123" +
+            "4;Encrypt=False")]
+        public string EncaConnectionString1 {
             get {
-                return ((string)(this["dbaEncaConnectionString"]));
+                return ((string)(this["EncaConnectionString1"]));
             }
         }
     }

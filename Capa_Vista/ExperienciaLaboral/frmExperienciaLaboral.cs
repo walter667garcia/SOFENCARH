@@ -79,9 +79,16 @@ namespace Capa_Vista.ExperienciaLaboral
         }
         private void Mostrar()
         {
-            lbPersona.Text = Persona;
-            this.dtgExperiencia.DataSource = nHome.BuscarExperiencia(Idpersona);
-            OcultarColumnas();
+            try
+            {
+                lbPersona.Text = Persona;
+                this.dtgExperiencia.DataSource = nHome.BuscarExperiencia(Idpersona);
+                OcultarColumnas();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Se produjo un error al intenta mostrar : {ex.Message}");
+            }
         }
 
         private void pcbNuevo_Click(object sender, EventArgs e)
@@ -180,6 +187,7 @@ namespace Capa_Vista.ExperienciaLaboral
                         string Motivo = this.dtgExperiencia.CurrentRow.Cells["MOTIVO_RETIRO"].Value.ToString();
                         string Referencia = this.dtgExperiencia.CurrentRow.Cells["REFERENCIAS"].Value.ToString();
                         string Descripcion = this.dtgExperiencia.CurrentRow.Cells["DESCRIPCION"].Value.ToString();
+                        string Documento = this.dtgExperiencia.CurrentRow.Cells["Documento"].Value.ToString();
                        
                         // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
                         instanciaAbierta = new ExperienciaLaboralFormulario();
@@ -187,7 +195,7 @@ namespace Capa_Vista.ExperienciaLaboral
                         instanciaAbierta.Idpersona = Idpersona;
                         instanciaAbierta.Evento = "Editar";
                         instanciaAbierta.CargarDatos(Id,Empresa,FechaIngreso,FechaRetiro,Telefono, Jefe,
-                                                           Puesto,Salario,Motivo,Referencia,Descripcion);
+                                                           Puesto,Salario,Motivo,Referencia,Descripcion,Documento);
                         instanciaAbierta.ShowDialog();
                     }
                     else

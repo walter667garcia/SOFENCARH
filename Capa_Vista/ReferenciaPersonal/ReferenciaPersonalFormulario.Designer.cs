@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.panel2 = new System.Windows.Forms.Panel();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.txtDocumento = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.txtId = new System.Windows.Forms.TextBox();
             this.txtRelacion = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
@@ -47,6 +51,11 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.White;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.button3);
+            this.panel2.Controls.Add(this.button4);
+            this.panel2.Controls.Add(this.txtDocumento);
+            this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.txtId);
             this.panel2.Controls.Add(this.txtRelacion);
             this.panel2.Controls.Add(this.button2);
@@ -59,8 +68,59 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 68);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(514, 378);
+            this.panel2.Size = new System.Drawing.Size(654, 582);
             this.panel2.TabIndex = 9;
+            // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.Color.Red;
+            this.button3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.ForeColor = System.Drawing.Color.White;
+            this.button3.Location = new System.Drawing.Point(382, 440);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(164, 37);
+            this.button3.TabIndex = 59;
+            this.button3.Text = "Ver PDF";
+            this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button4
+            // 
+            this.button4.BackColor = System.Drawing.Color.RoyalBlue;
+            this.button4.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.ForeColor = System.Drawing.Color.White;
+            this.button4.Location = new System.Drawing.Point(49, 440);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(164, 37);
+            this.button4.TabIndex = 58;
+            this.button4.Text = "Cargar Ruta";
+            this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // txtDocumento
+            // 
+            this.txtDocumento.Enabled = false;
+            this.txtDocumento.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDocumento.ForeColor = System.Drawing.Color.Black;
+            this.txtDocumento.Location = new System.Drawing.Point(46, 361);
+            this.txtDocumento.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtDocumento.Multiline = true;
+            this.txtDocumento.Name = "txtDocumento";
+            this.txtDocumento.Size = new System.Drawing.Size(500, 66);
+            this.txtDocumento.TabIndex = 57;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.label2.Location = new System.Drawing.Point(43, 320);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(128, 25);
+            this.label2.TabIndex = 56;
+            this.label2.Text = "Documento:";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // txtId
             // 
@@ -75,10 +135,10 @@
             // 
             this.txtRelacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtRelacion.ForeColor = System.Drawing.Color.Black;
-            this.txtRelacion.Location = new System.Drawing.Point(48, 231);
+            this.txtRelacion.Location = new System.Drawing.Point(48, 250);
             this.txtRelacion.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtRelacion.Name = "txtRelacion";
-            this.txtRelacion.Size = new System.Drawing.Size(382, 30);
+            this.txtRelacion.Size = new System.Drawing.Size(500, 30);
             this.txtRelacion.TabIndex = 10;
             // 
             // button2
@@ -87,7 +147,7 @@
             this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.ForeColor = System.Drawing.Color.White;
-            this.button2.Location = new System.Drawing.Point(290, 293);
+            this.button2.Location = new System.Drawing.Point(356, 514);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(140, 46);
             this.button2.TabIndex = 11;
@@ -100,7 +160,7 @@
             this.lbRelacion.AutoSize = true;
             this.lbRelacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbRelacion.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.lbRelacion.Location = new System.Drawing.Point(43, 191);
+            this.lbRelacion.Location = new System.Drawing.Point(43, 211);
             this.lbRelacion.Name = "lbRelacion";
             this.lbRelacion.Size = new System.Drawing.Size(102, 25);
             this.lbRelacion.TabIndex = 53;
@@ -112,7 +172,7 @@
             this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(46, 293);
+            this.button1.Location = new System.Drawing.Point(184, 514);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(141, 46);
             this.button1.TabIndex = 12;
@@ -124,10 +184,10 @@
             // 
             this.txtTelefono.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtTelefono.ForeColor = System.Drawing.Color.Black;
-            this.txtTelefono.Location = new System.Drawing.Point(46, 138);
+            this.txtTelefono.Location = new System.Drawing.Point(46, 150);
             this.txtTelefono.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtTelefono.Name = "txtTelefono";
-            this.txtTelefono.Size = new System.Drawing.Size(384, 30);
+            this.txtTelefono.Size = new System.Drawing.Size(502, 30);
             this.txtTelefono.TabIndex = 9;
             this.txtTelefono.TextChanged += new System.EventHandler(this.txtTelefono_TextChanged);
             // 
@@ -147,7 +207,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.label4.Location = new System.Drawing.Point(41, 101);
+            this.label4.Location = new System.Drawing.Point(41, 112);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(104, 25);
             this.label4.TabIndex = 51;
@@ -160,17 +220,18 @@
             this.txtPersona.Location = new System.Drawing.Point(46, 53);
             this.txtPersona.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtPersona.Name = "txtPersona";
-            this.txtPersona.Size = new System.Drawing.Size(384, 30);
+            this.txtPersona.Size = new System.Drawing.Size(502, 30);
             this.txtPersona.TabIndex = 8;
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.DodgerBlue;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(514, 68);
+            this.panel1.Size = new System.Drawing.Size(654, 68);
             this.panel1.TabIndex = 8;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
             this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseMove);
@@ -191,7 +252,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(514, 446);
+            this.ClientSize = new System.Drawing.Size(654, 650);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -220,5 +281,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtPersona;
         private System.Windows.Forms.TextBox txtId;
+        private System.Windows.Forms.TextBox txtDocumento;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button3;
     }
 }

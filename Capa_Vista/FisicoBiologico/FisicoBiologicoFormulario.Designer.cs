@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.panel2 = new System.Windows.Forms.Panel();
+            this.cmbEspecifique = new System.Windows.Forms.ComboBox();
+            this.cmbAlergias = new System.Windows.Forms.ComboBox();
             this.cmbOperacion = new System.Windows.Forms.ComboBox();
             this.cmbAccidente = new System.Windows.Forms.ComboBox();
             this.txtId = new System.Windows.Forms.TextBox();
@@ -58,10 +60,8 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.txtEspecifique = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.txtAlergias = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -79,6 +79,9 @@
             // 
             this.panel2.AutoScroll = true;
             this.panel2.BackColor = System.Drawing.Color.White;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.cmbEspecifique);
+            this.panel2.Controls.Add(this.cmbAlergias);
             this.panel2.Controls.Add(this.cmbOperacion);
             this.panel2.Controls.Add(this.cmbAccidente);
             this.panel2.Controls.Add(this.txtId);
@@ -108,10 +111,8 @@
             this.panel2.Controls.Add(this.label12);
             this.panel2.Controls.Add(this.label11);
             this.panel2.Controls.Add(this.label10);
-            this.panel2.Controls.Add(this.txtEspecifique);
             this.panel2.Controls.Add(this.label9);
             this.panel2.Controls.Add(this.label8);
-            this.panel2.Controls.Add(this.txtAlergias);
             this.panel2.Controls.Add(this.label7);
             this.panel2.Controls.Add(this.label6);
             this.panel2.Controls.Add(this.label5);
@@ -124,6 +125,32 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(764, 833);
             this.panel2.TabIndex = 5;
+            // 
+            // cmbEspecifique
+            // 
+            this.cmbEspecifique.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbEspecifique.FormattingEnabled = true;
+            this.cmbEspecifique.Items.AddRange(new object[] {
+            "Si",
+            "No"});
+            this.cmbEspecifique.Location = new System.Drawing.Point(12, 294);
+            this.cmbEspecifique.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cmbEspecifique.Name = "cmbEspecifique";
+            this.cmbEspecifique.Size = new System.Drawing.Size(427, 33);
+            this.cmbEspecifique.TabIndex = 128;
+            // 
+            // cmbAlergias
+            // 
+            this.cmbAlergias.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbAlergias.FormattingEnabled = true;
+            this.cmbAlergias.Items.AddRange(new object[] {
+            "Si",
+            "No"});
+            this.cmbAlergias.Location = new System.Drawing.Point(12, 210);
+            this.cmbAlergias.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cmbAlergias.Name = "cmbAlergias";
+            this.cmbAlergias.Size = new System.Drawing.Size(290, 33);
+            this.cmbAlergias.TabIndex = 127;
             // 
             // cmbOperacion
             // 
@@ -468,16 +495,6 @@
             this.label10.TabIndex = 98;
             this.label10.Text = "Usa lentes:";
             // 
-            // txtEspecifique
-            // 
-            this.txtEspecifique.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEspecifique.ForeColor = System.Drawing.Color.Black;
-            this.txtEspecifique.Location = new System.Drawing.Point(23, 297);
-            this.txtEspecifique.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtEspecifique.Name = "txtEspecifique";
-            this.txtEspecifique.Size = new System.Drawing.Size(424, 30);
-            this.txtEspecifique.TabIndex = 14;
-            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -499,16 +516,6 @@
             this.label8.Size = new System.Drawing.Size(355, 25);
             this.label8.TabIndex = 95;
             this.label8.Text = "Mantiene algún tratamiento médico:";
-            // 
-            // txtAlergias
-            // 
-            this.txtAlergias.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAlergias.ForeColor = System.Drawing.Color.Black;
-            this.txtAlergias.Location = new System.Drawing.Point(23, 213);
-            this.txtAlergias.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtAlergias.Name = "txtAlergias";
-            this.txtAlergias.Size = new System.Drawing.Size(279, 30);
-            this.txtAlergias.TabIndex = 12;
             // 
             // label7
             // 
@@ -596,6 +603,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.DodgerBlue;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -667,10 +675,8 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox txtEspecifique;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox txtAlergias;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
@@ -681,5 +687,7 @@
         private System.Windows.Forms.TextBox txtId;
         private System.Windows.Forms.ComboBox cmbAccidente;
         private System.Windows.Forms.ComboBox cmbOperacion;
+        private System.Windows.Forms.ComboBox cmbAlergias;
+        private System.Windows.Forms.ComboBox cmbEspecifique;
     }
 }

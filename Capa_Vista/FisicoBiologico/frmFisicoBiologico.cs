@@ -84,9 +84,16 @@ namespace Capa_Vista.FisicoBiologico
         }
         private void Mostrar()
         {
-            lbPersona.Text = Persona;
-            this.dtgFisicoBiologico.DataSource = nHome.BuscarFisioBiologico(Idpersona);
-            OcultarColumnas();
+            try
+            {
+                lbPersona.Text = Persona;
+                this.dtgFisicoBiologico.DataSource = nHome.BuscarFisioBiologico(Idpersona);
+                OcultarColumnas();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Se produjo un error al intenta mostrar : {ex.Message}");
+            }
         }
         private void pcbNuevo_Click(object sender, EventArgs e)
         {

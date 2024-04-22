@@ -18,6 +18,7 @@ namespace Capa_Datos
         public DateTime Fecha_Outicio { get; set; }
         public string Titulo { get; set; }
         public string Especialidad { get; set; }
+        public string Documento { get; set; }
         public string Persona { get; set; }
 
         public int ID { get; set; }
@@ -29,7 +30,7 @@ namespace Capa_Datos
         }
         public cNivelAcademico(int id_Nivel, int id_Persona, int id_Academico, 
             string establecimiento , DateTime fecha_Inicio, DateTime fecha_Outicio, 
-            string titulo, string especialidad, string persona, int id)
+            string titulo, string especialidad,string documento, string persona, int id)
         {
             Id_Nivel = id_Nivel;
             Id_Persona = id_Persona;
@@ -39,6 +40,7 @@ namespace Capa_Datos
             Fecha_Outicio = fecha_Outicio;
             Titulo = titulo;
             Especialidad = especialidad;
+            Documento = documento;
             Persona = persona;
             ID = id;
         }
@@ -117,6 +119,7 @@ namespace Capa_Datos
                 cmd.Parameters.AddWithValue("@aFecha", nivel.Fecha_Outicio).SqlDbType = SqlDbType.DateTime;
                 cmd.Parameters.AddWithValue("@Titulo", nivel.Titulo).SqlDbType = SqlDbType.VarChar;
                 cmd.Parameters.AddWithValue("@Especialidad", nivel.Especialidad).SqlDbType = SqlDbType.VarChar;
+                cmd.Parameters.AddWithValue("@Documento", nivel.Documento).SqlDbType = SqlDbType.VarChar;
 
 
                 rpta = cmd.ExecuteNonQuery() == 1 ? "OK" : "No ingresó el registro";
@@ -159,6 +162,7 @@ namespace Capa_Datos
                 cmd.Parameters.AddWithValue("@aFecha", nivel.Fecha_Outicio).SqlDbType = SqlDbType.DateTime;
                 cmd.Parameters.AddWithValue("@Titulo", nivel.Titulo).SqlDbType = SqlDbType.VarChar;
                 cmd.Parameters.AddWithValue("@Especialidad", nivel.Especialidad).SqlDbType = SqlDbType.VarChar;
+                cmd.Parameters.AddWithValue("@Documento", nivel.Documento).SqlDbType = SqlDbType.VarChar;
 
                 // Agregar parámetros para otros campos...
 

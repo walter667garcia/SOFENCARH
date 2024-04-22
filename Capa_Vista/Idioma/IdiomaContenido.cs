@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.IO;
 
 namespace Capa_Vista
 {
@@ -108,14 +109,23 @@ namespace Capa_Vista
         private void button4_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Todos los archivos|*.*";
+            openFileDialog.Filter = "Archivos PDF|*.pdf|Todos los archivos|*.*";
+            openFileDialog.FilterIndex = 1; // Establece el filtro predeterminado como PDF
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                rutaArchivo = openFileDialog.FileName;
+                rutaArchivo = openFileDialog.FileName; // Asignación del valor a la variable miembro
 
-                // Mostrar la ruta del archivo en el cuadro de texto
-                txtDocumento.Text = rutaArchivo;
+                // Verificar si el archivo seleccionado es un archivo PDF
+                if (Path.GetExtension(rutaArchivo).Equals(".pdf", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Mostrar la ruta del archivo en el cuadro de texto
+                    txtDocumento.Text = rutaArchivo;
+                }
+                else
+                {
+                    MessageBox.Show("Por favor, seleccione un archivo PDF.", "Archivo no válido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
 
         }

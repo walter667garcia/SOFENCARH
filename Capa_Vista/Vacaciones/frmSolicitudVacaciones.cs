@@ -19,13 +19,23 @@ namespace Capa_Vista
         public string Evento {  get; set; }
         public int diasTomados { get; set; }
         public int Acumulados { get; set; }
+    
         public frmSolicitudVacaciones()
         {
             InitializeComponent();
+
+            dtmfechaInicio.Format = DateTimePickerFormat.Custom;
+            dtmfechaInicio.CustomFormat = "dd/MM/yyyy";
+
+            dtmfechaFinal.Format = DateTimePickerFormat.Custom;
+            dtmfechaFinal.CustomFormat = "dd/MM/yyyy";
+
+            
         }
 
         private void frmSolicitudVacaciones_Load(object sender, EventArgs e)
         {
+           
 
         }
 
@@ -55,48 +65,89 @@ namespace Capa_Vista
             }
         }
 
-        private void Calcular()
+        private void calculo()
         {
+            int diasFestivos = Convert.ToInt32(txtDiasFestivos.Text);
+
+
+
             // Obtener las fechas seleccionadas de los DateTimePicker
-            DateTime fechaInicio = dtmfechaInicio.Value;
-            DateTime fechaFin = dtmfechaFinal.Value;
+            DateTime fechaInicio = mtCalendario.SelectionStart; //dtmfechaInicio.Value;
+            DateTime fechaFin = mtCalendario.SelectionEnd;// dtmfechaFinal.Value;
+
+   
+           
 
             // Calcular la diferencia en días entre las fechas
             TimeSpan diferencia = fechaFin - fechaInicio;
             int diasDiferencia = (int)diferencia.TotalDays;
 
-            // Obtener el número de días festivos desde el TextBox txtDiasDisponibles
-            int diasFestivos;
-            if (!int.TryParse(txtDiasFestivos.Text, out diasFestivos))
+            // Contadores para los días sábados y domingos
+            int sabados = 0;
+            int domingos = 0;
+
+            // Iterar sobre cada día dentro del rango
+            for (DateTime fecha = fechaInicio; fecha <= fechaFin; fecha = fecha.AddDays(1))
             {
-                MessageBox.Show("El valor de días festivos no es válido.");
-                return; // Salir del método si no se puede obtener un número válido
+                // Verificar si el día actual es sábado o domingo
+                if (fecha.DayOfWeek == DayOfWeek.Saturday)
+                {
+                    sabados++;
+                }
+                else if (fecha.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    domingos++;
+                }
             }
 
-            // Obtener el número de días disponibles desde el TextBox txtDiasDisponibles
-            int diasDisponibles;
-            if (!int.TryParse(txtDiasDisponibles.Text, out diasDisponibles))
+            int subtotal =( sabados + domingos + diasFestivos);
+
+            if (diasDiferencia > subtotal && diasDiferencia !=0){
+                int suma = (diasDiferencia - subtotal);
+                int diasDisponibles = Convert.ToInt32(txtDiasDisponibles.Text);
+                if (diasDisponibles >= suma && diasDisponibles != 0)
+                {
+                    int restantes = (diasDisponibles - suma);
+
+                    //Dias tomados
+                    this.txtTotal.Text = suma.ToString();
+                    //Dias restantes
+                    this.txtRestantes.Text = restantes.ToString();
+                    
+                   
+                }
+                else
+                {
+                    MessageBox.Show("No puedes asignar mas dias de vacaciones de los que tienes disponibles en este periodo");
+                }
+
+            }
+            else
             {
-                MessageBox.Show("El valor de días disponibles no es válido.");
-                return; // Salir del método si no se puede obtener un número válido
+                MessageBox.Show("Los dias de de descanso + los dias feriados sobrepasan la fechas estimadas");
             }
 
-            // Restar los días festivos de la diferencia total de días
-            int resumen = diasDiferencia - diasFestivos;
-            txtTotal.Text = resumen.ToString();
+           
 
-            // Restar los días disponibles del resumen
-            int restantes =  diasDisponibles - resumen;
-
-            // Mostrar los días restantes en el TextBox txtRestantes
-            txtRestantes.Text = restantes.ToString();
-
-
+          
         }
+
+
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            Calcular();
+           
+
+            if (this.txtDiasFestivos.Text !="" )
+            {
+                calculo();
+            }
+            else
+            {
+                MessageBox.Show("Necesita ingresar todos los campos");
+            }
+           
+           
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -117,7 +168,11 @@ namespace Capa_Vista
             DateTime fechaInicio = dtmfechaInicio.Value;
             DateTime fechaFin = dtmfechaFinal.Value;
 
-            if (string.IsNullOrEmpty(this.txtDiasFestivos.Text) || string.IsNullOrEmpty(this.txtDescripcion.Text))
+            if (string.IsNullOrEmpty(this.txtDiasFestivos.Text) ||
+                 string.IsNullOrEmpty(this.txtDescripcion.Text)||
+                string.IsNullOrEmpty(this.dtmfechaInicio.Text) ||
+                string.IsNullOrEmpty(this.dtmfechaFinal.Text) 
+                 )
             {
                 MensajeError("Falta ingresar algunos datos Remarcados");
 
@@ -127,7 +182,7 @@ namespace Capa_Vista
                 
                 string rpta = "";
                 if (this.Evento == "Nuevo")
-                {
+                { bool estado = true;
                     int disponibles, total;
                     total = Convert.ToInt32(this.txtTotal.Text);
                     disponibles = Convert.ToInt32(this.txtDiasDisponibles.Text);
@@ -140,7 +195,8 @@ namespace Capa_Vista
                         fechaFin,
                         Convert.ToInt32(this.txtDiasFestivos.Text),
                         Convert.ToInt32(this.txtTotal.Text),
-                        this.txtDescripcion.Text
+                        this.txtDescripcion.Text,
+                        estado
                        );
                     }
                     else
@@ -173,6 +229,16 @@ namespace Capa_Vista
                     this.MensajeError(rpta);
                 }
             }
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtDiasFestivos_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

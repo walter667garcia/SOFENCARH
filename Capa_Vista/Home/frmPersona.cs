@@ -15,7 +15,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Bibliography;
 using Capa_Vista.Educacion;
 using Capa_Vista.DatosAdicionales;
@@ -30,7 +29,9 @@ using Capa_Vista.SocioEconomico;
 using Capa_Vista.FisicoBiologico;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using Capa_Vista.Actas;
-using Capa_Vista.Reportes;
+using System.IO;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Capa_Vista.Reporte;
 
 namespace Capa_Vista
 {
@@ -41,12 +42,11 @@ namespace Capa_Vista
         public frmPersona()
         {
             InitializeComponent();
+            LlenarComboBoxes();
             dtmFecha.Format = DateTimePickerFormat.Custom;
             dtmFecha.CustomFormat = "dd/MM/yyyy";
-
             dtmFecha.KeyPress += dtmFecha_KeyPress;
-
-            ConfigurarOrdenTabulacion();
+            this.Mostrar();
 
         }
 
@@ -63,7 +63,7 @@ namespace Capa_Vista
                 if (this.dtgPersona.Columns.Count > 0)
                 {
                     this.dtgPersona.Columns[0].Visible = false;
-                    //this.dtgPersona.Columns[9].Visible = false;
+                    
                 }
                 else
                 {
@@ -78,11 +78,17 @@ namespace Capa_Vista
 
         private void Mostrar()
         {
-           
-              this.dtgPersona.DataSource = nPersona.MostrarPersonas();
-                 this.OcultarColumnas();
-            Imagen();
-            lblTotal.Text = "Total de Registros: " + Convert.ToString(dtgPersona.Rows.Count);
+            try
+            {
+                this.dtgPersona.DataSource = nPersona.MostrarPersonas();
+                this.OcultarColumnas();
+                Imagen();
+                lblTotal.Text = "Total de Registros: " + Convert.ToString(dtgPersona.Rows.Count);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Se produjo un error al intenta mostrar : {ex.Message}");
+            }
         }
 
         private void Imagen()
@@ -99,10 +105,10 @@ namespace Capa_Vista
         {
             this.Top = 0;
             this.Left = 0;
-            this.Mostrar();
+            
             this.Habilitar(false);
             this.Botones();
-            this.LlenarComboBoxes();
+          
             this.BuscarMunicipio();
 
 
@@ -131,10 +137,6 @@ namespace Capa_Vista
             cmbEstado.DataSource = dataSet.Tables["TYESTADOCIVIL"];
             cmbEstado.DisplayMember = "ESTADO_CIVIL";
             cmbEstado.ValueMember = "ID_ESTADO_CIVIL";
-
-           // cmbMunicipio.DataSource = dataSet.Tables["TYMUNICIPIO"];
-            //cmbMunicipio.DisplayMember = "MUNICIPIO";
-            //cmbMunicipio.ValueMember = "ID_MUNICIPIO";
 
             cmbDepartamento.DataSource = dataSet.Tables["TYDEPARTAMENTO"];
             cmbDepartamento.DisplayMember = "DEPARTAMENTO";
@@ -174,8 +176,8 @@ namespace Capa_Vista
                         float altoCm = img.Height / img.VerticalResolution * 2.54f; // Alto en centímetros
 
                         // Define el tamaño máximo permitido (en centímetros)
-                        float maxAnchoCm = 10; // 10 cm de ancho
-                        float maxAltoCm = 15; // 15 cm de alto
+                        float maxAnchoCm = 1000; // 1000 cm de ancho
+                        float maxAltoCm = 1000; // 1000 cm de alto
 
                         if (anchoCm > maxAnchoCm || altoCm > maxAltoCm)
                         {
@@ -228,6 +230,7 @@ namespace Capa_Vista
             this.txtPapellido.ReadOnly = !valor;
             this.txtSapellido.ReadOnly = !valor;
             this.txtTapellido.ReadOnly = !valor;
+            this.txtProfesion.ReadOnly = !valor;
             this.txtEdad.ReadOnly = !valor;
             this.txtNacion.ReadOnly = !valor;
             this.txtNacionalidad.ReadOnly = !valor;
@@ -261,6 +264,7 @@ namespace Capa_Vista
             this.txtPapellido.Text = string.Empty;
             this.txtSapellido.Text = string.Empty;
             this.txtTapellido.Text = string.Empty;
+            this.txtProfesion.Text = string.Empty;
             this.txtEdad.Text = string.Empty;
             this.cmbEstado.SelectedIndex = -1;  
             this.txtNacion.Text = string.Empty;
@@ -314,7 +318,7 @@ namespace Capa_Vista
                     {
                         MensajeError("Falta ingresar algunos datos Remarcados");
                         errorIcono.SetError(txtPnombre, "Ingrese un Nombre");
-                        errorIcono.SetError(txtSapellido, "Ingrese Código Postal");
+                        
                     }
                     else
                     {
@@ -322,28 +326,29 @@ namespace Capa_Vista
                         if (this.IsNuevo)
                         {
                             rpta = nPersona.InsertarPersona(
-                                this.txtPnombre.Text.Trim().ToUpper(),
-                                this.txtSnombre.Text.Trim().ToUpper(),
-                                this.txtTnombre.Text.Trim().ToUpper(),
-                                this.txtPapellido.Text.Trim().ToUpper(),
-                                this.txtSapellido.Text.Trim().ToUpper(),
-                                this.txtTapellido.Text.Trim().ToUpper(),
-                                this.txtEdad.Text.Trim().ToUpper(),
+                                this.txtPnombre.Text.Trim(),
+                                this.txtSnombre.Text.Trim(),
+                                this.txtTnombre.Text.Trim(),
+                                this.txtPapellido.Text.Trim(),
+                                this.txtSapellido.Text.Trim(),
+                                this.txtTapellido.Text.Trim(),
+                                this.txtProfesion.Text.Trim(),
+                                this.txtEdad.Text.Trim(),
                                 Convert.ToInt32(this.cmbEstado.SelectedValue),
-                                this.txtNacion.Text.Trim().ToUpper(),
+                                this.txtNacion.Text.Trim(),
                                 date,
                                 Convert.ToInt32(this.cmbGenero.SelectedValue),
                                 Convert.ToInt32(this.cmbEtnia.SelectedValue),
-                                this.txtNacionalidad.Text.Trim().ToUpper(),
+                                this.txtNacionalidad.Text.Trim(),
                                 Convert.ToInt32(this.cmbReligion.SelectedValue),
-                                this.txtDPI.Text.Trim().ToUpper(),
+                                this.txtDPI.Text.Trim(),
                                 Convert.ToInt32(this.cmbMunicipio.SelectedValue),
-                                this.txtIgss.Text.Trim().ToUpper(),
-                                this.txtNIT.Text.Trim().ToUpper(),
+                                this.txtIgss.Text.Trim(),
+                                this.txtNIT.Text.Trim(),
                                 ms.ToArray(), // Reemplaza ms.GetBuffer() con ms.ToArray()
-                                this.txtLicencia.Text.Trim().ToUpper(),
-                                this.txtTipoLicencia.Text.Trim().ToUpper(),
-                                this.cmbDepartamento.Text.Trim().ToUpper());
+                                this.txtLicencia.Text.Trim(),
+                                this.txtTipoLicencia.Text.Trim(),
+                                this.cmbDepartamento.Text.Trim());
                         }
                         else if (this.IsEditar)
                         {
@@ -357,28 +362,29 @@ namespace Capa_Vista
 
                             rpta = nPersona.EditarPersona(
                                 Convert.ToInt32(this.txtIdPersona.Text),
-                                this.txtPnombre.Text.Trim().ToUpper(),
-                                this.txtSnombre.Text.Trim().ToUpper(),
-                                this.txtTnombre.Text.Trim().ToUpper(),
-                                this.txtPapellido.Text.Trim().ToUpper(),
-                                this.txtSapellido.Text.Trim().ToUpper(),
-                                this.txtTapellido.Text.Trim().ToUpper(),
-                                this.txtEdad.Text.Trim().ToUpper(),
+                                this.txtPnombre.Text.Trim(),
+                                this.txtSnombre.Text.Trim(),
+                                this.txtTnombre.Text.Trim(),
+                                this.txtPapellido.Text.Trim(),
+                                this.txtSapellido.Text.Trim(),
+                                this.txtTapellido.Text.Trim(),
+                                this.txtProfesion.Text.Trim(),
+                                this.txtEdad.Text.Trim(),
                                 Convert.ToInt32(this.cmbEstado.SelectedValue),
-                                this.txtNacion.Text.Trim().ToUpper(),
+                                this.txtNacion.Text.Trim(),
                                 date,
                                 Convert.ToInt32(this.cmbGenero.SelectedValue),
                                 Convert.ToInt32(this.cmbEtnia.SelectedValue),
-                                this.txtNacionalidad.Text.Trim().ToUpper(),
+                                this.txtNacionalidad.Text.Trim(),
                                 Convert.ToInt32(this.cmbReligion.SelectedValue),
-                                this.txtDPI.Text.Trim().ToUpper(),
+                                this.txtDPI.Text.Trim(),
                                 Convert.ToInt32(this.cmbMunicipio.SelectedValue),
-                                this.txtIgss.Text.Trim().ToUpper(),
-                                this.txtNIT.Text.Trim().ToUpper(),
+                                this.txtIgss.Text.Trim(),
+                                this.txtNIT.Text.Trim(),
                                 nuevaImagen, // Utiliza la nueva imagen en lugar de ms.ToArray()
-                                this.txtLicencia.Text.Trim().ToUpper(),
-                                this.txtTipoLicencia.Text.Trim().ToUpper(),
-                                this.cmbDepartamento.Text.Trim().ToUpper());
+                                this.txtLicencia.Text.Trim(),
+                                this.txtTipoLicencia.Text.Trim(),
+                                this.cmbDepartamento.Text.Trim());
                         }
 
                         if (rpta.Equals("OK"))
@@ -437,43 +443,43 @@ namespace Capa_Vista
                     int idDepartamento = cmbDepartamento.FindStringExact(nombreDepartamento);
                     cmbDepartamento.SelectedIndex = idDepartamento;
 
-                    string Etnia = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Etnia"].Value);
-                int idEtnia = cmbEtnia.FindStringExact(Etnia);
-                cmbEtnia.SelectedIndex = idEtnia;
+                    string Etnia = this.dtgPersona.CurrentRow.Cells["Etnia"].Value.ToString();
+                    int idEtnia = cmbEtnia.FindStringExact(Etnia);
+                    cmbEtnia.SelectedIndex = idEtnia;
                 
 
-                string Genero = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Genero"].Value);
-                int idGenero = cmbGenero.FindStringExact(Genero);
-                cmbGenero.SelectedIndex = idGenero;
+                    string Genero = this.dtgPersona.CurrentRow.Cells["Genero"].Value.ToString();
+                    int idGenero = cmbGenero.FindStringExact(Genero);
+                    cmbGenero.SelectedIndex = idGenero;
 
-                string Estado = Convert.ToString(this.dtgPersona.CurrentRow.Cells["ESTADO_CIVIL"].Value);
-                int idestadocivil = cmbEstado.FindString(Estado);
-                cmbEstado.SelectedIndex = idestadocivil;
+                    string Estado = this.dtgPersona.CurrentRow.Cells["ESTADO_CIVIL"].Value.ToString();
+                    int idestadocivil = cmbEstado.FindString(Estado);
+                    cmbEstado.SelectedIndex = idestadocivil;
 
-                string Municipio = this.dtgPersona.CurrentRow.Cells["MUNICIPIO"].Value.ToString();
-                int idMunicipio = cmbMunicipio.FindString(Municipio);
-                cmbMunicipio.SelectedIndex = idMunicipio;
+                    string Municipio = this.dtgPersona.CurrentRow.Cells["MUNICIPIO"].Value.ToString();
+                    int idMunicipio = cmbMunicipio.FindString(Municipio);
+                    cmbMunicipio.SelectedIndex = idMunicipio;
 
-                string Religion = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Religión"].Value);
-                int idReligion = cmbReligion.FindStringExact(Religion);
-                cmbReligion.SelectedIndex = idReligion;
+                    string Religion = this.dtgPersona.CurrentRow.Cells["Religión"].Value.ToString();
+                    int idReligion = cmbReligion.FindStringExact(Religion);
+                    cmbReligion.SelectedIndex = idReligion;
 
-
-                this.txtIdPersona.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Id"].Value);
-                this.txtPnombre.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_NOMBRE"].Value);
-                this.txtSnombre.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_NOMBRE"].Value);
-                this.txtTnombre.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Tercer_NOMBRE"].Value);
-                this.txtPapellido.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_APELLIDO"].Value);
-                this.txtSapellido.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_APELLIDO"].Value);
-                this.txtTapellido.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["APELLIDO_casada"].Value);
-                this.txtEdad.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["EDAD"].Value);
-                this.txtNacion.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Lugar_NACIMIENTO"].Value);
-                this.txtNacionalidad.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["NACIONALIDAD"].Value);
-                this.txtDPI.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["DPI"].Value);
-                this.dtmFecha.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Fecha_NACIMIENTO"].Value);
-                this.txtIgss.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["IGSS"].Value);
-                this.txtNIT.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["NIT"].Value);
-                byte[] datosBinarios = this.dtgPersona.CurrentRow.Cells["Foto"].Value as byte[];
+                    this.txtProfesion.Text = this.dtgPersona.CurrentRow.Cells["Profesión_Oficio"].Value.ToString();
+                    this.txtIdPersona.Text = this.dtgPersona.CurrentRow.Cells["Id"].Value.ToString();
+                    this.txtPnombre.Text = this.dtgPersona.CurrentRow.Cells["Primer_NOMBRE"].Value.ToString();
+                    this.txtSnombre.Text = this.dtgPersona.CurrentRow.Cells["Segundo_NOMBRE"].Value.ToString();
+                    this.txtTnombre.Text = this.dtgPersona.CurrentRow.Cells["Tercer_NOMBRE"].Value.ToString();
+                    this.txtPapellido.Text = this.dtgPersona.CurrentRow.Cells["Primer_APELLIDO"].Value.ToString();
+                    this.txtSapellido.Text = this.dtgPersona.CurrentRow.Cells["Segundo_APELLIDO"].Value.ToString();
+                    this.txtTapellido.Text = this.dtgPersona.CurrentRow.Cells["APELLIDO_casada"].Value.ToString();
+                    this.txtEdad.Text = this.dtgPersona.CurrentRow.Cells["EDAD"].Value.ToString();
+                    this.txtNacion.Text = this.dtgPersona.CurrentRow.Cells["Lugar_NACIMIENTO"].Value.ToString();
+                    this.txtNacionalidad.Text = this.dtgPersona.CurrentRow.Cells["NACIONALIDAD"].Value.ToString();
+                    this.txtDPI.Text = this.dtgPersona.CurrentRow.Cells["DPI"].Value.ToString();
+                    this.dtmFecha.Text = this.dtgPersona.CurrentRow.Cells["Fecha_NACIMIENTO"].Value.ToString();
+                    this.txtIgss.Text = this.dtgPersona.CurrentRow.Cells["IGSS"].Value.ToString();
+                    this.txtNIT.Text = this.dtgPersona.CurrentRow.Cells["NIT"].Value.ToString();
+                    byte[] datosBinarios = this.dtgPersona.CurrentRow.Cells["Foto"].Value as byte[];
 
                 if (datosBinarios != null && datosBinarios.Length > 0)
                 {
@@ -484,9 +490,9 @@ namespace Capa_Vista
                 {
                     MessageBox.Show("Los datos binarios de la imagen son nulos o vacíos.");
                 }
-                this.txtLicencia.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["LICENCIA"].Value);
-                this.txtTipoLicencia.Text = Convert.ToString(this.dtgPersona.CurrentRow.Cells["TIPO_LICENCIA"].Value);
-                this.tabMantenimiento.SelectedIndex = 1;
+                    this.txtLicencia.Text = this.dtgPersona.CurrentRow.Cells["LICENCIA"].Value.ToString();
+                    this.txtTipoLicencia.Text = this.dtgPersona.CurrentRow.Cells["TIPO_LICENCIA"].Value.ToString();
+                    this.tabMantenimiento.SelectedIndex = 1;
             
                 }
                 else
@@ -538,7 +544,6 @@ namespace Capa_Vista
             if (lcNumero.Length > 13)
             {
                 lcNumero = lcNumero.Substring(0, 13);
-
             }
 
             if (lcNumero.Length <= 13)
@@ -606,6 +611,7 @@ namespace Capa_Vista
                         || string.IsNullOrEmpty(this.cmbEtnia.Text)
                         || string.IsNullOrEmpty(this.cmbReligion.Text)
                         || string.IsNullOrEmpty(this.cmbMunicipio.Text)
+                        || string.IsNullOrEmpty(this.txtProfesion.Text)
 
 
                         )
@@ -623,7 +629,8 @@ namespace Capa_Vista
                         errorIcono.SetError(cmbEtnia, "Selecione su Etnia");
                         errorIcono.SetError(cmbReligion, "Seleciones du religion");
                         errorIcono.SetError(cmbMunicipio, "Selecione su Municipio");
-                    }
+                        errorIcono.SetError(txtProfesion, "Ingrese su Profesión");
+                }
                     else 
                     {
 
@@ -638,6 +645,7 @@ namespace Capa_Vista
                                 this.txtPapellido.Text.Trim(),
                                 this.txtSapellido.Text.Trim(),
                                 this.txtTapellido.Text.Trim(),
+                                this.txtProfesion.Text.Trim(),
                                 this.txtEdad.Text.Trim(),                          
                                 Convert.ToInt32(this.cmbEstado.SelectedValue),
                                 this.txtNacion.Text.Trim(),
@@ -680,6 +688,7 @@ namespace Capa_Vista
                                 this.txtPapellido.Text.Trim(),
                                 this.txtSapellido.Text.Trim(),
                                 this.txtTapellido.Text.Trim(),
+                                this.txtProfesion.Text.Trim(),
                                 this.txtEdad.Text.Trim(),
                                 Convert.ToInt32(this.cmbEstado.SelectedValue),
                                 this.txtNacion.Text.Trim(),
@@ -772,7 +781,6 @@ namespace Capa_Vista
             cmbMunicipio.DisplayMember = "MUNICIPIO";
             cmbMunicipio.ValueMember = "ID_MUNICIPIO";
 
-
         }
 
        
@@ -863,37 +871,7 @@ namespace Capa_Vista
             // Convierte el primer carácter a mayúscula y el resto a minúsculas
             return char.ToUpper(texto[0]) + texto.Substring(1).ToLower();
         }
-
-
-        private void ConfigurarOrdenTabulacion()
-        {
-            // Establecer el orden de tabulación para los TextBox
-            txtPnombre.TabIndex = 1;
-            txtSnombre.TabIndex = 2;
-            txtTnombre.TabIndex = 3;
-            txtPapellido.TabIndex = 4;
-            txtSapellido.TabIndex = 5;
-            txtTapellido.TabIndex = 6;
-            txtDPI.TabIndex = 7;
-            cmbGenero.TabIndex = 8;
-            cmbEtnia.TabIndex = 9;
-            cmbEstado.TabIndex = 10;
-            dtmFecha.TabIndex = 11;
-            cmbDepartamento.TabIndex = 12;
-            cmbMunicipio.TabIndex = 13;
-            txtNacion.TabIndex = 14;
-            txtNacionalidad.TabIndex = 15;
-            txtNIT.TabIndex = 16;
-            txtIgss.TabIndex = 17;
-            cmbReligion.TabIndex = 18;
-            txtLicencia.TabIndex = 19;
-            txtTipoLicencia.TabIndex = 20;
-            btnFoto.TabIndex = 20;
-
-        }
-
-       
-
+     
         private void dtgPersona_MouseClick(object sender, MouseEventArgs e)
         {
 
@@ -927,7 +905,7 @@ namespace Capa_Vista
                     menu.Items.Add("Actas").Name = "Actas" + posicion;
                 }
                 menu.Show(dtgPersona, e.X, e.Y);
-                menu.ItemClicked += new ToolStripItemClickedEventHandler(menuclick1);
+                menu.ItemClicked += new ToolStripItemClickedEventHandler(menuclick);
             }
         }
 
@@ -943,11 +921,18 @@ namespace Capa_Vista
         private static frmReferenciaPersonal referenciaPersonal = null;
         private static frmOtrosDatos otrosDatos = null;
         private static frmDatosAdicionales datosAdicionales = null;
-        private static frmReportePersona reporte = null;
+        private static frmReporteEmpleado reporte = null;
         private static ActasFormulario actas = null;
-
-        private void menuclick1(object sender, ToolStripItemClickedEventArgs e)
+        
+        private void menuclick(object sender, ToolStripItemClickedEventArgs e)
         {
+
+            if(this.dtgPersona.CurrentRow == null)
+    {
+                MessageBox.Show("Por favor seleccione un empleado antes de abrir el menú.");
+                return;
+            }
+
             int Idpersona = Convert.ToInt32(this.dtgPersona.CurrentRow.Cells["id"].Value);
             string a = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Primer_Nombre"].Value);
             string b = Convert.ToString(this.dtgPersona.CurrentRow.Cells["Segundo_Nombre"].Value);
@@ -1173,15 +1158,14 @@ namespace Capa_Vista
 
                 else if (id.Contains("Reporte"))
                 {
-                    // Verificar si ya hay una instancia abierta
+                   /// Verificar si ya hay una instancia abierta
                     if (reporte == null || reporte.IsDisposed)
                     {
                         id = id.Replace("Reporte", "");
                         // Si no hay una instancia abierta, crear una nueva instancia y mostrar el formulario
-                        reporte = new frmReportePersona();
+                        reporte = new frmReporteEmpleado();
                         reporte.FormClosed += (s, args) => { reporte = null; };
-                        reporte.IdPersonaReporte = Idpersona;
-                        reporte.PersonaReporte = Persona;
+                        reporte.Idpersona = Idpersona;
                         reporte.ShowDialog();
                     }
                     else
@@ -1190,6 +1174,7 @@ namespace Capa_Vista
                         // Si ya hay una instancia abierta, mostrar un mensaje de advertencia
                         MessageBox.Show("Actualmente está ingresando solicitando un reporte. No puede abrir nuevamente el formulario.");
                     }
+                   
                 }
 
                 else if (id.Contains("Actas"))
@@ -1433,7 +1418,7 @@ namespace Capa_Vista
             {
                 for (int j = 0; j < dataGridView.Columns.Count; j++)
                 {
-                    worksheet.Cell(i + 2, j + 1).Value = dataGridView.Rows[i].Cells[j].Value.ToString();
+                    worksheet.Cell(i + 2, j + 1).Value = dataGridView.Rows[i].Cells[j].Value?.ToString();
                 }
             }
 
@@ -1443,12 +1428,23 @@ namespace Capa_Vista
             saveFileDialog.FileName = "ArchivoExcel.xlsx";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                workbook.SaveAs(saveFileDialog.FileName);
-                MessageBox.Show("El archivo Excel se ha exportado correctamente.", "Exportar a Excel", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                try
+                {
+                    workbook.SaveAs(saveFileDialog.FileName);
+                    MessageBox.Show("El archivo Excel se ha exportado correctamente.", "Exportar a Excel", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Abrir el archivo de Excel después de guardarlo
+                    System.Diagnostics.Process.Start(saveFileDialog.FileName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al guardar el archivo Excel: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
+
         }
 
-      
+
 
         private void cmbDepartamento_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -1484,15 +1480,18 @@ namespace Capa_Vista
 
         private string municipioSeleccionado = "ID_MUNICIPIO";
 
-        private void dtgPersona_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-           
-        }
+        
 
         private void button2_Click(object sender, EventArgs e)
         {
             BuscarPersona();
             OcultarColumnas();
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            frmReporteProfesion reporteProfesion = new frmReporteProfesion();
+            reporteProfesion.ShowDialog();
         }
     }
 }

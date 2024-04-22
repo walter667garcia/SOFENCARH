@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Capa_Vista.ReferenciaPersonal
 {
@@ -43,6 +44,13 @@ namespace Capa_Vista.ReferenciaPersonal
             }
             else
             {
+
+                // Luego, verifica si el número de teléfono tiene exactamente 8 dígitos
+                if (Regex.Replace(txtTelefono.Text, @"[^\d]", "").Length != 8)
+                {
+                    MessageBox.Show("El número de teléfono debe tener exactamente 8 dígitos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 string rpta = "";
                 if (this.Evento == "Nuevo")
                 {
@@ -50,7 +58,8 @@ namespace Capa_Vista.ReferenciaPersonal
                             Idpersona,
                              this.txtPersona.Text.Trim(),
                              this.txtTelefono.Text.Trim(),
-                             this.txtRelacion.Text.Trim()
+                             this.txtRelacion.Text.Trim(),
+                             this.txtDocumento.Text.Trim()
                              );
 
                 }
@@ -61,7 +70,8 @@ namespace Capa_Vista.ReferenciaPersonal
                           Idpersona,
                             this.txtPersona.Text.Trim(),
                             this.txtTelefono.Text.Trim(),
-                            this.txtRelacion.Text.Trim()
+                            this.txtRelacion.Text.Trim(),
+                            this.txtDocumento.Text.Trim()
                             );
                 }
                 if (rpta.Equals("OK"))
@@ -118,12 +128,13 @@ namespace Capa_Vista.ReferenciaPersonal
             dragging = false;
         }
 
-        public void CargarDatos(string id, string persona, string telefono, string relacion)
+        public void CargarDatos(string id, string persona, string telefono, string relacion, string documento)
         {
             this.txtId.Text = id;
             this.txtPersona.Text = persona;
             this.txtTelefono.Text = telefono;
             this.txtRelacion.Text = relacion;
+            this.txtDocumento.Text = documento;
         }
 
         private void txtTelefono_TextChanged(object sender, EventArgs e)
@@ -141,6 +152,51 @@ namespace Capa_Vista.ReferenciaPersonal
             txtTelefono.Text = TelefonoNumerico;
             // Coloca el cursor al final del texto
             txtTelefono.SelectionStart = txtTelefono.Text.Length;
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+        private string rutaArchivo;
+        private void button4_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Archivos PDF|*.pdf|Todos los archivos|*.*";
+            openFileDialog.FilterIndex = 1; // Establece el filtro predeterminado como PDF
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                rutaArchivo = openFileDialog.FileName; // Asignación del valor a la variable miembro
+
+                // Verificar si el archivo seleccionado es un archivo PDF
+                if (Path.GetExtension(rutaArchivo).Equals(".pdf", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Mostrar la ruta del archivo en el cuadro de texto
+                    txtDocumento.Text = rutaArchivo;
+                }
+                else
+                {
+                    MessageBox.Show("Por favor, seleccione un archivo PDF.", "Archivo no válido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string rutaActual = txtDocumento.Text;
+
+            if (!string.IsNullOrEmpty(rutaActual) && System.IO.File.Exists(rutaActual))
+            {
+                // Abrir el archivo con el visor predeterminado del sistema
+                System.Diagnostics.Process.Start(rutaActual);
+            }
+            else
+            {
+                MessageBox.Show("Por favor, seleccione un archivo válido o la ruta del archivo no existe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

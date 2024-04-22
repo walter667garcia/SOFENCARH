@@ -25,7 +25,7 @@ namespace Capa_Negocio
 
         public static string Insertar( int idpersona, int idAcademico,
             string establecimiento, DateTime dFecha, DateTime aFecha,
-            string titulo, string especialidad)
+            string titulo, string especialidad, string documento)
         {
             cNivelAcademico Obj = new cNivelAcademico();
             Obj.Id_Persona = idpersona;
@@ -35,13 +35,13 @@ namespace Capa_Negocio
             Obj.Fecha_Outicio = aFecha;
             Obj.Titulo = titulo;
             Obj.Especialidad = especialidad;
-            
+            Obj.Documento = documento;
             return Obj.Insertar(Obj);
         }
 
         public static string Actualizar(int idNivel,int idpersona, int idAcademico,
           string establecimiento, DateTime dFecha, DateTime aFecha,
-          string titulo, string especialidad)
+          string titulo, string especialidad, string documento)
         {
             cNivelAcademico Obj = new cNivelAcademico();
             Obj.Id_Nivel = idNivel;
@@ -52,7 +52,7 @@ namespace Capa_Negocio
             Obj.Fecha_Outicio = aFecha;
             Obj.Titulo = titulo;
             Obj.Especialidad = especialidad;
-
+            Obj.Documento = documento;
             return Obj.Actualizar(Obj);
         }
 

@@ -27,6 +27,8 @@ namespace Capa_Vista.Familia
         {
             InitializeComponent();
             LlenarComboBoxes();
+            dtmFecha.Format = DateTimePickerFormat.Custom;
+            dtmFecha.CustomFormat = "dd/MM/yyyy";
         }
 
         private void FamiliaFormulario_Load(object sender, EventArgs e)
@@ -100,6 +102,13 @@ namespace Capa_Vista.Familia
             }
             else
             {
+
+                // Verifica si el número de teléfono tiene exactamente 8 dígitos en txtTelefono o txtTeltrabajo
+                if (Regex.Replace(txtTelefono.Text, @"[^\d]", "").Length != 8 || Regex.Replace(txtTelTrabajo.Text, @"[^\d]", "").Length != 8)
+                {
+                    MessageBox.Show("El número de teléfono debe tener exactamente 8 dígitos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 string rpta = "";
                 if (this.Evento == "Nuevo")
                 {
@@ -186,7 +195,7 @@ namespace Capa_Vista.Familia
         private void txtTelTrabajo_TextChanged(object sender, EventArgs e)
         {
             // Elimina cualquier caracter que no sea dígito
-            string TelefonoNumerico = Regex.Replace(txtTelefono.Text, @"[^\d]", "");
+            string TelefonoNumerico = Regex.Replace(txtTelTrabajo.Text, @"[^\d]", "");
 
             // Limita a 13 caracteres
             if (TelefonoNumerico.Length > 8)
@@ -195,9 +204,25 @@ namespace Capa_Vista.Familia
             }
 
             // Asigna el texto limpio al TextBox
-            txtTelefono.Text = TelefonoNumerico;
+            txtTelTrabajo.Text = TelefonoNumerico;
             // Coloca el cursor al final del texto
-            txtTelefono.SelectionStart = txtTelefono.Text.Length;
+            txtTelTrabajo.SelectionStart = txtTelTrabajo.Text.Length;
+        }
+
+        private void dtmFecha_ValueChanged(object sender, EventArgs e)
+        {
+            // Calcula la edad
+            DateTime fechaNacimiento = dtmFecha.Value;
+            int edad = DateTime.Today.Year - fechaNacimiento.Year;
+
+            // Verifica si aún no ha pasado el cumpleaños de este año
+            if (DateTime.Today < fechaNacimiento.AddYears(edad))
+            {
+                edad--;
+            }
+
+            // Asigna la edad al campo correspondiente
+            txtEdad.Text = edad.ToString();
         }
     }
 }

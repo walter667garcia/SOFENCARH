@@ -55,10 +55,10 @@ namespace Capa_Vista.Usuario
         {
             byte[] imagenBytes = pcbFoto.Image != null ? ObtenerImagenComoBytes(pcbFoto.Image) : null;
             if (string.IsNullOrEmpty(this.txtNombre.Text)
-
-
+              
                )
             {
+                
                 MensajeError("Falta ingresar algunos datos Remarcados");
             }
             else
@@ -167,6 +167,11 @@ namespace Capa_Vista.Usuario
                     pcbFoto.Image = imagenActual;
                 }
             }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            txtContraseña.UseSystemPasswordChar = !checkBox1.Checked;
         }
     }
 }

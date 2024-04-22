@@ -62,9 +62,9 @@ namespace Capa_Vista.FisicoBiologico
             this.cmbDiabetes.Text = string.Empty;
             this.cmbAccidente.Text = string.Empty;
             this.cmbOperacion.Text = string.Empty;
-            this.txtAlergias.Text = string.Empty;
+            this.cmbAlergias.Text = string.Empty;
             this.cmbtratamiento.Text = string.Empty;
-            this.txtEspecifique.Text = string.Empty;
+            this.cmbEspecifique.Text = string.Empty;
             this.cmblentes.Text = string.Empty;
             this.cmbauditivo.Text = string.Empty;
             this.txtDiscapacidad.Text = string.Empty;
@@ -97,9 +97,9 @@ namespace Capa_Vista.FisicoBiologico
                         this.cmbDiabetes.Text.Trim(),
                         this.cmbAccidente.Text.Trim(),
                         this.cmbOperacion.Text.Trim(),
-                        this.txtAlergias.Text.Trim(),
+                        this.cmbAlergias.Text.Trim(),
                         this.cmbtratamiento.Text.Trim(),
-                        this.txtEspecifique.Text.Trim(),
+                        this.cmbEspecifique.Text.Trim(),
                         this.cmblentes.Text.Trim(),
                         this.cmbauditivo.Text.Trim(),
                         this.txtDiscapacidad.Text.Trim(),
@@ -122,9 +122,9 @@ namespace Capa_Vista.FisicoBiologico
                         this.cmbDiabetes.Text.Trim(),
                         this.cmbAccidente.Text.Trim(),
                         this.cmbOperacion.Text.Trim(),
-                        this.txtAlergias.Text.Trim(),
+                        this.cmbAlergias.Text.Trim(),
                         this.cmbtratamiento.Text.Trim(),
-                        this.txtEspecifique.Text.Trim(),
+                        this.cmbEspecifique.Text.Trim(),
                         this.cmblentes.Text.Trim(),
                         this.cmbauditivo.Text.Trim(),
                         this.txtDiscapacidad.Text.Trim(),
@@ -173,9 +173,9 @@ namespace Capa_Vista.FisicoBiologico
             this.cmbDiabetes.Text = diabetes;
             this.cmbAccidente.Text = accidente;
             this.cmbOperacion.Text = operacion;
-            this.txtAlergias.Text = alergias;
+            this.cmbAlergias.Text = alergias;
             this.cmbtratamiento.Text = tratamiento;
-            this.txtEspecifique.Text = especifique;
+            this.cmbEspecifique.Text = especifique;
             this.cmblentes.Text = lentes;
             this.cmbauditivo.Text = auditivo;
             this.txtDiscapacidad.Text = discapacidad;

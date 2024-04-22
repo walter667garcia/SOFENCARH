@@ -7,8 +7,10 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace Capa_Vista.Localizacion
 {
@@ -140,6 +142,16 @@ namespace Capa_Vista.Localizacion
             int idLocalizacion = cmbLocalizacion.FindStringExact(descripcion);
             cmbLocalizacion.SelectedIndex = idLocalizacion;
             txtLocalizacion.Text = localizacion;
+           
+        }
+
+        private void txtLocalizacion_TextChanged(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void cmbLocalizacion_SelectedIndexChanged(object sender, EventArgs e)
+        {
            
         }
     }

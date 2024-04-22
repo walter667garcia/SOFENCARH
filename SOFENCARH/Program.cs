@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Capa_Vista;
+using Capa_Vista.Contratos;
+using Capa_Vista.Reporte;
 
 namespace SOFENCARH
 {
@@ -15,6 +17,7 @@ namespace SOFENCARH
         [STAThread]
         static void Main()
         {
+           
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Login());

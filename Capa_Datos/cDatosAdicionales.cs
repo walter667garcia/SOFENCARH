@@ -70,13 +70,11 @@ namespace Capa_Datos
         public string Actualizar(cDatosAdicionales adicionales)
         {
             string rpta = "";
-
             using (SqlConnection sqlcon = new SqlConnection(Conexion.Cn))
             {
                 try
                 {
                     sqlcon.Open();
-
                     using (SqlCommand cmd = new SqlCommand("sp_ActualizarRHDATOSADICIONALES", sqlcon))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
@@ -85,13 +83,9 @@ namespace Capa_Datos
                         cmd.Parameters.AddWithValue("@Emergencia", adicionales.EMERGENCIAS).SqlDbType = SqlDbType.NVarChar;
                         cmd.Parameters.AddWithValue("@Parentesco", adicionales.PARENTESCO).SqlDbType = SqlDbType.NVarChar;
                         cmd.Parameters.AddWithValue("@Telefono", adicionales.TELEFONO).SqlDbType = SqlDbType.NVarChar;
-
                         // Agregar parámetros para otros campos...
-
                         int filasAfectadas = cmd.ExecuteNonQuery();
-
-                        rpta = filasAfectadas == 1 ? "OK" : "No se actualizó el registro 1234";
-
+                        rpta = filasAfectadas == 1 ? "OK" : "No se actualizó el registr";
                     }
                 }
                 catch (SqlException ex)

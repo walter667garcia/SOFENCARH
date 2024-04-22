@@ -88,6 +88,7 @@ namespace Capa_Vista.DatosAdicionales
         }
         private void button2_Click(object sender, EventArgs e)
         {
+            // Primero, verifica si los campos obligatorios están completos
             if (string.IsNullOrEmpty(this.txtEmergencia.Text) || string.IsNullOrEmpty(this.txtParentesco.Text) || string.IsNullOrEmpty(this.txtTelefono.Text))
             {
                 MensajeError("Falta ingresar algunos datos Remarcados");
@@ -97,6 +98,14 @@ namespace Capa_Vista.DatosAdicionales
             }
             else
             {
+                // Luego, verifica si el número de teléfono tiene exactamente 8 dígitos
+                if (Regex.Replace(txtTelefono.Text, @"[^\d]", "").Length != 8)
+                {
+                    MessageBox.Show("El número de teléfono debe tener exactamente 8 dígitos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Si todos los campos están completos y el número de teléfono tiene 8 dígitos, procede con la inserción o actualización de datos
                 string rpta = "";
 
                 if (this.Evento == "Nuevo")
@@ -117,7 +126,6 @@ namespace Capa_Vista.DatosAdicionales
                         this.txtParentesco.Text.Trim(),
                         this.txtTelefono.Text.Trim()
                     );
-
                 }
 
                 if (rpta.Equals("OK"))
@@ -131,8 +139,8 @@ namespace Capa_Vista.DatosAdicionales
                 }
 
                 LimpiarCampos();
-               
             }
+
         }
 
         public void CargarElementos
@@ -162,6 +170,7 @@ namespace Capa_Vista.DatosAdicionales
             txtTelefono.Text = TelefonoNumerico;
             // Coloca el cursor al final del texto
             txtTelefono.SelectionStart = txtTelefono.Text.Length;
+
         }
     }
 }

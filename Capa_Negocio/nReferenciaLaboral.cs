@@ -11,17 +11,18 @@ namespace Capa_Negocio
     public class nReferenciaLaboral
     {
 
-        public static string Insertar(int idpersona, string empresa, string telefono, string relacion)
+        public static string Insertar(int idpersona, string empresa, string telefono, string relacion, string documento)
         {
             cReferenciaLaboral Obj = new cReferenciaLaboral();
             Obj.IdPersona = idpersona;
             Obj.Empresa = empresa;
             Obj.Telefono = telefono;
             Obj.Relacion = relacion;
+            Obj.Documento = documento;
             return Obj.Insertar(Obj);
         }
 
-        public static string Actualizar(int idreflaboral, int idpersona, string empresa, string telefono, string relacion)
+        public static string Actualizar(int idreflaboral, int idpersona, string empresa, string telefono, string relacion, string documento)
         {
             cReferenciaLaboral Obj = new cReferenciaLaboral();
             Obj.IdReflaboral = idreflaboral;
@@ -29,6 +30,7 @@ namespace Capa_Negocio
             Obj.Empresa = empresa;
             Obj.Telefono = telefono;
             Obj.Relacion = relacion;
+            Obj.Documento = documento;
             return Obj.Actualizar(Obj);
         }
 

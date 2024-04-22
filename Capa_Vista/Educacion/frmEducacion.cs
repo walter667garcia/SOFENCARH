@@ -118,9 +118,16 @@ namespace Capa_Vista.Educacion
         }
         private void Mostrar()
         {
-            lbPersona.Text = Persona;
-            this.dtgEducacion.DataSource = nHome.BuscarEducacion(Idpersona);
-            OcultarColumnas();
+            try
+            {
+                lbPersona.Text = Persona;
+                this.dtgEducacion.DataSource = nHome.BuscarEducacion(Idpersona);
+                OcultarColumnas();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Se produjo un error al intenta mostrar : {ex.Message}");
+            }
         }
 
         private void pcbTitulo_Click(object sender, EventArgs e)
@@ -183,13 +190,14 @@ namespace Capa_Vista.Educacion
                         string fechaFin = datos["FIN"].Value?.ToString();
                         string Titulo = datos["Titulo"].Value?.ToString();
                         string Especialidad = datos["ESPECIALIDAD"].Value?.ToString();
+                        string Documento = datos["DOCUMENTO"].Value?.ToString();
 
-                
+
                         instanciaAbierta = new EducacionFormulario();
                         instanciaAbierta.FormClosed += (s, args) => { instanciaAbierta = null; };
                         instanciaAbierta.Idpersona = Idpersona;
                         instanciaAbierta.CargarDatos(Id,Educacion, Establecimiento,
-                                                     fechaInicio, fechaFin, Titulo, Especialidad);
+                                                     fechaInicio, fechaFin, Titulo, Especialidad, Documento);
                         instanciaAbierta.Evento = "Editar";
                         instanciaAbierta.ShowDialog();
                     }

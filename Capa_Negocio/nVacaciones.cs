@@ -17,6 +17,13 @@ namespace Capa_Negocio
             return Obj.Mostrar(Obj);
         }
 
+        public static DataTable MostrarVacacionesCanceladas(int id)
+        {
+            cVacaciones Obj = new cVacaciones();
+            Obj.Id = id;
+            return Obj.MostrarCanceladas(Obj);
+        }
+
         public static DataTable BuscarPersona(string textoBuscar)
         {
 
@@ -33,7 +40,7 @@ namespace Capa_Negocio
         }
 
         public static string InsertarVacaciones(int idpersona, int idperiodo, DateTime fechaInicio, 
-            DateTime fechafin, int diasF, int diasT ,string descripcion )
+            DateTime fechafin, int diasF, int diasT ,string descripcion, bool estado )
         {
             cVacaciones Obj = new cVacaciones();
             Obj.IDPERSONA = idpersona;
@@ -43,6 +50,7 @@ namespace Capa_Negocio
             Obj.DIAS_FESTIVOS = diasF;
             Obj.DIAS_TOMADOS = diasT;
             Obj.DESCRIPCION = descripcion;
+            Obj.Estado = estado;
             return Obj.Insertar();
         }
     }

@@ -110,9 +110,16 @@ namespace Capa_Vista.DatosAdicionales
         }
         public void mostrar()
         {
-            this.lbPersona.Text = Persona;
-            this.dtgDatosAdicionales.DataSource = nHome.BuscarDatosAdicionales(Idpersona);
-            OcultarColumnas();
+            try
+            {
+                this.lbPersona.Text = Persona;
+                this.dtgDatosAdicionales.DataSource = nHome.BuscarDatosAdicionales(Idpersona);
+                OcultarColumnas();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Se produjo un error al intenta mostrar : {ex.Message}");
+            }
         }
 
         private void frmDatosAdicionales_Load(object sender, EventArgs e)

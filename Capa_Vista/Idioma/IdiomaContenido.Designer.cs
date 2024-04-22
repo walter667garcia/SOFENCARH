@@ -59,11 +59,12 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.DodgerBlue;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.label6);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(444, 53);
+            this.panel2.Size = new System.Drawing.Size(540, 53);
             this.panel2.TabIndex = 14;
             this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseDown);
             this.panel2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseMove);
@@ -104,7 +105,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 53);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(444, 693);
+            this.panel1.Size = new System.Drawing.Size(540, 720);
             this.panel1.TabIndex = 15;
             // 
             // txtId
@@ -121,9 +122,9 @@
             this.button4.BackColor = System.Drawing.Color.RoyalBlue;
             this.button4.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button4.ForeColor = System.Drawing.Color.White;
-            this.button4.Location = new System.Drawing.Point(14, 524);
+            this.button4.Location = new System.Drawing.Point(37, 564);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(164, 55);
+            this.button4.Size = new System.Drawing.Size(133, 40);
             this.button4.TabIndex = 12;
             this.button4.Text = "Cargar Ruta";
             this.button4.UseVisualStyleBackColor = false;
@@ -136,7 +137,7 @@
             this.cmbIdioma.FormattingEnabled = true;
             this.cmbIdioma.Location = new System.Drawing.Point(59, 60);
             this.cmbIdioma.Name = "cmbIdioma";
-            this.cmbIdioma.Size = new System.Drawing.Size(280, 33);
+            this.cmbIdioma.Size = new System.Drawing.Size(323, 33);
             this.cmbIdioma.TabIndex = 8;
             // 
             // tkbLectura
@@ -147,7 +148,7 @@
             this.tkbLectura.Location = new System.Drawing.Point(61, 387);
             this.tkbLectura.Maximum = 100;
             this.tkbLectura.Name = "tkbLectura";
-            this.tkbLectura.Size = new System.Drawing.Size(278, 30);
+            this.tkbLectura.Size = new System.Drawing.Size(389, 30);
             this.tkbLectura.TabIndex = 11;
             this.tkbLectura.ValueChanged += new System.EventHandler(this.tkbLectura_ValueChanged);
             // 
@@ -159,7 +160,7 @@
             this.tkbEscritura.Location = new System.Drawing.Point(61, 282);
             this.tkbEscritura.Maximum = 100;
             this.tkbEscritura.Name = "tkbEscritura";
-            this.tkbEscritura.Size = new System.Drawing.Size(278, 30);
+            this.tkbEscritura.Size = new System.Drawing.Size(389, 30);
             this.tkbEscritura.TabIndex = 10;
             this.tkbEscritura.ValueChanged += new System.EventHandler(this.tkbEscritura_ValueChanged);
             // 
@@ -171,7 +172,7 @@
             this.tkbConversacion.Location = new System.Drawing.Point(59, 165);
             this.tkbConversacion.Maximum = 100;
             this.tkbConversacion.Name = "tkbConversacion";
-            this.tkbConversacion.Size = new System.Drawing.Size(280, 30);
+            this.tkbConversacion.Size = new System.Drawing.Size(391, 30);
             this.tkbConversacion.TabIndex = 9;
             this.tkbConversacion.ValueChanged += new System.EventHandler(this.tkbConversacion_ValueChanged);
             // 
@@ -179,7 +180,7 @@
             // 
             this.lbLectura.AutoSize = true;
             this.lbLectura.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbLectura.Location = new System.Drawing.Point(374, 392);
+            this.lbLectura.Location = new System.Drawing.Point(470, 392);
             this.lbLectura.Name = "lbLectura";
             this.lbLectura.Size = new System.Drawing.Size(31, 25);
             this.lbLectura.TabIndex = 21;
@@ -189,7 +190,7 @@
             // 
             this.lbConversacion.AutoSize = true;
             this.lbConversacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbConversacion.Location = new System.Drawing.Point(374, 170);
+            this.lbConversacion.Location = new System.Drawing.Point(470, 170);
             this.lbConversacion.Name = "lbConversacion";
             this.lbConversacion.Size = new System.Drawing.Size(31, 25);
             this.lbConversacion.TabIndex = 20;
@@ -199,7 +200,7 @@
             // 
             this.lbEscritura.AutoSize = true;
             this.lbEscritura.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbEscritura.Location = new System.Drawing.Point(374, 287);
+            this.lbEscritura.Location = new System.Drawing.Point(470, 287);
             this.lbEscritura.Name = "lbEscritura";
             this.lbEscritura.Size = new System.Drawing.Size(31, 25);
             this.lbEscritura.TabIndex = 17;
@@ -222,9 +223,9 @@
             this.button3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button3.ForeColor = System.Drawing.Color.White;
-            this.button3.Location = new System.Drawing.Point(197, 524);
+            this.button3.Location = new System.Drawing.Point(368, 562);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(208, 55);
+            this.button3.Size = new System.Drawing.Size(133, 40);
             this.button3.TabIndex = 14;
             this.button3.Text = "Ver PDF";
             this.button3.UseVisualStyleBackColor = false;
@@ -232,11 +233,13 @@
             // 
             // txtDocumento
             // 
+            this.txtDocumento.Enabled = false;
             this.txtDocumento.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtDocumento.ForeColor = System.Drawing.Color.Black;
             this.txtDocumento.Location = new System.Drawing.Point(37, 485);
+            this.txtDocumento.Multiline = true;
             this.txtDocumento.Name = "txtDocumento";
-            this.txtDocumento.Size = new System.Drawing.Size(368, 33);
+            this.txtDocumento.Size = new System.Drawing.Size(464, 71);
             this.txtDocumento.TabIndex = 13;
             // 
             // label2
@@ -289,7 +292,7 @@
             this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.ForeColor = System.Drawing.Color.White;
-            this.button2.Location = new System.Drawing.Point(253, 620);
+            this.button2.Location = new System.Drawing.Point(285, 638);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(140, 46);
             this.button2.TabIndex = 15;
@@ -303,7 +306,7 @@
             this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(59, 620);
+            this.button1.Location = new System.Drawing.Point(106, 638);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(141, 46);
             this.button1.TabIndex = 16;
@@ -316,7 +319,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(444, 746);
+            this.ClientSize = new System.Drawing.Size(540, 773);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

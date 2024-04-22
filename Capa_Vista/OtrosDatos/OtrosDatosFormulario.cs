@@ -25,6 +25,11 @@ namespace Capa_Vista.OtrosDatos
         public OtrosDatosFormulario()
         {
             InitializeComponent();
+            dtmFechaT.Format = DateTimePickerFormat.Custom;
+            dtmFechaT.CustomFormat = "dd/MM/yyyy";
+
+            dtmFechasS.Format = DateTimePickerFormat.Custom;
+            dtmFechasS.CustomFormat = "dd/MM/yyyy";
         }
 
         private void button1_Click(object sender, EventArgs e)

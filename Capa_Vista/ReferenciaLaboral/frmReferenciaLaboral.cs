@@ -87,9 +87,16 @@ namespace Capa_Vista.ReferenciaLaboral
         }
         public void Mostrar()
         {
-            this.lbPersona.Text = Persona;
-            this.dtgLaboral.DataSource = nHome.BuscarReferenciaLaboral(Idpersona);
-            OcultarColumnas();
+            try
+            {
+                this.lbPersona.Text = Persona;
+                this.dtgLaboral.DataSource = nHome.BuscarReferenciaLaboral(Idpersona);
+                OcultarColumnas();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Se produjo un error al intenta mostrar : {ex.Message}");
+            }
         }
         private void pcbNuevo_Click(object sender, EventArgs e)
         {
@@ -167,12 +174,13 @@ namespace Capa_Vista.ReferenciaLaboral
                         string Empresa = this.dtgLaboral.CurrentRow.Cells["Empresa"].Value.ToString();
                         string Telefono = this.dtgLaboral.CurrentRow.Cells["Telefono"].Value.ToString();
                         string Relacion = this.dtgLaboral.CurrentRow.Cells["Relacion"].Value.ToString();
+                        string Documento = this.dtgLaboral.CurrentRow.Cells["Documento"].Value.ToString();
 
                         instanciaAbierta = new ReferenciaLaboralFormulario();
                         instanciaAbierta.FormClosed += (s, args) => { instanciaAbierta = null; };
                         instanciaAbierta.Idpersona = Idpersona;
                         instanciaAbierta.Evento = "Editar";
-                        instanciaAbierta.CargarDatos(Id,Empresa,Telefono, Relacion);
+                        instanciaAbierta.CargarDatos(Id,Empresa,Telefono, Relacion,Documento);
                         instanciaAbierta.ShowDialog();
                     }
                     else

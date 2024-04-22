@@ -20,7 +20,10 @@ namespace Capa_Datos
         public int DIAS_TOMADOS { get; set; }
         public string DESCRIPCION { get; set; }
 
+        public bool Estado {  get; set; }
+
         public int Id {  get; set; }
+        public int IdCancelado {  get; set; }
 
         public string Persona {  get; set; }
         // Constructor por defecto
@@ -29,7 +32,7 @@ namespace Capa_Datos
         }
 
         // Constructor con parámetros
-        public cVacaciones(int idVacaciones, int idPersona, int idPeriodo, DateTime fechaInicio, DateTime fechaFin, int diasFestivos, int diasTomados, string descripcion, string persona)
+        public cVacaciones(int idVacaciones, int idPersona, int idPeriodo, DateTime fechaInicio, DateTime fechaFin, int diasFestivos, int diasTomados, string descripcion, string persona, bool estado)
         {
             ID_VACACIONES = idVacaciones;
             IDPERSONA = idPersona;
@@ -40,6 +43,7 @@ namespace Capa_Datos
             DIAS_TOMADOS = diasTomados;
             DESCRIPCION = descripcion;
             Persona = persona;
+            Estado = estado;
         }
 
         public DataTable Mostrar(cVacaciones vacaciones)
@@ -58,6 +62,34 @@ namespace Capa_Datos
                 ParBuscar.ParameterName = "@ID";
                 ParBuscar.SqlDbType = SqlDbType.Int;
                 ParBuscar.Value = vacaciones.Id;
+                sqlcmd.Parameters.Add(ParBuscar);
+
+                SqlDataAdapter sqlDat = new SqlDataAdapter(sqlcmd);
+                sqlDat.Fill(DtResultado1);
+            }
+            catch (Exception ex)
+            {
+                DtResultado1 = null;
+            }
+            return DtResultado1;
+        }
+
+        public DataTable MostrarCanceladas(cVacaciones vacaciones)
+        {
+            DataTable DtResultado1 = new DataTable("RHVACACIONES");
+            SqlConnection sqlconn = new SqlConnection();
+            try
+            {
+                sqlconn.ConnectionString = Conexion.Cn;
+                SqlCommand sqlcmd = new SqlCommand();
+                sqlcmd.Connection = sqlconn;
+                sqlcmd.CommandText = "sp_ListarVacacionesHistorialfalse";
+                sqlcmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter ParBuscar = new SqlParameter();
+                ParBuscar.ParameterName = "@ID";
+                ParBuscar.SqlDbType = SqlDbType.Int;
+                ParBuscar.Value = vacaciones.IdCancelado;
                 sqlcmd.Parameters.Add(ParBuscar);
 
                 SqlDataAdapter sqlDat = new SqlDataAdapter(sqlcmd);
@@ -153,6 +185,7 @@ namespace Capa_Datos
                         cmd.Parameters.AddWithValue("@DIAS_TOMADOS", DIAS_TOMADOS);
                       
                         cmd.Parameters.AddWithValue("@DESCRIPCION", DESCRIPCION);
+                        cmd.Parameters.AddWithValue("@Estado", Estado);
 
                         rpta = cmd.ExecuteNonQuery() == 1 ? "OK" : "No ingresó el registro";
                     }

@@ -9,6 +9,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using System.Globalization;
 
 namespace Capa_Vista.ExperienciaLaboral
 {
@@ -26,6 +28,11 @@ namespace Capa_Vista.ExperienciaLaboral
         public ExperienciaLaboralFormulario()
         {
             InitializeComponent();
+
+            dtmFechaIngreso.Format = DateTimePickerFormat.Custom;
+            dtmFechaIngreso.CustomFormat = "dd/MM/yyyy";
+            dtmFechaRetiro.Format = DateTimePickerFormat.Custom;
+            dtmFechaRetiro.CustomFormat = "dd/MM/yyyy";
         }
 
         //Eventos necesarios para movilizar el formulario
@@ -67,6 +74,7 @@ namespace Capa_Vista.ExperienciaLaboral
             this.txtMotivo.Text = string.Empty;
             this.cmbReferencia.Text = string.Empty;
             this.txtDescripcion.Text = string.Empty;
+            this.txtDocumento.Text = string.Empty;
         }
         private void button2_Click(object sender, EventArgs e)
         {
@@ -82,9 +90,18 @@ namespace Capa_Vista.ExperienciaLaboral
                 this.txtEmpresa.Text = "***";
                 this.txtSalario.Text = "***";
                 this.txtDescripcion.Text = "***";
+                this.txtDocumento.Text = "***";
             }
+            
             else
             {
+                // Luego, verifica si el número de teléfono tiene exactamente 8 dígitos
+            if (Regex.Replace(txtTelefono.Text, @"[^\d]", "").Length != 8)
+                {
+                    MessageBox.Show("El número de teléfono debe tener exactamente 8 dígitos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 string rpta = "";
                 if (Evento == "Nuevo")
                 {
@@ -99,7 +116,8 @@ namespace Capa_Vista.ExperienciaLaboral
                         fechaRetiro,
                         this.txtMotivo.Text.Trim(),
                         this.cmbReferencia.Text.Trim(),
-                        this.txtDescripcion.Text.Trim()
+                        this.txtDescripcion.Text.Trim(),
+                        this.txtDocumento.Text.Trim()
                     );
                 }
                 else if(Evento == "Editar")
@@ -116,7 +134,8 @@ namespace Capa_Vista.ExperienciaLaboral
                         fechaRetiro,
                         this.txtMotivo.Text.Trim(),
                         this.cmbReferencia.Text.Trim(),
-                        this.txtDescripcion.Text.Trim()
+                        this.txtDescripcion.Text.Trim(),
+                        this.txtDocumento.Text.Trim()
                     );
                 }
 
@@ -142,7 +161,7 @@ namespace Capa_Vista.ExperienciaLaboral
         }
         public void CargarDatos(string id, string empresa, string fechaIngreso, string fechaRetiro,
                                      string telefono, string jefe, string puesto, string salario,
-                                     string motivo, string referencia, string descripcion)
+                                     string motivo, string referencia, string descripcion, string documento)
         {
             this.txtId.Text = id;
             this.txtEmpresa.Text = empresa;
@@ -155,6 +174,7 @@ namespace Capa_Vista.ExperienciaLaboral
             this.txtMotivo.Text = motivo;
             this.cmbReferencia.Text = referencia;
             this.txtDescripcion.Text = descripcion;
+            this.txtDocumento.Text = documento;
         }
 
         private void txtTelefono_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
@@ -172,6 +192,72 @@ namespace Capa_Vista.ExperienciaLaboral
             txtTelefono.Text = TelefonoNumerico;
             // Coloca el cursor al final del texto
             txtTelefono.SelectionStart = txtTelefono.Text.Length;
+        }
+
+        private string rutaArchivo;
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Archivos PDF|*.pdf|Todos los archivos|*.*";
+            openFileDialog.FilterIndex = 1; // Establece el filtro predeterminado como PDF
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                rutaArchivo = openFileDialog.FileName; // Asignación del valor a la variable miembro
+
+                // Verificar si el archivo seleccionado es un archivo PDF
+                if (Path.GetExtension(rutaArchivo).Equals(".pdf", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Mostrar la ruta del archivo en el cuadro de texto
+                    txtDocumento.Text = rutaArchivo;
+                }
+                else
+                {
+                    MessageBox.Show("Por favor, seleccione un archivo PDF.", "Archivo no válido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string rutaActual = txtDocumento.Text;
+
+            if (!string.IsNullOrEmpty(rutaActual) && System.IO.File.Exists(rutaActual))
+            {
+                // Abrir el archivo con el visor predeterminado del sistema
+                System.Diagnostics.Process.Start(rutaActual);
+            }
+            else
+            {
+                MessageBox.Show("Por favor, seleccione un archivo válido o la ruta del archivo no existe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void txtSalario_TextChanged(object sender, EventArgs e)
+        {
+            // Elimina cualquier caracter que no sea dígito
+            string Q = Regex.Replace(txtSalario.Text, @"[^\d]", "");
+
+            // Limita a 9 caracteres
+            if (Q.Length > 9)
+            {
+                Q = Q.Substring(0, 9);
+            }
+
+            // Formatea el número como moneda local (Quetzal en Guatemala)
+            if (long.TryParse(Q, out long numero))
+            {
+                txtSalario.Text = numero.ToString("C0", new CultureInfo("es-GT"));
+
+            }
+            else
+            {
+                txtSalario.Text = "";  // Si no se puede convertir, se deja en blanco
+            }
+
+            // Coloca el cursor al final del texto
+            txtSalario.SelectionStart = txtSalario.Text.Length;
         }
     }
 }

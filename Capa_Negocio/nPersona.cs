@@ -12,7 +12,7 @@ namespace Capa_Negocio
     {
         public static string InsertarPersona(
     string P_NOMBRE, string S_NOMBRE, string T_NOMBRE,
-    string P_APELLIDO, string S_APELLIDO, string C_APELLIDO,
+    string P_APELLIDO, string S_APELLIDO, string C_APELLIDO, string PROFESION_OFICIO,
     string EDAD, int ID_ESTADO_CIVIL,
     string L_NACIMIENTO, DateTime F_NACIMIENTO, int ID_GENERO,
     int ID_ETNIA, string NACIONALIDAD, int ID_RELIGION,
@@ -27,6 +27,7 @@ namespace Capa_Negocio
                 P_APELLIDO = P_APELLIDO,
                 S_APELLIDO = S_APELLIDO,
                 C_APELLIDO = C_APELLIDO,
+                PROFESION_OFICIO = PROFESION_OFICIO,
                 EDAD = EDAD,
                 ID_ESTADO_CIVIL = ID_ESTADO_CIVIL,
                 L_NACIMIENTO = L_NACIMIENTO,
@@ -87,6 +88,7 @@ namespace Capa_Negocio
     string p_APELLIDO,
     string s_APELLIDO,
     string c_APELLIDO,
+    string PROFESION_OFICIO,
     string eDAD,
     int iD_ESTADO_CIVIL,
     string l_NACIMIENTO,
@@ -112,6 +114,7 @@ namespace Capa_Negocio
             Obj.P_APELLIDO = p_APELLIDO;
             Obj.S_APELLIDO = s_APELLIDO;
             Obj.C_APELLIDO = c_APELLIDO;
+            Obj.PROFESION_OFICIO = PROFESION_OFICIO;
             Obj.EDAD = eDAD;
             Obj.ID_ESTADO_CIVIL = iD_ESTADO_CIVIL;
             Obj.L_NACIMIENTO = l_NACIMIENTO;

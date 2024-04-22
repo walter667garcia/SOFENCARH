@@ -146,7 +146,7 @@
             // 
             // pcbTitulo
             // 
-            this.pcbTitulo.Cursor = System.Windows.Forms.Cursors.AppStarting;
+            this.pcbTitulo.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pcbTitulo.Image = ((System.Drawing.Image)(resources.GetObject("pcbTitulo.Image")));
             this.pcbTitulo.Location = new System.Drawing.Point(14, 4);
             this.pcbTitulo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);

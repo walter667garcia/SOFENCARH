@@ -16,6 +16,7 @@ namespace Capa_Datos
         public string Nombre { get; set; }
         public string Telefono { get; set; }
         public string Relacion { get; set; }
+        public string Documento { get; set; }
 
         public string Persona { get; set; }
 
@@ -23,13 +24,14 @@ namespace Capa_Datos
 
         public cReferenciaPersonal() { }
 
-        public cReferenciaPersonal(int idRefpersonal, int idPersona, string nombre, string telefono, string relacion, string persona, int iD)
+        public cReferenciaPersonal(int idRefpersonal, int idPersona, string nombre, string telefono, string relacion,string documento, string persona, int iD)
         {
             IdRefpersonal = idRefpersonal;
             IdPersona = idPersona;
             Nombre = nombre;
             Telefono = telefono;
             Relacion = relacion;
+            Documento = documento;
             Persona = persona;
             ID = iD;
         }
@@ -50,6 +52,7 @@ namespace Capa_Datos
                         cmd.Parameters.AddWithValue("@Nombre", personal.Nombre);
                         cmd.Parameters.AddWithValue("@Telefono", personal.Telefono);
                         cmd.Parameters.AddWithValue("@Relacion", personal.Relacion);
+                        cmd.Parameters.AddWithValue("@Documento", personal.Documento);
 
                         rpta = cmd.ExecuteNonQuery() == 1 ? "OK" : "No ingresó el registro";
                     }
@@ -83,6 +86,7 @@ namespace Capa_Datos
                         cmd.Parameters.AddWithValue("@Nombre", personal.Nombre);
                         cmd.Parameters.AddWithValue("@Telefono", personal.Telefono);
                         cmd.Parameters.AddWithValue("@Relacion", personal.Relacion);
+                        cmd.Parameters.AddWithValue("@Documento", personal.Documento);
                         // Agregar parámetros para otros campos...
 
                         int filasAfectadas = cmd.ExecuteNonQuery();

@@ -1,13 +1,15 @@
 ﻿using Capa_Negocio;
 using Capa_Vista.Familia;
 using Capa_Vista.ReferenciaLaboral;
-using Capa_Vista.Reportes;
+using Capa_Vista.Reporte;
+using ClosedXML.Excel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -31,13 +33,31 @@ namespace Capa_Vista.Vacaciones
 
         private void Mostrar()
         {
-            this.dtgAsignarPeriodos.DataSource = nPeriodos.MostrarPeriodos(idPersona);
-            int suma = 0;
+            try
+            {
+                Periodos();
+                Vacaciones();
+                this.dtgVacacionesCanceladas.DataSource = nVacaciones.MostrarVacacionesCanceladas(idPersona);
 
-            foreach (DataGridViewRow fila in dtgAsignarPeriodos.Rows)
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Se produjo un error al intenta mostrar : {ex.Message}");
+            }
+
+
+        }
+
+
+        private void Periodos()
+        {
+            this.dtgAsignarPeriodos.DataSource = nPeriodos.MostrarPeriodos(idPersona);
+
+            int suma = 0;
+            foreach (DataGridViewRow Periodos in dtgAsignarPeriodos.Rows)
             {
                 // Obtener el valor de la celda como una cadena de texto
-                string dias = fila.Cells["DIAS_DISPONIBLES"].Value.ToString();
+                string dias = Periodos.Cells["DIAS_DISPONIBLES"].Value.ToString();
 
                 // Intentar convertir la cadena a un entero antes de sumarlo
                 int diasDisponibles;
@@ -45,51 +65,36 @@ namespace Capa_Vista.Vacaciones
                 {
                     // Sumar el valor convertido a la suma total
                     suma += diasDisponibles;
-                    lbTotalDias.Text = suma.ToString();
+                    lbTotalAcumulados.Text = suma.ToString();
+                }
+
+            }
+            
+        }
+
+        private void Vacaciones()
+        {
+            this.dtgHistorialVacaciones.DataSource = nVacaciones.MostrarVacaciones(idPersona);
+
+            int suma = 0;
+            foreach (DataGridViewRow Vacaciones in dtgHistorialVacaciones.Rows)
+            {
+
+                // Obtener el valor de la celda como una cadena de texto
+                string dias = Vacaciones.Cells["Dias_Tomados"].Value.ToString();
+
+                // Intentar convertir la cadena a un entero antes de sumarlo
+                int diastomados;
+                if (int.TryParse(dias, out diastomados))
+                {
+                    // Sumar el valor convertido a la suma total
+                    suma += diastomados;
+                    lbTotalDiasTomados.Text = suma.ToString();
                 }
             }
-
-            /*  List<int> ids = new List<int>();
-
-              // Obtener el número total de filas en el DataGridView
-              int totalFilas = dtgAsignarPeriodos.RowCount;
-
-              // Verificar si hay más de 5 filas
-              if (totalFilas > 5)
-              {
-                  // Determinar el índice desde el cual comenzar a recopilar los ID
-                  int startIndex = Math.Max(totalFilas - 5, 0);
-
-                  // Recorrer las filas del DataGridView
-                  for (int i = 0; i < startIndex; i++)
-                  {
-                      // Obtener el valor del ID de la fila actual
-                      int id = Convert.ToInt32(dtgAsignarPeriodos.Rows[i].Cells["ID_PERIODO"].Value);
-
-                      string rpt = "";
-
-                      rpt = nPeriodos.ActualizarEstado(
-                          id, false);
-
-                      // aui quiero ejecutar el procedimiento almacenado
-                      // Agregar el ID a la lista
-                      ids.Add(id);
-                  }
-
-                  // Usar los IDs recopilados según sea necesario
-                  foreach (int id in ids)
-                  {
-                      // Realizar operaciones con los IDs
-                      Console.WriteLine("ID: " + id);
-                  }
-
-
-              }
-              else
-              {
-                  MessageBox.Show("El número total de filas es igual o menor a 5.");
-              }*/
         }
+
+
         private void pcbNuevo_Click(object sender, EventArgs e)
         {
             int totalRegistros = dtgAsignarPeriodos.RowCount;
@@ -253,10 +258,70 @@ namespace Capa_Vista.Vacaciones
             vacaciones.IdPersona = idPersona;
             vacaciones.Evento = "Nuevo";
             vacaciones.diasTomados = DiasTomados;
-            vacaciones.Acumulados = Convert.ToInt32(this.lbTotalDias.Text);
+            vacaciones.Acumulados = Convert.ToInt32(this.lbTotalAcumulados.Text);
             vacaciones.CargarDatos(diferencia, Evento,Empleado, DPI, Periodo, Dias);
             vacaciones.ShowDialog();
         }
 
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+            ExportarDataGridViewAExcel(dtgAsignarPeriodos);
+        }
+
+        private void ExportarDataGridViewAExcel(DataGridView dataGridView)
+        {
+            // Verificar si hay datos en el DataGridView
+            if (dataGridView.Rows.Count == 0)
+            {
+                MessageBox.Show("No hay datos para exportar.", "Exportar a Excel", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            // Crear un nuevo libro de Excel
+            var workbook = new XLWorkbook();
+            var worksheet = workbook.Worksheets.Add("Hoja1");
+            // Agregar los encabezados de columnas
+            for (int i = 1; i <= dataGridView.Columns.Count; i++)
+            {
+                worksheet.Cell(1, i).Value = dataGridView.Columns[i - 1].HeaderText;
+            }
+            // Agregar los datos de las filas
+            for (int i = 0; i < dataGridView.Rows.Count; i++)
+            {
+                for (int j = 0; j < dataGridView.Columns.Count; j++)
+                {
+                    worksheet.Cell(i + 2, j + 1).Value = dataGridView.Rows[i].Cells[j].Value?.ToString();
+                }
+            }
+            // Guardar el archivo de Excel
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Archivos Excel (*.xlsx)|*.xlsx";
+            saveFileDialog.FileName = "ArchivoExcel.xlsx";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    workbook.SaveAs(saveFileDialog.FileName);
+                    MessageBox.Show("El archivo Excel se ha exportado correctamente.", "Exportar a Excel", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Abrir el archivo de Excel después de guardarlo
+                    System.Diagnostics.Process.Start(saveFileDialog.FileName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al guardar el archivo Excel: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+        }
+
+        private void pictureBox4_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void pictureBox5_Click(object sender, EventArgs e)
+        {
+            
+        }
     }
 }
